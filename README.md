@@ -1,16 +1,17 @@
-# armoyu_services
+# ARMOYU_SERVICES
 
-A new Flutter project.
+Bu proje, ARMOYU web sitesi ile entegre çalışan bir API sağlamaktadır. API'yi kullanabilmek için belirli bir anahtara (API Key) ihtiyaç duyulmaktadır.
 
-## Getting Started
+## ARMOYU API Kullanımı
 
-This project is a starting point for a Flutter application.
+**ARMOYU_SERVICES** projesi, **ARAMIZDAKİ OYUNCU** web sitesi ile bağlantılı bir API'dir. Bu API, yalnızca bir API anahtarı ile çalışabilir. API'yi kullanabilmek için aşağıdaki adımları izlemelisiniz:
 
-A few resources to get you started if this is your first Flutter project:
+1. **API Anahtarı Alma**: API'yi kullanmak isteyen geliştiricilerin, ARMOYU web sitesine kayıt olarak bir başvuru yapmaları gerekmektedir. Başvuruları onaylanan geliştiricilere, API anahtarı sağlanacaktır.
+2. **Geliştirici Olun**: API'yi kullanmak isteyen kişiler, ARMOYU platformunda geliştirici olarak kayıt olmalıdır. Geliştirici başvurunuz onaylandıktan sonra, size özel API anahtarınız tanımlanacaktır.
+3. **API Güvenliği**: API anahtarınız kişisel ve gizlidir. Herhangi bir üçüncü tarafla paylaşılmaması gerekmektedir. API anahtarınızı kaybetmeniz veya güvenliğinizin ihlal edilmesi durumunda, hemen ARMOYU destek ekibiyle iletişime geçmelisiniz.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+ARMOYU'nun API'sini kullanarak **veri alışverişi** yapabilir, **oyuncu istatistiklerine erişebilir** ve **oyun içi işlemleri** gerçekleştirebilirsiniz.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Yardım ve Destek
+
+Herhangi bir sorunuz veya teknik destek talebiniz varsa, lütfen [ARMOYU Destek](https://aramizdakioyuncu.com/destek) sayfasından bizimle iletişime geçin.
