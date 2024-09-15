@@ -1,17 +1,18 @@
 name: armoyu_services
-description: 'ARMOYU kütüphanesidir'
+description: "ARMOYU kütüphanesidir"
 publish_to: https://pub.dev/publishers/aramizdakioyuncu.com
 repository: https://github.com/berkaytikenoglu/armoyu_services
 version: 1.0.0+3
 
 environment:
-  sdk: '>=3.4.4 <4.0.0'
+  sdk: ">=3.4.4 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  http: ^1.2.2
+  cupertino_icons: ^1.0.6
+  get: ^4.6.6
   device_info_plus: ^10.0.1
   package_info_plus: ^8.0.1
 dev_dependencies:
