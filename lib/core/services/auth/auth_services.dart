@@ -1,24 +1,22 @@
 import 'package:armoyu_services/export.dart';
 
 final class AuthServices {
-  late final ApiHelpers _apiHelpers;
-
   final String? token;
   final String? appVersion;
+  final ApiHelpers apiHelpers;
 
   AuthServices({
     required this.token,
     required this.appVersion,
-  }) {
-    _apiHelpers = ApiHelpers();
-  }
+    required this.apiHelpers,
+  });
 
   Future<Map<String, dynamic>> login({
     required LoginRequestModel loginRequestModel,
   }) async {
-    Map<String, dynamic> result = await _apiHelpers.post(
+    Map<String, dynamic> result = await apiHelpers.post(
       endpoint: EndpointConstants.authServicesLogin,
-      headers: _apiHelpers.getRequestHeader(
+      headers: apiHelpers.getRequestHeader(
         token: token,
         appVersion: appVersion,
       ),
@@ -29,9 +27,9 @@ final class AuthServices {
   }
 
   Future<Map<String, dynamic>> logout() async {
-    return await _apiHelpers.post(
+    return await apiHelpers.post(
       endpoint: EndpointConstants.users,
-      headers: _apiHelpers.getRequestHeader(
+      headers: apiHelpers.getRequestHeader(
         token: token,
         appVersion: appVersion,
       ),
@@ -42,9 +40,9 @@ final class AuthServices {
   Future<Map<String, dynamic>> register({
     required RegisterRequestModel registerRequestModel,
   }) async {
-    Map<String, dynamic> result = await _apiHelpers.post(
+    Map<String, dynamic> result = await apiHelpers.post(
       endpoint: EndpointConstants.users,
-      headers: _apiHelpers.getRequestHeader(
+      headers: apiHelpers.getRequestHeader(
         token: token,
         appVersion: appVersion,
       ),

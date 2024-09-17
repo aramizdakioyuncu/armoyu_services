@@ -3,8 +3,9 @@ import 'package:http/http.dart' as http;
 
 final class ApiHelpers {
   late final LoggingServices _loggingServices;
+  final String apiKey;
 
-  ApiHelpers() {
+  ApiHelpers({required this.apiKey}) {
     _loggingServices = LoggingServices();
   }
 
@@ -27,7 +28,7 @@ final class ApiHelpers {
     Map<String, String>? headers,
   }) async {
     final response = await http.get(
-      Uri.parse(EndpointConstants.baseURL + endpoint),
+      Uri.parse("${EndpointConstants.baseURL}/$apiKey/$endpoint"),
       headers: headers,
     );
 
@@ -40,7 +41,7 @@ final class ApiHelpers {
     Map<String, dynamic>? body,
   }) async {
     final response = await http.post(
-      Uri.parse(EndpointConstants.baseURL + endpoint),
+      Uri.parse("${EndpointConstants.baseURL}/$apiKey/$endpoint"),
       headers: headers,
       body: body != null ? json.encode(body) : null,
     );
@@ -54,7 +55,7 @@ final class ApiHelpers {
     Map<String, dynamic>? body,
   }) async {
     final response = await http.put(
-      Uri.parse(EndpointConstants.baseURL + endpoint),
+      Uri.parse("${EndpointConstants.baseURL}/$apiKey/$endpoint"),
       headers: headers,
       body: body != null ? json.encode(body) : null,
     );
@@ -67,7 +68,7 @@ final class ApiHelpers {
     Map<String, String>? headers,
   }) async {
     final response = await http.delete(
-      Uri.parse(EndpointConstants.baseURL + endpoint),
+      Uri.parse("${EndpointConstants.baseURL}/$apiKey/$endpoint"),
       headers: headers,
     );
 

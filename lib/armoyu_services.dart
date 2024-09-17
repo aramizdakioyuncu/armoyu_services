@@ -8,26 +8,31 @@ class ARMOYUServices {
   late final UtilsServices _utilsServices;
 
   final String apiKey;
+  late final ApiHelpers _apiHelpers;
 
   String? _token;
   set token(value) => _token = value;
 
   ARMOYUServices({required this.apiKey}) {
+    _apiHelpers = ApiHelpers(apiKey: apiKey);
     _loggingServices = LoggingServices();
 
     _authServices = AuthServices(
       token: _token,
       appVersion: _loggingServices.version,
+      apiHelpers: _apiHelpers,
     );
 
     _userServices = UserServices(
       token: _token,
       appVersion: _loggingServices.version,
+      apiHelpers: _apiHelpers,
     );
 
     _utilsServices = UtilsServices(
       token: _token,
       appVersion: _loggingServices.version,
+      apiHelpers: _apiHelpers,
     );
   }
 
