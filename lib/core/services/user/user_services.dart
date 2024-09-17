@@ -1,8 +1,8 @@
 import 'package:armoyu_services/export.dart';
 
 class UserServices {
-  final String? token;
-  final String? appVersion;
+  String? token;
+  String? appVersion;
   final ApiHelpers apiHelpers;
 
   UserServices({
@@ -10,6 +10,11 @@ class UserServices {
     required this.appVersion,
     required this.apiHelpers,
   });
+
+  void reload({required String? t, required String? a}) {
+    token = t;
+    appVersion = a;
+  }
 
   Future<Map<String, dynamic>> getUsers() async {
     return await apiHelpers.get(
@@ -36,6 +41,10 @@ class UserServices {
   }) async {
     return await apiHelpers.post(
       endpoint: '${EndpointConstants.users}/friends',
+      headers: apiHelpers.getRequestHeader(
+        token: token,
+        appVersion: appVersion,
+      ),
       body: addFriendRequestModel.toMap(),
     );
   }

@@ -1,8 +1,8 @@
 import 'package:armoyu_services/export.dart';
 
 class UtilsServices {
-  final String? token;
-  final String? appVersion;
+  String? token;
+  String? appVersion;
   final ApiHelpers apiHelpers;
 
   UtilsServices({
@@ -10,6 +10,11 @@ class UtilsServices {
     required this.appVersion,
     required this.apiHelpers,
   });
+
+  void reload({required String? t, required String? a}) {
+    token = t;
+    appVersion = a;
+  }
 
   //  Request listeleme
   Future<Map<String, dynamic>> getFeedbackRequest() async {

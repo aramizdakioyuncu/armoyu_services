@@ -2,12 +2,9 @@ import 'package:armoyu_services/export.dart';
 import 'package:http/http.dart' as http;
 
 final class ApiHelpers {
-  late final LoggingServices _loggingServices;
   final String apiKey;
 
-  ApiHelpers({required this.apiKey}) {
-    _loggingServices = LoggingServices();
-  }
+  ApiHelpers({required this.apiKey});
 
   Map<String, String> getRequestHeader({
     String? token,
@@ -78,13 +75,13 @@ final class ApiHelpers {
   Map<String, dynamic> _defaultCallback({required http.Response response}) {
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonresponse = json.decode(response.body);
-      _loggingServices.logConsole(
+      LoggingServices.instance.logConsole(
         message: jsonresponse["aciklama"].toString(),
       );
 
       return jsonresponse;
     } else {
-      _loggingServices.logConsole(
+      LoggingServices.instance.logConsole(
         message: "Status hatası: ${response.statusCode}",
       );
       return {

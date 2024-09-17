@@ -1,12 +1,15 @@
 import 'package:armoyu_services/export.dart';
 
 final class LoggingServices {
+  static final LoggingServices _instance = LoggingServices._init();
+  static LoggingServices get instance => _instance;
+
   String? _version;
   String? get version => _version;
 
   Map<String, dynamic>? _deviceInfo;
 
-  LoggingServices() {
+  LoggingServices._init() {
     logConsole(message: "API Initialized");
 
     getAppVersion();

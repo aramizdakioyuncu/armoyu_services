@@ -2,7 +2,6 @@ import 'package:armoyu_services/export.dart';
 export 'package:armoyu_services/export.dart';
 
 class ARMOYUServices {
-  late final LoggingServices _loggingServices;
   late final AuthServices _authServices;
   late final UserServices _userServices;
   late final UtilsServices _utilsServices;
@@ -11,27 +10,33 @@ class ARMOYUServices {
   late final ApiHelpers _apiHelpers;
 
   String? _token;
-  set token(value) => _token = value;
+  set token(value) {
+    _token = value;
+
+    final version = LoggingServices.instance.version;
+    _authServices.reload(t: _token, a: version);
+    _userServices.reload(t: _token, a: version);
+    _utilsServices.reload(t: _token, a: version);
+  }
 
   ARMOYUServices({required this.apiKey}) {
     _apiHelpers = ApiHelpers(apiKey: apiKey);
-    _loggingServices = LoggingServices();
 
     _authServices = AuthServices(
       token: _token,
-      appVersion: _loggingServices.version,
+      appVersion: LoggingServices.instance.version,
       apiHelpers: _apiHelpers,
     );
 
     _userServices = UserServices(
       token: _token,
-      appVersion: _loggingServices.version,
+      appVersion: LoggingServices.instance.version,
       apiHelpers: _apiHelpers,
     );
 
     _utilsServices = UtilsServices(
       token: _token,
-      appVersion: _loggingServices.version,
+      appVersion: LoggingServices.instance.version,
       apiHelpers: _apiHelpers,
     );
   }
@@ -75,15 +80,21 @@ class ARMOYUServices {
 
   Future<Map<String, dynamic>> register({
     required RegisterRequestModel registerRequestModel,
+    bool signIn = false,
   }) async {
     Map<String, dynamic> result = await _authServices.register(
       registerRequestModel: registerRequestModel,
     );
 
     if (result['durum'] == 1) {
-      _loggingServices.logConsole(
+      LoggingServices.instance.logConsole(
         message: result['icerik']['access_token'],
       );
+
+      if (signIn) {
+        token = result['icerik']['access_token'];
+        LoggingServices.instance.logConsole(message: "Giriş yapıldı!");
+      }
     }
 
     return result;

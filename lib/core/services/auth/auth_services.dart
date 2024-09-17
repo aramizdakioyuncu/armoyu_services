@@ -1,8 +1,8 @@
 import 'package:armoyu_services/export.dart';
 
 final class AuthServices {
-  final String? token;
-  final String? appVersion;
+  String? token;
+  String? appVersion;
   final ApiHelpers apiHelpers;
 
   AuthServices({
@@ -10,6 +10,11 @@ final class AuthServices {
     required this.appVersion,
     required this.apiHelpers,
   });
+
+  void reload({required String? t, required String? a}) {
+    token = t;
+    appVersion = a;
+  }
 
   Future<Map<String, dynamic>> login({
     required LoginRequestModel loginRequestModel,
