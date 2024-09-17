@@ -1,116 +1,102 @@
-import 'package:armoyu_services/services/api.dart';
-import 'package:armoyu_services/services/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:armoyu_services/export.dart';
+export 'package:armoyu_services/export.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+class ARMOYUServices {
+  late final AuthServices _authServices;
+  late final UserServices _userServices;
+  late final UtilsServices _utilsServices;
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String apiKey;
+  late final ApiHelpers _apiHelpers;
 
-  @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+  String? _token;
+  set token(value) {
+    _token = value;
+
+    final version = LoggingServices.instance.version;
+    _authServices.reload(t: _token, a: version);
+    _userServices.reload(t: _token, a: version);
+    _utilsServices.reload(t: _token, a: version);
+  }
+
+  ARMOYUServices({required this.apiKey}) {
+    _apiHelpers = ApiHelpers(apiKey: apiKey);
+
+    _authServices = AuthServices(
+      token: _token,
+      appVersion: LoggingServices.instance.version,
+      apiHelpers: _apiHelpers,
+    );
+
+    _userServices = UserServices(
+      token: _token,
+      appVersion: LoggingServices.instance.version,
+      apiHelpers: _apiHelpers,
+    );
+
+    _utilsServices = UtilsServices(
+      token: _token,
+      appVersion: LoggingServices.instance.version,
+      apiHelpers: _apiHelpers,
     );
   }
-}
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  late APIServices serviceARMOYU;
-
-  @override
-  void initState() {
-    super.initState();
-    serviceARMOYU = APIServices(apiKEY: "1");
+  Future<Map<String, dynamic>> getFeedbackRequest() async {
+    return await _utilsServices.getFeedbackRequest();
   }
 
-  Future<void> login() async {
-    final Map<String, dynamic> getUsersResult =
-        await serviceARMOYU.login(username: "deneme", password: "deneme");
-
-    if (getUsersResult['durum'] != 1) {
-      ARMOYUWidgets.getSnackBar(getUsersResult);
-      return;
-    }
+  Future<Map<String, dynamic>> getUsers() async {
+    return await _userServices.getUsers();
   }
 
-  Future<void> befriend() async {
-    final Map<String, dynamic> getUsersResult =
-        await serviceARMOYU.addfriend(kiminle: 2);
-
-    if (getUsersResult['durum'] != 1) {
-      ARMOYUWidgets.getSnackBar(getUsersResult);
-      return;
-    }
+  Future<Map<String, dynamic>> deleteUser({required int userId}) async {
+    return await _userServices.deleteUser(userId: userId);
   }
 
-  Future<void> register({
-    required String firstname,
-    required String lastname,
-    required String username,
-    required String email,
-    required String password,
+  Future<Map<String, dynamic>> addFriend({
+    required AddFriendRequestModel addFriendRequestModel,
   }) async {
-    final Map<String, dynamic> getUsersResult = await serviceARMOYU.register(
-        firstname: firstname,
-        lastname: lastname,
-        username: username,
-        email: email,
-        password: password);
-
-    if (getUsersResult['durum'] != 1) {
-      ARMOYUWidgets.getSnackBar(getUsersResult);
-      return;
-    }
+    return await _userServices.addFriend(
+      addFriendRequestModel: addFriendRequestModel,
+    );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: () async => await login(),
-              child: const Text("TIKLA"),
-            ),
-            ElevatedButton(
-              onPressed: () async => await befriend(),
-              child: const Text("Arkadaş ol"),
-            ),
-            ElevatedButton(
-              onPressed: () async => await register(
-                firstname: "TEST1",
-                lastname: "SOYAD2",
-                email: "tesst@ema32il.com",
-                password: "12345678",
-                username: "test23",
-              ),
-              child: const Text("Kayıt Ol"),
-            ),
-          ],
-        ),
-      ),
+  Future<Map<String, dynamic>> login(
+      {required LoginRequestModel loginRequestModel}) async {
+    Map<String, dynamic> result = await _authServices.login(
+      loginRequestModel: loginRequestModel,
     );
+
+    if (result['durum'] == 1) {
+      token = result['icerik']['access_token'];
+    }
+
+    return result;
+  }
+
+  Future<Map<String, dynamic>> logout() async {
+    return await _authServices.logout();
+  }
+
+  Future<Map<String, dynamic>> register({
+    required RegisterRequestModel registerRequestModel,
+    bool signIn = false,
+  }) async {
+    Map<String, dynamic> result = await _authServices.register(
+      registerRequestModel: registerRequestModel,
+    );
+
+    if (result['durum'] == 1) {
+      LoggingServices.instance.logConsole(
+        message: result['icerik']['access_token'],
+      );
+
+      if (signIn) {
+        token = result['icerik']['access_token'];
+        LoggingServices.instance.logConsole(message: "Giriş yapıldı!");
+      }
+    }
+
+    return result;
   }
 }
