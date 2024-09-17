@@ -1,29 +1,21 @@
-import 'package:armoyu_services/export.dart';
+part of 'package:armoyu_services/armoyu_services.dart';
 
-final class AuthServices {
-  String? token;
-  String? appVersion;
-  final ApiHelpers apiHelpers;
+final class _AuthServices {
+  String? Function() getToken;
+  final _ApiHelpers apiHelpers;
 
-  AuthServices({
-    required this.token,
-    required this.appVersion,
+  _AuthServices({
+    required this.getToken,
     required this.apiHelpers,
   });
-
-  void reload({required String? t, required String? a}) {
-    token = t;
-    appVersion = a;
-  }
 
   Future<Map<String, dynamic>> login({
     required LoginRequestModel loginRequestModel,
   }) async {
     Map<String, dynamic> result = await apiHelpers.post(
-      endpoint: EndpointConstants.authServicesLogin,
+      endpoint: _EndpointConstants.authServicesLogin,
       headers: apiHelpers.getRequestHeader(
-        token: token,
-        appVersion: appVersion,
+        token: getToken(),
       ),
       body: loginRequestModel.toMap(),
     );
@@ -33,10 +25,9 @@ final class AuthServices {
 
   Future<Map<String, dynamic>> logout() async {
     return await apiHelpers.post(
-      endpoint: EndpointConstants.users,
+      endpoint: _EndpointConstants.users,
       headers: apiHelpers.getRequestHeader(
-        token: token,
-        appVersion: appVersion,
+        token: getToken(),
       ),
       body: {},
     );
@@ -46,10 +37,9 @@ final class AuthServices {
     required RegisterRequestModel registerRequestModel,
   }) async {
     Map<String, dynamic> result = await apiHelpers.post(
-      endpoint: EndpointConstants.users,
+      endpoint: _EndpointConstants.users,
       headers: apiHelpers.getRequestHeader(
-        token: token,
-        appVersion: appVersion,
+        token: getToken(),
       ),
       body: registerRequestModel.toMap(),
     );

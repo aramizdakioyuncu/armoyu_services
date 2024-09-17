@@ -36,6 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     armoyuServices = ARMOYUServices(apiKey: "1");
+    armoyuServices.setup();
   }
 
   static void getSnackBar(getUsersResult) {

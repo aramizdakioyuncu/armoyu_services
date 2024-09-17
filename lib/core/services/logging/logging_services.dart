@@ -1,19 +1,21 @@
-import 'package:armoyu_services/export.dart';
+part of 'package:armoyu_services/armoyu_services.dart';
 
-final class LoggingServices {
-  static final LoggingServices _instance = LoggingServices._init();
-  static LoggingServices get instance => _instance;
+final class _LoggingServices {
+  static final _LoggingServices _instance = _LoggingServices._init();
+  static _LoggingServices get instance => _instance;
 
   String? _version;
   String? get version => _version;
 
   Map<String, dynamic>? _deviceInfo;
 
-  LoggingServices._init() {
+  _LoggingServices._init() {
     logConsole(message: "API Initialized");
+  }
 
-    getAppVersion();
-    getDeviceInfo();
+  Future<void> setup() async {
+    await getAppVersion();
+    await getDeviceInfo();
   }
 
   Future<void> getAppVersion() async {
@@ -30,6 +32,6 @@ final class LoggingServices {
   }
 
   void logConsole({required String message}) {
-    log("[ARMOYU] $message");
+    log("[ARMOYU]: $message");
   }
 }

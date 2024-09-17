@@ -1,28 +1,20 @@
-import 'package:armoyu_services/export.dart';
+part of 'package:armoyu_services/armoyu_services.dart';
 
-class UtilsServices {
-  String? token;
-  String? appVersion;
-  final ApiHelpers apiHelpers;
+class _UtilsServices {
+  String? Function() getToken;
+  final _ApiHelpers apiHelpers;
 
-  UtilsServices({
-    required this.token,
-    required this.appVersion,
+  _UtilsServices({
+    required this.getToken,
     required this.apiHelpers,
   });
-
-  void reload({required String? t, required String? a}) {
-    token = t;
-    appVersion = a;
-  }
 
   //  Request listeleme
   Future<Map<String, dynamic>> getFeedbackRequest() async {
     return await apiHelpers.get(
-      endpoint: EndpointConstants.requests,
+      endpoint: _EndpointConstants.requests,
       headers: apiHelpers.getRequestHeader(
-        token: token,
-        appVersion: appVersion,
+        token: getToken(),
       ),
     );
   }
