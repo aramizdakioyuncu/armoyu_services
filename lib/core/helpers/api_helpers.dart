@@ -1,19 +1,17 @@
-import 'package:armoyu_services/export.dart';
-import 'package:http/http.dart' as http;
+part of 'package:armoyu_services/armoyu_services.dart';
 
-final class ApiHelpers {
+final class _ApiHelpers {
   final String apiKey;
 
-  ApiHelpers({required this.apiKey});
+  _ApiHelpers({required this.apiKey});
 
   Map<String, String> getRequestHeader({
     String? token,
-    String? appVersion,
   }) {
     final map = {
       'Authorization': token != null ? 'Bearer $token' : '',
       'Content-Type': 'application/json',
-      'X-Client-Version': appVersion ?? '',
+      'X-Client-Version': _LoggingServices.instance.version ?? '',
     };
 
     map.removeWhere((k, v) => v.trim() == '' || v.trim().isEmpty);
@@ -25,7 +23,7 @@ final class ApiHelpers {
     Map<String, String>? headers,
   }) async {
     final response = await http.get(
-      Uri.parse("${EndpointConstants.baseURL}/$apiKey/$endpoint"),
+      Uri.parse("${_EndpointConstants.baseURL}/$apiKey/$endpoint"),
       headers: headers,
     );
 
@@ -38,7 +36,7 @@ final class ApiHelpers {
     Map<String, dynamic>? body,
   }) async {
     final response = await http.post(
-      Uri.parse("${EndpointConstants.baseURL}/$apiKey/$endpoint"),
+      Uri.parse("${_EndpointConstants.baseURL}/$apiKey/$endpoint"),
       headers: headers,
       body: body != null ? json.encode(body) : null,
     );
@@ -52,7 +50,7 @@ final class ApiHelpers {
     Map<String, dynamic>? body,
   }) async {
     final response = await http.put(
-      Uri.parse("${EndpointConstants.baseURL}/$apiKey/$endpoint"),
+      Uri.parse("${_EndpointConstants.baseURL}/$apiKey/$endpoint"),
       headers: headers,
       body: body != null ? json.encode(body) : null,
     );
@@ -65,7 +63,7 @@ final class ApiHelpers {
     Map<String, String>? headers,
   }) async {
     final response = await http.delete(
-      Uri.parse("${EndpointConstants.baseURL}/$apiKey/$endpoint"),
+      Uri.parse("${_EndpointConstants.baseURL}/$apiKey/$endpoint"),
       headers: headers,
     );
 
@@ -75,13 +73,13 @@ final class ApiHelpers {
   Map<String, dynamic> _defaultCallback({required http.Response response}) {
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonresponse = json.decode(response.body);
-      LoggingServices.instance.logConsole(
+      _LoggingServices.instance.logConsole(
         message: jsonresponse["aciklama"].toString(),
       );
 
       return jsonresponse;
     } else {
-      LoggingServices.instance.logConsole(
+      _LoggingServices.instance.logConsole(
         message: "Status hatası: ${response.statusCode}",
       );
       return {
