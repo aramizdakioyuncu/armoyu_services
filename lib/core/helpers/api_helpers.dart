@@ -1,9 +1,16 @@
 part of 'package:armoyu_services/armoyu_services.dart';
 
-final class _ApiHelpers {
+final class ApiHelpers {
   final String apiKey;
+  final bool usePreviousAPI;
 
-  _ApiHelpers({required this.apiKey});
+  late final String baseUrl;
+
+  ApiHelpers({required this.apiKey, required this.usePreviousAPI}) {
+    baseUrl = usePreviousAPI
+        ? _EndpointConstants.previousBaseUrl
+        : _EndpointConstants.baseURL;
+  }
 
   Map<String, String> getRequestHeader({
     String? token,
@@ -23,7 +30,7 @@ final class _ApiHelpers {
     Map<String, String>? headers,
   }) async {
     final response = await http.get(
-      Uri.parse("${_EndpointConstants.baseURL}/$apiKey/$endpoint"),
+      Uri.parse("$baseUrl/$apiKey/$endpoint"),
       headers: headers,
     );
 
@@ -36,7 +43,7 @@ final class _ApiHelpers {
     Map<String, dynamic>? body,
   }) async {
     final response = await http.post(
-      Uri.parse("${_EndpointConstants.baseURL}/$apiKey/$endpoint"),
+      Uri.parse("$baseUrl/$apiKey/$endpoint"),
       headers: headers,
       body: body != null ? json.encode(body) : null,
     );
@@ -50,7 +57,7 @@ final class _ApiHelpers {
     Map<String, dynamic>? body,
   }) async {
     final response = await http.put(
-      Uri.parse("${_EndpointConstants.baseURL}/$apiKey/$endpoint"),
+      Uri.parse("$baseUrl/$apiKey/$endpoint"),
       headers: headers,
       body: body != null ? json.encode(body) : null,
     );
@@ -63,7 +70,7 @@ final class _ApiHelpers {
     Map<String, String>? headers,
   }) async {
     final response = await http.delete(
-      Uri.parse("${_EndpointConstants.baseURL}/$apiKey/$endpoint"),
+      Uri.parse("$baseUrl/$apiKey/$endpoint"),
       headers: headers,
     );
 

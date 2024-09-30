@@ -35,7 +35,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    armoyuServices = ARMOYUServices(apiKey: "1");
+    armoyuServices = ARMOYUServices(
+        apiKey: "bda0b6f27fc1a6a87e8ba8cd9ab339ca", usePreviousAPI: true);
+
     armoyuServices.setup();
   }
 
@@ -58,7 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> login() async {
-    final Map<String, dynamic> getUsersResult = await armoyuServices.login(
+    final Map<String, dynamic> getUsersResult =
+        await armoyuServices.authServices.login(
       loginRequestModel: LoginRequestModel(
         username: "deneme",
         password: "deneme",
@@ -71,8 +74,19 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  Future<void> previuslogin() async {
+    final getUsersResult = await armoyuServices.authServices
+        .previuslogin(username: "deneme", password: "deneme");
+    getSnackBar(getUsersResult);
+
+    if (getUsersResult['durum'] != 1) {
+      getSnackBar(getUsersResult);
+      return;
+    }
+  }
+
   Future<void> befriend() async {
-    final Map<String, dynamic> getUsersResult = await armoyuServices.addFriend(
+    final getUsersResult = await armoyuServices.userServices.addFriend(
       addFriendRequestModel: AddFriendRequestModel(
         kiminle: 2,
       ),
@@ -91,7 +105,8 @@ class _MyHomePageState extends State<MyHomePage> {
     required String email,
     required String password,
   }) async {
-    final Map<String, dynamic> getUsersResult = await armoyuServices.register(
+    final Map<String, dynamic> getUsersResult =
+        await armoyuServices.authServices.register(
       registerRequestModel: RegisterRequestModel(
         firstname: firstname,
         lastname: lastname,
@@ -119,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ElevatedButton(
-              onPressed: () async => await login(),
+              onPressed: () async => previuslogin(),
               child: const Text("Test Login"),
             ),
             ElevatedButton(

@@ -1,27 +1,35 @@
 part of 'package:armoyu_services/armoyu_services.dart';
 
-class _UserServices {
-  String? Function() getToken;
-  final _ApiHelpers apiHelpers;
+class UserServices {
+  final String? Function() getToken;
+  final void Function(String? token) setToken;
 
-  _UserServices({
-    required this.getToken,
-    required this.apiHelpers,
-  });
+  final String apiKey;
+  final bool usePreviousAPI;
+
+  late final ApiHelpers _apiHelpers;
+
+  UserServices(
+      {required this.getToken,
+      required this.setToken,
+      required this.apiKey,
+      required this.usePreviousAPI}) {
+    _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
+  }
 
   Future<Map<String, dynamic>> getUsers() async {
-    return await apiHelpers.get(
+    return await _apiHelpers.get(
       endpoint: _EndpointConstants.users,
-      headers: apiHelpers.getRequestHeader(
+      headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
     );
   }
 
   Future<Map<String, dynamic>> deleteUser({required int userId}) async {
-    return await apiHelpers.delete(
+    return await _apiHelpers.delete(
       endpoint: '${_EndpointConstants.users}/$userId',
-      headers: apiHelpers.getRequestHeader(
+      headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
     );
@@ -30,9 +38,9 @@ class _UserServices {
   Future<Map<String, dynamic>> addFriend({
     required AddFriendRequestModel addFriendRequestModel,
   }) async {
-    return await apiHelpers.post(
+    return await _apiHelpers.post(
       endpoint: '${_EndpointConstants.users}/friends',
-      headers: apiHelpers.getRequestHeader(
+      headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
       body: addFriendRequestModel.toMap(),

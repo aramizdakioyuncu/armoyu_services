@@ -1,19 +1,28 @@
 part of 'package:armoyu_services/armoyu_services.dart';
 
-class _UtilsServices {
-  String? Function() getToken;
-  final _ApiHelpers apiHelpers;
+class UtilsServices {
+  final String? Function() getToken;
+  final void Function(String? token) setToken;
 
-  _UtilsServices({
+  final String apiKey;
+  final bool usePreviousAPI;
+
+  late final ApiHelpers _apiHelpers;
+
+  UtilsServices({
     required this.getToken,
-    required this.apiHelpers,
-  });
+    required this.setToken,
+    required this.apiKey,
+    required this.usePreviousAPI,
+  }) {
+    _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
+  }
 
   //  Request listeleme
   Future<Map<String, dynamic>> getFeedbackRequest() async {
-    return await apiHelpers.get(
+    return await _apiHelpers.get(
       endpoint: _EndpointConstants.requests,
-      headers: apiHelpers.getRequestHeader(
+      headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
     );
