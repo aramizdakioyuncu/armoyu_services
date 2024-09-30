@@ -1,3 +1,3 @@
-## [1.0.0+1]
+## [1.0.0+3]
 
-- İlk sürüm yayınlandı.
+- Apiservices kullanılabilir hale getirildi.
