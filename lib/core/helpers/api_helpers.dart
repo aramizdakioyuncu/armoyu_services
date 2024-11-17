@@ -12,6 +12,45 @@ final class ApiHelpers {
         : _EndpointConstants.baseURL;
   }
 
+  ///////////////
+  Future<XFile> compressImage(XFile image) async {
+    final dir = await path_provider.getTemporaryDirectory();
+    final targetPath = '${dir.absolute.path}/temp.jpg';
+
+    final originaldata = await image.readAsBytes();
+    final originalnewkb = originaldata.length / 1024;
+    final originalnewMb = originalnewkb / 1024;
+
+    if (kDebugMode) {
+      print('original images size : $originalnewMb');
+    }
+
+    final result = await FlutterImageCompress.compressAndGetFile(
+      image.path,
+      targetPath,
+      minHeight: 500,
+      minWidth: 500,
+      quality: 90,
+    );
+
+    final data = await result!.readAsBytes();
+    final newkb = data.length / 1024;
+    final newMb = newkb / 1024;
+
+    if (kDebugMode) {
+      print('compress images size : $newMb');
+    }
+
+    return XFile(result.path);
+  }
+
+  Future<http.MultipartFile> generateImageFile(String text, XFile file) async {
+    final fileBytes = await file.readAsBytes();
+    return http.MultipartFile.fromBytes(text, fileBytes, filename: file.name);
+  }
+
+/////////////////
+
   Map<String, String> getRequestHeader({
     String? token,
   }) {
@@ -41,14 +80,46 @@ final class ApiHelpers {
     required String endpoint,
     Map<String, String>? headers,
     Map<String, dynamic>? body,
+    List<http.MultipartFile>? files,
   }) async {
-    final response = await http.post(
-      Uri.parse("$baseUrl/$apiKey/$endpoint"),
-      headers: headers,
-      body: body != null ? json.encode(body) : null,
-    );
+    var request =
+        http.MultipartRequest('POST', Uri.parse("$baseUrl/$apiKey/$endpoint"));
+    // Files listesini işleyin
+    if (files != null) {
+      for (var file in files) {
+        request.files.add(file);
+      }
+    }
 
-    return _defaultCallback(response: response);
+    // Header'ları ekle
+    if (headers != null) {
+      request.headers.addAll(headers);
+    }
+
+    // Body'yi ekle (varsa)
+    if (body != null) {
+      for (var key in body.keys) {
+        request.fields[key] = body[key];
+      }
+    }
+
+    // final response = await http.post(
+    //   Uri.parse("$baseUrl/$apiKey/$endpoint"),
+    //   headers: headers,
+    //   body: body != null ? json.encode(body) : null,
+    // );
+    try {
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+      return _defaultCallback(response: response);
+    } catch (e) {
+      log("Sunucuya bağlanılamadı.");
+      return {
+        "durum": 0,
+        "aciklama": "Sunucuya bağlanılamadı.",
+        "aciklamadetay": ""
+      };
+    }
   }
 
   Future<Map<String, dynamic>> put({
@@ -79,19 +150,27 @@ final class ApiHelpers {
 
   Map<String, dynamic> _defaultCallback({required http.Response response}) {
     if (response.statusCode == 200) {
-      Map<String, dynamic> jsonresponse = json.decode(response.body);
-      _LoggingServices.instance.logConsole(
-        message: jsonresponse["aciklama"].toString(),
-      );
-
-      return jsonresponse;
+      try {
+        Map<String, dynamic> jsonresponse = json.decode(response.body);
+        _LoggingServices.instance.logConsole(
+          message: jsonresponse["aciklama"].toString(),
+        );
+        return jsonresponse;
+      } catch (e) {
+        return {
+          "durum": 0,
+          "aciklama": "Json verisi gelmedi.",
+          "aciklamadetay": ""
+        };
+      }
     } else {
       _LoggingServices.instance.logConsole(
         message: "Status hatası: ${response.statusCode}",
       );
       return {
-        'durum': false,
-        'aciklama': '${response.statusCode} ${response.body}',
+        "durum": 0,
+        "aciklama": "İstek başarısız oldu. Durum kodu: ${response.statusCode}",
+        "aciklamadetay": ""
       };
     }
   }

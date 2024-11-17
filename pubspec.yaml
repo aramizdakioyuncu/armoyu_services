@@ -1,8 +1,8 @@
 name: armoyu_services
 description: 'ARMOYU kütüphanesidir'
 publish_to: https://pub.dev/publishers/aramizdakioyuncu.com
-repository: https://github.com/berkaytikenoglu/armoyu_services
-version: 1.0.0+3
+repository: https://github.com/aramizdakioyuncu/armoyu_services
+version: 1.0.0+4
 
 environment:
   sdk: '>=3.4.4 <4.0.0'
@@ -14,6 +14,12 @@ dependencies:
   http: ^1.2.2
   device_info_plus: ^10.0.1
   package_info_plus: ^8.0.1
+  crypto: ^3.0.3
+  image_picker: ^1.0.7
+  image_cropper: ^8.0.1
+  flutter_image_compress: ^2.3.0
+  path_provider: ^2.1.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
