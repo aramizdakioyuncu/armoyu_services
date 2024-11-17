@@ -18,30 +18,6 @@ class UtilsServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<Map<String, dynamic>> changegroupmedia({
-    required String username,
-    required String password,
-    required List<XFile> files,
-    required int groupID,
-    required String category,
-  }) async {
-    List<http.MultipartFile> photosCollection = [];
-    for (var file in files) {
-      photosCollection.add(await _apiHelpers.generateImageFile("media", file));
-    }
-
-    return await _apiHelpers.post(
-      body: {
-        "groupID": "$groupID",
-        "category": category,
-      },
-      endpoint: "$username/$password/${_EndpointConstants.groupsettings}/0",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
-    );
-  }
-
   //  Request listeleme
   Future<Map<String, dynamic>> getFeedbackRequest() async {
     return await _apiHelpers.get(
@@ -52,353 +28,252 @@ class UtilsServices {
     );
   }
 
-  Future<Map<String, dynamic>> sitemesaji({
+  //////////////////////////////////
+  ///
+  Future<Map<String, dynamic>> getappdetail(
+      {required String username, required String password}) async {
+    Map<String, dynamic> result = await _apiHelpers.post(
+      endpoint:
+          "$username/$password/${_EndpointConstants.previusAuthServicesLogin}/0/0/",
+    );
+    return result;
+  }
+
+  Future<Map<String, dynamic>> fetchUserInfo({
+    required String username,
+    required String password,
+    required int userID,
+  }) async {
+    Map<String, dynamic> result = await _apiHelpers.post(
+      body: {"oyuncubakid": "$userID"},
+      endpoint:
+          "$username/$password/${_EndpointConstants.previusAuthServicesLogin}/0/0/",
+    );
+    return result;
+  }
+
+  Future<Map<String, dynamic>> forgotpassword({
+    required String username,
+    required String password,
+    required String useremail,
+    required String userresettype,
+  }) async {
+    Map<String, dynamic> result = await _apiHelpers.post(
+      body: {
+        "kullaniciadi": username,
+        "email": useremail,
+        "sifirlamatercihi": userresettype
+      },
+      endpoint: "$username/$password/${_EndpointConstants.forgotPassword}/0/0/",
+    );
+    return result;
+  }
+
+  Future<Map<String, dynamic>> forgotpassworddone({
+    required String username,
+    required String password,
+    required String useremail,
+    required String userresettype,
+    required String securitycode,
+    required String repassword,
+  }) async {
+    Map<String, dynamic> result = await _apiHelpers.post(
+      body: {
+        "kullaniciadi": username,
+        "email": useremail,
+        "dogrulamakodu": securitycode,
+        "sifre": password,
+        "sifretekrar": repassword
+      },
+      endpoint: "$username/$password/${_EndpointConstants.forgotPassword}/0/0/",
+    );
+    return result;
+  }
+
+  Future<Map<String, dynamic>> lookProfile({
+    required String username,
+    required String password,
+    required String userID,
+  }) async {
+    Map<String, dynamic> result = await _apiHelpers.post(
+      body: {
+        "oyuncubakid": userID,
+      },
+      endpoint:
+          "$username/$password/${_EndpointConstants.previusAuthServicesLogin}/0/0/",
+    );
+    return result;
+  }
+
+  Future<Map<String, dynamic>> lookProfilewithusername({
+    required String username,
+    required String password,
+    required String userusername,
+  }) async {
+    Map<String, dynamic> result = await _apiHelpers.post(
+      body: {
+        "oyuncubakusername": userusername,
+      },
+      endpoint:
+          "$username/$password/${_EndpointConstants.previusAuthServicesLogin}/0/0/",
+    );
+    return result;
+  }
+
+  Future<Map<String, dynamic>> myGroups({
     required String username,
     required String password,
   }) async {
-    return await _apiHelpers.post(
+    Map<String, dynamic> result = await _apiHelpers.post(
+      body: {},
+      endpoint: "$username/$password/${_EndpointConstants.mygroups}/0/0/",
+    );
+    return result;
+  }
+
+  Future<Map<String, dynamic>> mySchools({
+    required String username,
+    required String password,
+  }) async {
+    Map<String, dynamic> result = await _apiHelpers.post(
+      body: {},
+      endpoint: "$username/$password/${_EndpointConstants.myschools}/0/0/",
+    );
+    return result;
+  }
+
+  Future<Map<String, dynamic>> myStations({
+    required String username,
+    required String password,
+  }) async {
+    Map<String, dynamic> result = await _apiHelpers.post(
+      body: {},
+      endpoint: "$username/$password/${_EndpointConstants.mystations}/0/0/",
+    );
+    return result;
+  }
+
+  Future<Map<String, dynamic>> getprofilePosts({
+    required String username,
+    required String password,
+    required String userID,
+    required String category,
+    required String page,
+  }) async {
+    Map<String, dynamic> result = await _apiHelpers.post(
+      body: {
+        "oyuncubakid": userID,
+        "limit": "20",
+        "paylasimozellik": category,
+      },
+      endpoint: "$username/$password/${_EndpointConstants.profileposts}/$page/",
+    );
+    return result;
+  }
+
+  Future<Map<String, dynamic>> getplayerxp({
+    required String username,
+    required String password,
+    required int page,
+  }) async {
+    Map<String, dynamic> result = await _apiHelpers.post(
+      body: {"sayfa": page},
+      endpoint: "$username/$password/${_EndpointConstants.xpordering}/0/0",
+    );
+    return result;
+  }
+
+  Future<Map<String, dynamic>> getplayerpop({
+    required String username,
+    required String password,
+    required int page,
+  }) async {
+    Map<String, dynamic> result = await _apiHelpers.post(
+      body: {"sayfa": page},
+      endpoint: "$username/$password/${_EndpointConstants.popordering}/0/0",
+    );
+    return result;
+  }
+
+  Future<Map<String, dynamic>> getnotifications({
+    required String username,
+    required String password,
+    required String kategori,
+    required String kategoridetay,
+    required int page,
+  }) async {
+    Map<String, dynamic> result = await _apiHelpers.post(
+      body: {
+        "kategori": kategori,
+        "kategoridetay": kategoridetay,
+        "sayfa": page,
+        "limit": "20",
+      },
+      endpoint: "$username/$password/${_EndpointConstants.notifications}/0/0",
+    );
+    return result;
+  }
+
+  Future<Map<String, dynamic>> getchats({
+    required String username,
+    required String password,
+    required int page,
+  }) async {
+    Map<String, dynamic> result = await _apiHelpers.post(
+      body: {
+        "sayfa": page,
+        "limit": "30",
+      },
       endpoint: "$username/$password/${_EndpointConstants.chat}/0/0",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
     );
+    return result;
   }
 
-//Blocking
-  Future<Map<String, dynamic>> blockinglist({
+  Future<Map<String, dynamic>> getnewchatfriendlist({
     required String username,
     required String password,
+    required int page,
   }) async {
-    return await _apiHelpers.post(
-      endpoint: "$username/$password/${_EndpointConstants.blockinglist}/0/0",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+    Map<String, dynamic> result = await _apiHelpers.post(
+      body: {
+        "sayfa": page,
+        "limit": "30",
+      },
+      endpoint: "$username/$password/${_EndpointConstants.chatfriends}/0",
     );
+    return result;
   }
 
-  Future<Map<String, dynamic>> blocklistadd({
+  Future<Map<String, dynamic>> getdeailchats({
+    required String username,
+    required String password,
+    required int chatID,
+  }) async {
+    Map<String, dynamic> result = await _apiHelpers.post(
+      body: {
+        "sohbetID": chatID,
+        "sohbetturu": "ozel",
+      },
+      endpoint: "$username/$password/${_EndpointConstants.chatdetail}/0/0",
+    );
+    return result;
+  }
+
+  Future<Map<String, dynamic>> sendchatmessage({
     required String username,
     required String password,
     required int userID,
+    required String message,
+    required String type,
   }) async {
-    return await _apiHelpers.post(
-        endpoint: "$username/$password/${_EndpointConstants.bloclistadd}/0",
-        headers: _apiHelpers.getRequestHeader(
-          token: getToken(),
-        ),
-        body: {"userID": userID});
-  }
-
-  Future<Map<String, dynamic>> blocklistremove({
-    required String username,
-    required String password,
-    required int userID,
-  }) async {
-    return await _apiHelpers.post(
-        endpoint: "$username/$password/${_EndpointConstants.bloclistremove}/0",
-        headers: _apiHelpers.getRequestHeader(
-          token: getToken(),
-        ),
-        body: {"userID": userID});
-  }
-
-//Blocking
-
-//Category
-  Future<Map<String, dynamic>> category({
-    required String username,
-    required String password,
-    required int categoryID,
-  }) async {
-    return await _apiHelpers.post(
+    Map<String, dynamic> result = await _apiHelpers.post(
       body: {
-        "kategoriID": categoryID,
+        "oyuncubakid": "$userID",
+        "icerik": message,
+        "turu": type,
       },
-      endpoint: "$username/$password/${_EndpointConstants.categories}/0/0",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "$username/$password/${_EndpointConstants.chatsend}/0/0",
     );
+    return result;
   }
-
-  Future<Map<String, dynamic>> categorydetail({
-    required String username,
-    required String password,
-    required int categoryID,
-  }) async {
-    return await _apiHelpers.post(
-      body: {
-        "kategoriID": categoryID,
-      },
-      endpoint: "$username/$password/${_EndpointConstants.categorydetail}/0",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
-    );
-  }
-
-//Category
-
-//Country - Province
-
-  Future<Map<String, dynamic>> countryfetch({
-    required String username,
-    required String password,
-  }) async {
-    return await _apiHelpers.post(
-      body: {},
-      endpoint: "$username/$password/${_EndpointConstants.countries}/0/0",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
-    );
-  }
-
-  Future<Map<String, dynamic>> fetchprovince({
-    required String username,
-    required String password,
-    required int countryID,
-  }) async {
-    return await _apiHelpers.post(
-      body: {"countryID": countryID},
-      endpoint: "$username/$password/${_EndpointConstants.provinces}/0/0",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
-    );
-  }
-
-//Country - Province
-
-//Events
-
-  Future<Map<String, dynamic>> eventsfetch({
-    required String username,
-    required String password,
-  }) async {
-    return await _apiHelpers.post(
-      body: {},
-      endpoint: "$username/$password/${_EndpointConstants.eventlist}/0",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
-    );
-  }
-
-  Future<Map<String, dynamic>> eventsdetail({
-    required String username,
-    required String password,
-    required int eventID,
-  }) async {
-    return await _apiHelpers.post(
-      body: {},
-      endpoint:
-          "$username/$password/${_EndpointConstants.eventdetail}/$eventID/0",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
-    );
-  }
-
-  Future<Map<String, dynamic>> eventJoinorLeave({
-    required String username,
-    required String password,
-    required int eventID,
-    required bool status,
-  }) async {
-    int intStatus = 0;
-
-    if (status) {
-      intStatus = 1;
-    }
-
-    return await _apiHelpers.post(
-      body: {
-        "etkinlikID": "$eventID",
-        "cevap": intStatus,
-      },
-      endpoint: "$username/$password/${_EndpointConstants.joinleave}/0/0",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
-    );
-  }
-
-  Future<Map<String, dynamic>> eventparticipantList({
-    required String username,
-    required String password,
-    required int eventID,
-  }) async {
-    return await _apiHelpers.post(
-      body: {
-        "etkinlikID": "$eventID",
-      },
-      endpoint: "$username/$password/${_EndpointConstants.participant}/0/0",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
-    );
-  }
-//Events
-//Group
-
-  Future<Map<String, dynamic>> groupFetch({
-    required String username,
-    required String password,
-    required int grupID,
-  }) async {
-    return await _apiHelpers.post(
-      body: {
-        "grupID": grupID,
-      },
-      endpoint: "$username/$password/${_EndpointConstants.groups}/0/0",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
-    );
-  }
-
-  Future<Map<String, dynamic>> groupusersFetch({
-    required String username,
-    required String password,
-    required int grupID,
-  }) async {
-    return await _apiHelpers.post(
-      body: {
-        "grupID": grupID,
-      },
-      endpoint: "$username/$password/${_EndpointConstants.groupmembers}/0",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
-    );
-  }
-
-  Future<Map<String, dynamic>> groupLeave({
-    required String username,
-    required String password,
-    required int grupID,
-  }) async {
-    return await _apiHelpers.post(
-      body: {
-        "grupID": grupID,
-      },
-      endpoint: "$username/$password/${_EndpointConstants.groupleave}/0",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
-    );
-  }
-
-  Future<Map<String, dynamic>> groupsettingsSave({
-    required String username,
-    required String password,
-    required int grupID,
-    required String groupName,
-    required String groupshortName,
-    required String description,
-    required String discordInvite,
-    required String webLINK,
-    required bool joinStatus,
-  }) async {
-    return await _apiHelpers.post(
-      body: {
-        "grupID": "$grupID",
-        "baslik": groupName,
-        "grupetiket": groupshortName,
-        "aciklama": description,
-        "discordlink": discordInvite,
-        "website": webLINK,
-        "alimdurum": joinStatus == true ? "1" : "0",
-      },
-      endpoint: "$username/$password/${_EndpointConstants.groupsettings}/0",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
-    );
-  }
-
-  Future<Map<String, dynamic>> grouprequestanswer({
-    required String username,
-    required String password,
-    required int groupID,
-    required String answer,
-  }) async {
-    return await _apiHelpers.post(
-      body: {
-        "grupID": "$groupID",
-        "cevap": answer,
-      },
-      endpoint:
-          "$username/$password/${_EndpointConstants.groupInviteanswer}/0/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
-    );
-  }
-
-  Future<Map<String, dynamic>> groupuserInvite({
-    required String username,
-    required String password,
-    required int groupID,
-    required List<String> userList, //Username
-  }) async {
-    Map<String, String> formData = {"grupID": "$groupID"};
-    for (int i = 0; i < userList.length; i++) {
-      formData['users[$i]'] = userList[i];
-    }
-
-    return await _apiHelpers.post(
-      body: formData,
-      endpoint: "$username/$password/${_EndpointConstants.groupInvite}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
-    );
-  }
-
-  Future<Map<String, dynamic>> groupuserRemove({
-    required String username,
-    required String password,
-    required int groupID,
-    required int userID,
-  }) async {
-    return await _apiHelpers.post(
-      body: {
-        "grupID": groupID,
-        "userID": userID,
-      },
-      endpoint: "$username/$password/${_EndpointConstants.groupuserremove}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
-    );
-  }
-
-  Future<Map<String, dynamic>> groupcreate({
-    required String username,
-    required String password,
-    required String grupadi,
-    required String kisaltmaadi,
-    required int grupkategori,
-    required int grupkategoridetay,
-    required int varsayilanoyun,
-  }) async {
-    return await _apiHelpers.post(
-      body: {
-        "grupadi": grupadi,
-        "kisaltmaadi": kisaltmaadi,
-        "grupkategori": "$grupkategori",
-        "grupkategoridetay": "$grupkategoridetay",
-        "varsayilanoyun": "$varsayilanoyun"
-      },
-      endpoint: "$username/$password/${_EndpointConstants.groupcreate}/0/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
-    );
-  }
-
-  //Group
 }

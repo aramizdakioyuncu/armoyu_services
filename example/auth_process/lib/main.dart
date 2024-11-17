@@ -35,8 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    armoyuServices = ARMOYUServices(
-        apiKey: "", usePreviousAPI: true);
+    armoyuServices = ARMOYUServices(apiKey: "", usePreviousAPI: true);
 
     armoyuServices.setup();
   }

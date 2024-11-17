@@ -23,6 +23,9 @@ final class _EndpointConstants {
   static const String chatdetail = "sohbetdetay";
   static const String chatsend = "sohbetgonder";
 
+  //App
+  static const String sitemessages = "sitemesajidetay";
+
   static const String blockinglist = "engel";
   static const String bloclistadd = "engel/ekle";
   static const String bloclistremove = "engel/sil";
@@ -30,15 +33,19 @@ final class _EndpointConstants {
   static const String categorydetail = "kategoriler-detay";
   static const String countries = "ulkeler";
   static const String provinces = "iller";
+
+  //Event
   static const String eventlist = "etkinlikler/liste";
   static const String eventdetail = "etkinlikler";
-  static const String joinleave = "katilma";
-  static const String participant = "katilim";
+  static const String joinleave = "etkinlikler/katilma";
+  static const String participant = "etkinlikler/katilim";
 
+  //Groups
   static const String groups = "gruplar";
   static const String groupmembers = "gruplar/uyeler";
   static const String groupleave = "gruplar/ayril";
   static const String groupsettings = "gruplar/ayarlar";
+  static const String groupmedya = "gruplar/medya";
   static const String groupInviteanswer = "gruplar-davetcevap";
   static const String groupInvite = "gruplar/davetet";
   static const String groupuserremove = "gruplar/gruptanat";
@@ -77,4 +84,53 @@ final class _EndpointConstants {
   static const String getcomments = "sosyal/yorumlar";
   static const String createcomments = "sosyal/yorum-olustur";
   static const String postlikers = "sosyal/begenenler";
+
+  //Profile
+  static const String invitelist = "davetliste";
+  static const String sendauthmail = "profil/maildogrulamaURL";
+  static const String invitecoderefresh = "davetkodyenile";
+  static const String friendlist = "arkadaslarim";
+  static const String friendrequest = "arkadas-ol";
+  static const String friendrequestanswer = "arkadas-cevap";
+  static const String userdurting = "arkadas-durt";
+  static const String friendremove = "arkadas-cikar";
+  static const String defaultavatar = "avatar-varsayilan";
+  static const String defaultbanner = "banner-varsayilan";
+  static const String changeavatar = "avatar-guncelle";
+  static const String changebanner = "arkaplan-guncelle";
+  static const String selectfavteam = "profil/favoritakimsec";
+  static const String saveprofiledetails = "profil/ozelbilgiler";
+
+  //School
+  static const String getschools = "okullar";
+  static const String fetchSchool = "okullar/detay";
+  static const String joinschool = "isyerleri/katil";
+  static const String getschoolclass = "isyerleri/icerik";
+
+  //Search
+  static const String hashtag = "etiketler";
+  static const String searchengine = "arama";
+
+  //Station
+  static const String stations = "istasyonlar/liste";
+  static const String stationequipments = "istasyonlar/ekipmanlar";
+
+  //Story
+  static const String story = "hikaye";
+  static const String addstory = "hikaye/ekle";
+  static const String removestory = "hikaye/sil";
+  static const String hidestory = "hikaye/gizle";
+  static const String viewstory = "hikaye/bak";
+  static const String viewliststory = "hikaye/goruntuleyenler";
+  static const String likestory = "hikaye/begeni-ekle";
+  static const String likeremovestory = "hikaye/begeni-sil";
+
+  //Survey
+  static const String surveylist = "anketler/liste";
+  static const String surveyreply = "anketler/yanitla";
+  static const String deletesurvey = "anketler/sil";
+  static const String createsurvey = "anketler/olustur";
+
+  //Teams
+  static const String teamslist = "takimlar/liste";
 }

@@ -1,3 +1,3 @@
-## [1.0.0+4]
+## [1.0.0+5]
 
-- Apiservices geliştirmeler yapıldı
+- APIService ARMOYU kullanımı için son güncellemeler.
