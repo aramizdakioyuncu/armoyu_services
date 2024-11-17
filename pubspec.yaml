@@ -1,6 +1,6 @@
 name: armoyu_services
 description: 'ARMOYU kütüphanesidir'
-publish_to: https://pub.dev/publishers/aramizdakioyuncu.com
+# publish_to: https://pub.dev/packages/armoyu_services
 repository: https://github.com/aramizdakioyuncu/armoyu_services
 version: 1.0.0+4
 

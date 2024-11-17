@@ -1,3 +1,3 @@
-## [1.0.0+3]
+## [1.0.0+4]
 
-- Apiservices kullanılabilir hale getirildi.
+- Apiservices geliştirmeler yapıldı
