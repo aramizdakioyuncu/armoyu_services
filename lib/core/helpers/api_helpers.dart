@@ -113,10 +113,10 @@ final class ApiHelpers {
       final response = await http.Response.fromStream(streamedResponse);
       return _defaultCallback(response: response);
     } catch (e) {
-      log("Sunucuya bağlanılamadı.");
+      log("[ARMOYU] Sunucuya bağlanılamadı.");
       return {
         "durum": 0,
-        "aciklama": "Sunucuya bağlanılamadı.",
+        "aciklama": "[ARMOYU] Sunucuya bağlanılamadı.",
         "aciklamadetay": ""
       };
     }
@@ -159,7 +159,7 @@ final class ApiHelpers {
       } catch (e) {
         return {
           "durum": 0,
-          "aciklama": "Json verisi gelmedi.",
+          "aciklama": "[ARMOYU] Json verisi gelmedi.",
           "aciklamadetay": ""
         };
       }
@@ -169,7 +169,8 @@ final class ApiHelpers {
       );
       return {
         "durum": 0,
-        "aciklama": "İstek başarısız oldu. Durum kodu: ${response.statusCode}",
+        "aciklama":
+            "[ARMOYU] İstek başarısız oldu. Durum kodu: ${response.statusCode}",
         "aciklamadetay": ""
       };
     }
