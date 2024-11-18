@@ -53,10 +53,12 @@ final class ApiHelpers {
 
   Map<String, String> getRequestHeader({
     String? token,
+    bool isJson = false,
   }) {
     final map = {
       'Authorization': token != null ? 'Bearer $token' : '',
-      'Content-Type': 'application/json',
+      'Content-Type':
+          isJson ? 'application/json' : 'application/x-www-form-urlencoded',
       'X-Client-Version': _LoggingServices.instance.version ?? '',
     };
 
@@ -82,42 +84,63 @@ final class ApiHelpers {
     Map<String, dynamic>? body,
     List<http.MultipartFile>? files,
   }) async {
-    var request =
-        http.MultipartRequest('POST', Uri.parse("$baseUrl/$apiKey/$endpoint"));
-    // Files listesini işleyin
-    if (files != null) {
-      for (var file in files) {
-        request.files.add(file);
-      }
-    }
-
-    // Header'ları ekle
-    if (headers != null) {
-      request.headers.addAll(headers);
-    }
-
-    // Body'yi ekle (varsa)
-    if (body != null) {
-      for (var key in body.keys) {
-        request.fields[key] = body[key];
-      }
-    }
-
-    // final response = await http.post(
-    //   Uri.parse("$baseUrl/$apiKey/$endpoint"),
-    //   headers: headers,
-    //   body: body != null ? json.encode(body) : null,
-    // );
     try {
-      final streamedResponse = await request.send();
-      final response = await http.Response.fromStream(streamedResponse);
+      http.Response response;
+
+      if (files != null && files.isNotEmpty) {
+        log("Multipart istek");
+        // Multipart istek
+        var request = http.MultipartRequest(
+            'POST', Uri.parse("$baseUrl/$apiKey/$endpoint"));
+
+        // Dosyaları ekle
+        for (var file in files) {
+          request.files.add(file);
+        }
+
+        // Header'ları ekle
+        if (headers != null) {
+          request.headers.addAll(headers);
+        }
+
+        // Body'yi ekle
+        if (body != null) {
+          for (var key in body.keys) {
+            request.fields[key] = body[key].toString();
+          }
+        }
+
+        // Gönder ve yanıtı al
+        final streamedResponse = await request.send();
+        response = await http.Response.fromStream(streamedResponse);
+      } else {
+        // Normal POST isteği
+
+        var formData =
+            <String, String>{}; // Başlangıçta boş bir Map oluşturuyoruz
+
+        if (body != null) {
+          formData = body.map((key, value) {
+            return MapEntry(
+                key, value.toString()); // Tüm değerleri string'e dönüştür
+          });
+        }
+
+        response = await http.post(
+          Uri.parse("$baseUrl/$apiKey/$endpoint"),
+          headers: headers,
+          body: formData,
+        );
+      }
+
+      // Yanıtı işle
       return _defaultCallback(response: response);
     } catch (e) {
-      log("[ARMOYU] Sunucuya bağlanılamadı.");
+      log("Sunucuya bağlanılamadı: $e");
       return {
         "durum": 0,
-        "aciklama": "[ARMOYU] Sunucuya bağlanılamadı.",
-        "aciklamadetay": ""
+        "aciklama": "Sunucuya bağlanılamadı.",
+        "aciklamadetay": e.toString(),
       };
     }
   }
@@ -157,15 +180,18 @@ final class ApiHelpers {
         );
         return jsonresponse;
       } catch (e) {
+        _LoggingServices.instance.logConsole(
+          message: "Json verisi gelmedi.",
+        );
         return {
           "durum": 0,
-          "aciklama": "[ARMOYU] Json verisi gelmedi.",
+          "aciklama": "Json verisi gelmedi.",
           "aciklamadetay": ""
         };
       }
     } else {
       _LoggingServices.instance.logConsole(
-        message: "Status hatası: ${response.statusCode}",
+        message: "İstek başarısız oldu. Durum kodu: ${response.statusCode}",
       );
       return {
         "durum": 0,
