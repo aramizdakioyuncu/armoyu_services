@@ -21,7 +21,6 @@ class NotificationServices {
   Future<Map<String, dynamic>> listNotificationSettings({
     required String username,
     required String password,
-    required int page,
   }) async {
     return await _apiHelpers.post(
       body: {},

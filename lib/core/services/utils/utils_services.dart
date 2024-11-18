@@ -73,7 +73,6 @@ class UtilsServices {
     required String username,
     required String password,
     required String useremail,
-    required String userresettype,
     required String securitycode,
     required String repassword,
   }) async {
@@ -93,7 +92,7 @@ class UtilsServices {
   Future<Map<String, dynamic>> lookProfile({
     required String username,
     required String password,
-    required String userID,
+    required int userID,
   }) async {
     Map<String, dynamic> result = await _apiHelpers.post(
       body: {
@@ -158,7 +157,7 @@ class UtilsServices {
     required String password,
     required String userID,
     required String category,
-    required String page,
+    required int page,
   }) async {
     Map<String, dynamic> result = await _apiHelpers.post(
       body: {
