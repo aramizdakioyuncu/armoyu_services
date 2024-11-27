@@ -63,6 +63,27 @@ class ARMOYUServices {
   late final SurveyServices surveyServices;
   late final TeamsServices teamsServices;
 
+//WİDGETSLIST
+  final List<Map<String, dynamic>> peopleList = [];
+  final List<Map<String, dynamic>> hashtagList = [];
+
+  void addpeopleList(Map<String, dynamic> newPerson) {
+    if (!peopleList.any((person) => person['id'] == newPerson['id'])) {
+      peopleList.add(newPerson);
+    } else {
+      log("Kişi zaten listede bulunmaktadır.");
+    }
+  }
+
+  void addhashtagList(Map<String, dynamic> newHashtag) {
+    if (!hashtagList.any((hashtag) => hashtag['id'] == newHashtag['id'])) {
+      hashtagList.add(newHashtag);
+    } else {
+      log("Hashtag zaten listede bulunmaktadır.");
+    }
+  }
+//
+
   final String apiKey;
 
   String? _token;

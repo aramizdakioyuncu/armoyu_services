@@ -1,3 +1,3 @@
-## [1.0.0+7]
+## [1.0.0+8]
 
-- Canlı Sürümde kullanılmaya başlandı.
+- Widgetlar eklenmeye başlandı

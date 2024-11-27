@@ -1,0 +1,12 @@
+import 'package:armoyu_services/armoyu_services.dart';
+import 'package:armoyu_services/widgets/sources/elevatedbutton.dart';
+import 'package:armoyu_services/widgets/sources/mention.dart';
+import 'package:armoyu_services/widgets/sources/textfield.dart';
+
+class ARMOYUWidget {
+  final ARMOYUServices service;
+  late final ARMOYUElevatedButton elevatedButton = ARMOYUElevatedButton();
+  late final ARMOYUTextfields textField = ARMOYUTextfields(service);
+  late final ARMOYUMention mention = ARMOYUMention(service);
+  ARMOYUWidget({required this.service});
+}

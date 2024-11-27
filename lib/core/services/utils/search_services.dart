@@ -19,8 +19,8 @@ class SearchServices {
   }
 
   Future<Map<String, dynamic>> hashtag({
-    required String username,
-    required String password,
+    String? username,
+    String? password,
     required String hashtag,
     required int page,
   }) async {
@@ -29,7 +29,8 @@ class SearchServices {
         "etiket": hashtag,
         "sayfa": page,
       },
-      endpoint: "$username/$password/${_EndpointConstants.hashtag}/0/0/",
+      endpoint:
+          "${username ??= "0"}/${password ??= "0"}/${_EndpointConstants.hashtag}/0/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
@@ -37,8 +38,8 @@ class SearchServices {
   }
 
   Future<Map<String, dynamic>> searchengine({
-    required String username,
-    required String password,
+    String? username,
+    String? password,
     required String searchword,
     required int page,
   }) async {
@@ -47,7 +48,8 @@ class SearchServices {
         "sayfa": "$page",
         "oyuncuadi": searchword,
       },
-      endpoint: "$username/$password/${_EndpointConstants.searchengine}/0/0/",
+      endpoint:
+          "${username ??= "0"}/${password ??= "0"}/${_EndpointConstants.searchengine}/0/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
@@ -55,8 +57,8 @@ class SearchServices {
   }
 
   Future<Map<String, dynamic>> onlyusers({
-    required String username,
-    required String password,
+    String? username,
+    String? password,
     required String searchword,
     required int page,
   }) async {
@@ -66,7 +68,8 @@ class SearchServices {
         "oyuncuadi": searchword,
         "kategori": "oyuncular",
       },
-      endpoint: "$username/$password/${_EndpointConstants.searchengine}/0/0/",
+      endpoint:
+          "${username ??= "0"}/${password ??= "0"}/${_EndpointConstants.searchengine}/0/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
@@ -74,8 +77,8 @@ class SearchServices {
   }
 
   Future<Map<String, dynamic>> onlyschools({
-    required String username,
-    required String password,
+    String? username,
+    String? password,
     required String searchword,
     required int page,
   }) async {
@@ -84,7 +87,8 @@ class SearchServices {
         "sayfa": "$page",
         "oyuncuadi": searchword,
       },
-      endpoint: "$username/$password/${_EndpointConstants.searchengine}/0/0/",
+      endpoint:
+          "${username ??= "0"}/${password ??= "0"}/${_EndpointConstants.searchengine}/0/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
@@ -92,8 +96,8 @@ class SearchServices {
   }
 
   Future<Map<String, dynamic>> onlyworks({
-    required String username,
-    required String password,
+    String? username,
+    String? password,
     required String searchword,
     required int page,
   }) async {
@@ -102,7 +106,8 @@ class SearchServices {
         "sayfa": "$page",
         "oyuncuadi": searchword,
       },
-      endpoint: "$username/$password/${_EndpointConstants.searchengine}/0/0/",
+      endpoint:
+          "${username ??= "0"}/${password ??= "0"}/${_EndpointConstants.searchengine}/0/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
