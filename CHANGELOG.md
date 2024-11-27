@@ -1,3 +1,3 @@
-## [1.0.0+8]
+## [1.0.0+9]
 
-- Widgetlar eklenmeye başlandı
+- Examples örnekleri artırıldı

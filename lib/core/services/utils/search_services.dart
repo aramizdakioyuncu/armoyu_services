@@ -32,7 +32,7 @@ class SearchServices {
         "sayfa": page,
       },
       endpoint:
-          "${username ??= "0"}/${password ??= "0"}/${_EndpointConstants.hashtag}/0/0/",
+          "${username ?? "0"}/${password ?? "0"}/${_EndpointConstants.hashtag}/0/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
@@ -53,7 +53,7 @@ class SearchServices {
         "oyuncuadi": searchword,
       },
       endpoint:
-          "${username ??= "0"}/${password ??= "0"}/${_EndpointConstants.searchengine}/0/0/",
+          "${username ?? "0"}/${password ?? "0"}/${_EndpointConstants.searchengine}/0/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
@@ -75,7 +75,7 @@ class SearchServices {
         "kategori": "oyuncular",
       },
       endpoint:
-          "${username ??= "0"}/${password ??= "0"}/${_EndpointConstants.searchengine}/0/0/",
+          "${username ?? "0"}/${password ?? "0"}/${_EndpointConstants.searchengine}/0/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
@@ -96,7 +96,7 @@ class SearchServices {
         "oyuncuadi": searchword,
       },
       endpoint:
-          "${username ??= "0"}/${password ??= "0"}/${_EndpointConstants.searchengine}/0/0/",
+          "${username ?? "0"}/${password ?? "0"}/${_EndpointConstants.searchengine}/0/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
@@ -117,7 +117,7 @@ class SearchServices {
         "oyuncuadi": searchword,
       },
       endpoint:
-          "${username ??= "0"}/${password ??= "0"}/${_EndpointConstants.searchengine}/0/0/",
+          "${username ?? "0"}/${password ?? "0"}/${_EndpointConstants.searchengine}/0/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),

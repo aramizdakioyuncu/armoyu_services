@@ -130,9 +130,9 @@ final class ApiHelpers {
         response = await http.Response.fromStream(streamedResponse);
       } else {
         // Normal POST isteği
+        log("Normal POST istek");
 
-        var formData =
-            <String, String>{}; // Başlangıçta boş bir Map oluşturuyoruz
+        var formData = <String, String>{};
 
         if (body != null) {
           formData = body.map((key, value) {

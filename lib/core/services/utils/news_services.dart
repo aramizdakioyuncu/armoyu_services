@@ -19,18 +19,21 @@ class NewsServices {
   }
 
   Future<Map<String, dynamic>> fetch({
-    required String username,
-    required String password,
+    required String? username,
+    required String? password,
     required int page,
   }) async {
-    password = _apiHelpers.generateMd5(password);
+    if (password != null) {
+      password = _apiHelpers.generateMd5(password);
+    }
 
     return await _apiHelpers.post(
       body: {
         "sayfa": page,
         "limit": "10",
       },
-      endpoint: "$username/$password/${_EndpointConstants.newsList}/0/",
+      endpoint:
+          "${username ?? "0"}/${password ?? "0"}/${_EndpointConstants.newsList}/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),

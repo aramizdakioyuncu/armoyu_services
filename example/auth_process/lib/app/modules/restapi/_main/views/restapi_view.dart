@@ -115,6 +115,16 @@ class RestapiView extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ARMOYU.widgets.elevatedButton.costum1(
+                    text: "News",
+                    onPressed: () async {
+                      Get.toNamed("/restapi/news");
+                    },
+                    loadingStatus: controller.addfriendstaus.value,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ARMOYU.widgets.elevatedButton.costum1(
                     text: "Friends",
                     enabled: false,
                     onPressed: () async {
@@ -122,6 +132,26 @@ class RestapiView extends StatelessWidget {
 
                       await controller.befriend();
                       controller.addfriendstaus.value = false;
+                    },
+                    loadingStatus: controller.addfriendstaus.value,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ARMOYU.widgets.elevatedButton.costum1(
+                    text: "Search Engine",
+                    onPressed: () async {
+                      Get.toNamed("/restapi/search-engine");
+                    },
+                    loadingStatus: controller.addfriendstaus.value,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ARMOYU.widgets.elevatedButton.costum1(
+                    text: "Other",
+                    onPressed: () async {
+                      Get.toNamed("/restapi/other");
                     },
                     loadingStatus: controller.addfriendstaus.value,
                   ),

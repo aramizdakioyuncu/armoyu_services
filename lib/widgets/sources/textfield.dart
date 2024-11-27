@@ -77,7 +77,7 @@ class ARMOYUTextfields {
             counter: minLength != null || maxLength != null
                 ? minLength != null && controller.value.text.length < minLength
                     ? Text(
-                        "${controller.value.text.length}/${controller.value.text.length <= minLength ? minLength : minLength}",
+                        "${controller.value.text.length}/${maxLength}",
                         style: TextStyle(
                           color: controller.value.text.length < minLength
                               ? Colors.red

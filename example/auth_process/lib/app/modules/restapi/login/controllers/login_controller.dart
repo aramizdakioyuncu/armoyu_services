@@ -1,5 +1,7 @@
 import 'package:armoyu_services/armoyu_services.dart';
+import 'package:auth_process/app/data/models/user.dart';
 import 'package:auth_process/app/services/armoyu.dart';
+import 'package:auth_process/app/utils/app_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -57,6 +59,19 @@ class LoginController extends GetxController {
 
     useravatarController.value =
         getUsersResult['icerik']['avatar']['media_minURL'];
+
+    AppList.user.value = User(
+      userID: getUsersResult['icerik']['playerID'],
+      username: getUsersResult['icerik']["username"],
+      password: passcordController.value.text,
+      displayname: getUsersResult['icerik']["displayName"],
+      firstname: getUsersResult['icerik']["firstName"],
+      lastname: getUsersResult['icerik']['lastName'],
+      avatar: getUsersResult['icerik']['avatar']['media_minURL'],
+      banner: getUsersResult['icerik']['banner']['media_minURL'],
+    );
+
+    log(AppList.user.value!.username!);
   }
 
   Future<void> befriend() async {

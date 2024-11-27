@@ -1,5 +1,3 @@
-import 'package:armoyu_services/armoyu_services.dart';
-import 'package:auth_process/app/modules/restapi/_main/controllers/restapi_controller.dart';
 import 'package:auth_process/app/modules/restapi/login/controllers/login_controller.dart';
 import 'package:auth_process/app/services/armoyu.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -11,7 +9,7 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(LoginController());
+    final controller = Get.put(LoginController(), permanent: true);
 
     return Scaffold(
       appBar: AppBar(title: const Text("Rest API Example")),

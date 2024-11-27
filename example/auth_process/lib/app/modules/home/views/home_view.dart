@@ -1,5 +1,4 @@
 import 'package:auth_process/app/modules/home/controllers/home_controller.dart';
-import 'package:auth_process/app/services/armoyu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -54,7 +53,7 @@ class HomeView extends StatelessWidget {
             ),
           ),
           const Center(
-            child: Text("Version : 1.0.0+9"),
+            child: Text("Version : 1.0.0+10"),
           ),
         ],
       ),
