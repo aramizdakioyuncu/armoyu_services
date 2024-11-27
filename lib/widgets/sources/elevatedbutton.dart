@@ -54,9 +54,11 @@ class ARMOYUElevatedButton {
             ),
             child: Text(
               text,
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
+                color:
+                    !enabled ? const Color.fromARGB(255, 211, 211, 211) : null,
               ),
             ),
           );

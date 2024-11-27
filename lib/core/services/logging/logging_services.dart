@@ -13,9 +13,18 @@ final class _LoggingServices {
     logConsole(message: "API Initialized");
   }
 
-  Future<void> setup() async {
+  Future<bool> setup({required ARMOYUServices service}) async {
     await getAppVersion();
     await getDeviceInfo();
+
+    Map<String, dynamic> result = await service.appServices._apiHelpers.post(
+      endpoint: "0/0/0/0/0",
+    );
+
+    if (result['durum'] == 0) {
+      return false;
+    }
+    return true;
   }
 
   Future<void> getAppVersion() async {

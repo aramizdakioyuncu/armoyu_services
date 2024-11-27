@@ -23,6 +23,8 @@ class PostsServices {
     required String password,
     required int postID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "postID": "$postID",
@@ -40,6 +42,8 @@ class PostsServices {
     required String password,
     required int postID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "postID": "$postID",
@@ -57,6 +61,8 @@ class PostsServices {
     required String password,
     required int commentID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "postID": "$commentID",
@@ -74,6 +80,8 @@ class PostsServices {
     required String password,
     required int commentID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "postID": "$commentID",
@@ -93,6 +101,8 @@ class PostsServices {
     required List<XFile> files,
     required String? location,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     List<http.MultipartFile> photosCollection = [];
 
     for (XFile element in files) {
@@ -131,6 +141,8 @@ class PostsServices {
     required String password,
     required int postID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "postID": "$postID",
@@ -147,6 +159,8 @@ class PostsServices {
     required String password,
     required int commentID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "yorumID": "$commentID",
@@ -163,6 +177,8 @@ class PostsServices {
     required String password,
     required int page,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {"limit": "20"},
       endpoint: "$username/$password/${_EndpointConstants.getposts}/$page/",
@@ -179,6 +195,8 @@ class PostsServices {
     String? category,
     int? categoryDetail,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "postID": "$postID",
@@ -197,6 +215,8 @@ class PostsServices {
     required String password,
     required int postID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {"postID": "$postID"},
       endpoint: "$username/$password/${_EndpointConstants.getcomments}/",
@@ -212,6 +232,8 @@ class PostsServices {
     required int postID,
     required String text,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "postID": "$postID",
@@ -230,6 +252,8 @@ class PostsServices {
     required String password,
     required int postID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "postID": "$postID",

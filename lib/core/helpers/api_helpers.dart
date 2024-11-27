@@ -12,6 +12,18 @@ final class ApiHelpers {
         : _EndpointConstants.baseURL;
   }
 
+////MD5/////
+  String generateMd5(String input) {
+    // Girdi verisini utf8 formatına çevir
+    var bytes = utf8.encode(input);
+
+    // MD5 hash oluştur
+    var digest = md5.convert(bytes);
+
+    // Hash'i string olarak döndür
+    return digest.toString();
+  }
+
   ///////////////
   Future<XFile> compressImage(XFile image) async {
     final dir = await path_provider.getTemporaryDirectory();
@@ -87,6 +99,9 @@ final class ApiHelpers {
     try {
       http.Response response;
 
+      //DEVELOPER LOG
+      log("$baseUrl/$apiKey/$endpoint");
+      //
       if (files != null && files.isNotEmpty) {
         log("Multipart istek");
         // Multipart istek

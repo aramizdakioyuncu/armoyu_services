@@ -29,7 +29,7 @@ class ARMOYUTextfields {
       maxLines = minLines + 5;
     }
 
-    if (title != null) {
+    if (title != null && placeholder == null) {
       placeholder = title;
     }
 
@@ -51,8 +51,6 @@ class ARMOYUTextfields {
             onTap();
           },
           onChanged: (value) {
-            // setstate();
-            // controller.refresh();
             if (onChanged != null) {
               onChanged(value);
             }

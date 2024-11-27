@@ -23,6 +23,8 @@ class SurveyServices {
     required String password,
     required int page,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "sayfa": page,
@@ -39,6 +41,8 @@ class SurveyServices {
     required String password,
     required int surveyID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "anketID": surveyID,
@@ -56,6 +60,8 @@ class SurveyServices {
     required int surveyID,
     required int optionID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "anketID": surveyID,
@@ -73,6 +79,8 @@ class SurveyServices {
     required String password,
     required int surveyID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "anketID": surveyID,
@@ -91,6 +99,8 @@ class SurveyServices {
     required List<String> options,
     required String date,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     Map<String, String> formData = {
       "anketsoru": surveyQuestion,
       "bitiszaman": date,

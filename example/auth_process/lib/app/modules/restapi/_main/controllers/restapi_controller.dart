@@ -1,18 +1,29 @@
 import 'package:armoyu_services/armoyu_services.dart';
+import 'package:auth_process/app/services/armoyu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RestapiController extends GetxController {
-  late final ARMOYUServices armoyuServices;
+  var apikeyController = TextEditingController().obs;
+  var usernameController = TextEditingController().obs;
+  var passcordController = TextEditingController().obs;
+
+  var statusController = Rx<bool?>(null);
+
+//Profile
+
+  var useravatarController =
+      "https://aramizdakioyuncu.com/galeri/ana-yapi/armoyu128.png".obs;
+
+  var savestaus = false.obs;
   var loginstaus = false.obs;
   var addfriendstaus = false.obs;
   var registerstaus = false.obs;
+
   @override
+  // ignore: unnecessary_overrides
   void onInit() {
     super.onInit();
-    armoyuServices = ARMOYUServices(apiKey: "", usePreviousAPI: true);
-
-    armoyuServices.setup();
   }
 
   static void getSnackBar(getUsersResult) {
@@ -34,33 +45,24 @@ class RestapiController extends GetxController {
   }
 
   Future<void> login() async {
-    final Map<String, dynamic> getUsersResult =
-        await armoyuServices.authServices.login(
-      loginRequestModel: LoginRequestModel(
-        username: "deneme",
-        password: "deneme",
-      ),
+    final getUsersResult = await ARMOYU.service.authServices.previuslogin(
+      username: usernameController.value.text,
+      password: passcordController.value.text,
     );
 
-    if (getUsersResult['durum'] != 1) {
+    if (getUsersResult['durum'] == 0 ||
+        getUsersResult['aciklama'] == "Oyuncu bilgileri yanlış!") {
       getSnackBar(getUsersResult);
       return;
     }
-  }
+    log(getUsersResult['icerik'].toString());
 
-  Future<void> previuslogin() async {
-    final getUsersResult = await armoyuServices.authServices
-        .previuslogin(username: "deneme", password: "deneme");
-    getSnackBar(getUsersResult);
-
-    if (getUsersResult['durum'] != 1) {
-      getSnackBar(getUsersResult);
-      return;
-    }
+    useravatarController.value =
+        getUsersResult['icerik']['avatar']['media_minURL'];
   }
 
   Future<void> befriend() async {
-    final getUsersResult = await armoyuServices.userServices.addFriend(
+    final getUsersResult = await ARMOYU.service.userServices.addFriend(
       addFriendRequestModel: AddFriendRequestModel(
         kiminle: 2,
       ),
@@ -80,7 +82,7 @@ class RestapiController extends GetxController {
     required String password,
   }) async {
     final Map<String, dynamic> getUsersResult =
-        await armoyuServices.authServices.register(
+        await ARMOYU.service.authServices.register(
       registerRequestModel: RegisterRequestModel(
         firstname: firstname,
         lastname: lastname,

@@ -24,6 +24,8 @@ class EventServices {
     required String username,
     required String password,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {},
       endpoint: "$username/$password/${_EndpointConstants.eventlist}/0/",
@@ -38,6 +40,8 @@ class EventServices {
     required String password,
     required int eventID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {},
       endpoint:
@@ -54,11 +58,15 @@ class EventServices {
     required int eventID,
     required bool status,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     int intStatus = 0;
 
     if (status) {
       intStatus = 1;
     }
+
+    password = _apiHelpers.generateMd5(password);
 
     return await _apiHelpers.post(
       body: {
@@ -77,6 +85,8 @@ class EventServices {
     required String password,
     required int eventID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "etkinlikID": "$eventID",

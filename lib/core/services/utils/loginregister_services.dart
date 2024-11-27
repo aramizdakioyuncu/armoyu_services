@@ -23,6 +23,8 @@ class LoginRegisterServices {
     required String password,
     required String code,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "davetkodu": code,

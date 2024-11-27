@@ -23,6 +23,8 @@ class NewsServices {
     required String password,
     required int page,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "sayfa": page,
@@ -40,6 +42,8 @@ class NewsServices {
     required String password,
     required int newsID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "haberID": "$newsID",

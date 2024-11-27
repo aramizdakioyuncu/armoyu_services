@@ -24,6 +24,8 @@ class CategoryServices {
     required String password,
     required String categoryID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "kategoriID": categoryID,
@@ -40,6 +42,8 @@ class CategoryServices {
     required String password,
     required String categoryID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "kategoriID": categoryID,

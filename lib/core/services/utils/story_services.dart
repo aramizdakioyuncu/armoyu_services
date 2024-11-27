@@ -23,6 +23,8 @@ class StoryServices {
     required String password,
     required int page,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "sayfa": page,
@@ -41,6 +43,8 @@ class StoryServices {
     required String imageURL,
     required bool isEveryonePublish,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "hikayemedya": imageURL,
@@ -58,6 +62,8 @@ class StoryServices {
     required String password,
     required int storyID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {"hikayeID": "$storyID"},
       endpoint: "$username/$password/${_EndpointConstants.removestory}/0/",
@@ -72,6 +78,8 @@ class StoryServices {
     required String password,
     required int storyID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {"hikayeID": "$storyID"},
       endpoint: "$username/$password/${_EndpointConstants.hidestory}/0/",
@@ -86,6 +94,8 @@ class StoryServices {
     required String password,
     required int storyID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {"hikayeID": "$storyID"},
       endpoint: "$username/$password/${_EndpointConstants.viewstory}/0/",
@@ -100,6 +110,8 @@ class StoryServices {
     required String password,
     required int storyID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {"hikayeID": "$storyID"},
       endpoint: "$username/$password/${_EndpointConstants.viewliststory}/0/",
@@ -114,6 +126,8 @@ class StoryServices {
     required String password,
     required int storyID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {"hikayeID": "$storyID"},
       endpoint: "$username/$password/${_EndpointConstants.likestory}/0/",
@@ -128,6 +142,8 @@ class StoryServices {
     required String password,
     required int storyID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {"hikayeID": "$storyID"},
       endpoint: "$username/$password/${_EndpointConstants.likeremovestory}/0/",
@@ -142,6 +158,8 @@ class StoryServices {
     required String password,
     required int storyID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {"hikayeID": "$storyID"},
       endpoint: "$username/$password/${_EndpointConstants.likestory}/0/",

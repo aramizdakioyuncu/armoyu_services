@@ -22,6 +22,8 @@ class TeamsServices {
     required String username,
     required String password,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {},
       endpoint: "$username/$password/${_EndpointConstants.teamslist}/0/",

@@ -22,6 +22,8 @@ class SchoolServices {
     required String username,
     required String password,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {},
       endpoint: "$username/$password/${_EndpointConstants.getschools}/0/0/",
@@ -36,6 +38,8 @@ class SchoolServices {
     required String password,
     required int schoolID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "okulID": schoolID,
@@ -55,6 +59,8 @@ class SchoolServices {
     required String jobID,
     required String classPassword,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "isyeriidi": schoolID,
@@ -74,6 +80,8 @@ class SchoolServices {
     required String password,
     required String schoolID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {"hangisyeri": schoolID},
       endpoint: "$username/$password/${_EndpointConstants.getschoolclass}/0/",

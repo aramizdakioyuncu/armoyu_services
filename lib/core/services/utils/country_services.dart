@@ -24,6 +24,8 @@ class CountryServices {
     required String username,
     required String password,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {},
       endpoint: "$username/$password/${_EndpointConstants.countries}/0/",
@@ -38,6 +40,8 @@ class CountryServices {
     required String password,
     required int countryID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {"countryID": countryID},
       endpoint: "$username/$password/${_EndpointConstants.provinces}/0/",

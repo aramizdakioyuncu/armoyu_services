@@ -22,6 +22,8 @@ class StationServices {
     required String username,
     required String password,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {},
       endpoint: "$username/$password/${_EndpointConstants.stations}/0/",
@@ -35,6 +37,8 @@ class StationServices {
     required String username,
     required String password,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {"kategori": "yemek"},
       endpoint: "$username/$password/${_EndpointConstants.stations}/0/",
@@ -49,6 +53,8 @@ class StationServices {
     required String password,
     required int stationID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {"istasyonID": stationID},
       endpoint:

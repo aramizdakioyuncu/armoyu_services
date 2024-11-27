@@ -82,6 +82,8 @@ final class AuthServices {
 
   Future<Map<String, dynamic>> previuslogin(
       {required String username, required String password}) async {
+    password = _apiHelpers.generateMd5(password);
+
     Map<String, dynamic> result = await _apiHelpers.post(
       endpoint:
           "$username/$password/${_EndpointConstants.previusAuthServicesLogin}/0/0/",
@@ -99,6 +101,8 @@ final class AuthServices {
     required String rpassword,
     required String inviteCode,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     Map<String, dynamic> result = await _apiHelpers.post(
       body: {
         "islem": "kayit-ol",
@@ -119,6 +123,8 @@ final class AuthServices {
     required String username,
     required String password,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     Map<String, dynamic> result = await _apiHelpers.post(
       body: {
         "islem": "cikis-yap",

@@ -22,6 +22,8 @@ class NotificationServices {
     required String username,
     required String password,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {},
       endpoint:
@@ -37,6 +39,8 @@ class NotificationServices {
     required String password,
     required List<String> options,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     Map<String, String> formData = {};
 
     for (int i = 0; i < options.length; i++) {

@@ -23,6 +23,8 @@ class BlockingServices {
     required String username,
     required String password,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       endpoint: "$username/$password/${_EndpointConstants.blockinglist}/0/0",
       headers: _apiHelpers.getRequestHeader(
@@ -36,6 +38,8 @@ class BlockingServices {
     required String password,
     required int userID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
         endpoint: "$username/$password/${_EndpointConstants.bloclistadd}/0",
         headers: _apiHelpers.getRequestHeader(
@@ -49,6 +53,8 @@ class BlockingServices {
     required String password,
     required int userID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
         endpoint: "$username/$password/${_EndpointConstants.bloclistremove}/0",
         headers: _apiHelpers.getRequestHeader(

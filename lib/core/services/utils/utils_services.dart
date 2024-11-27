@@ -32,6 +32,8 @@ class UtilsServices {
   ///
   Future<Map<String, dynamic>> getappdetail(
       {required String username, required String password}) async {
+    password = _apiHelpers.generateMd5(password);
+
     Map<String, dynamic> result = await _apiHelpers.post(
       endpoint:
           "$username/$password/${_EndpointConstants.previusAuthServicesLogin}/0/0/",
@@ -44,6 +46,8 @@ class UtilsServices {
     required String password,
     required int userID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     Map<String, dynamic> result = await _apiHelpers.post(
       body: {"oyuncubakid": "$userID"},
       endpoint:
@@ -58,6 +62,8 @@ class UtilsServices {
     required String useremail,
     required String userresettype,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     Map<String, dynamic> result = await _apiHelpers.post(
       body: {
         "kullaniciadi": username,
@@ -76,6 +82,8 @@ class UtilsServices {
     required String securitycode,
     required String repassword,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     Map<String, dynamic> result = await _apiHelpers.post(
       body: {
         "kullaniciadi": username,
@@ -94,6 +102,8 @@ class UtilsServices {
     required String password,
     required int userID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     Map<String, dynamic> result = await _apiHelpers.post(
       body: {
         "oyuncubakid": userID,
@@ -109,6 +119,8 @@ class UtilsServices {
     required String password,
     required String userusername,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     Map<String, dynamic> result = await _apiHelpers.post(
       body: {
         "oyuncubakusername": userusername,
@@ -123,6 +135,8 @@ class UtilsServices {
     required String username,
     required String password,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     Map<String, dynamic> result = await _apiHelpers.post(
       body: {},
       endpoint: "$username/$password/${_EndpointConstants.mygroups}/0/0/",
@@ -134,6 +148,8 @@ class UtilsServices {
     required String username,
     required String password,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     Map<String, dynamic> result = await _apiHelpers.post(
       body: {},
       endpoint: "$username/$password/${_EndpointConstants.myschools}/0/0/",
@@ -145,6 +161,8 @@ class UtilsServices {
     required String username,
     required String password,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     Map<String, dynamic> result = await _apiHelpers.post(
       body: {},
       endpoint: "$username/$password/${_EndpointConstants.mystations}/0/0/",
@@ -159,6 +177,8 @@ class UtilsServices {
     required String category,
     required int page,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     Map<String, dynamic> result = await _apiHelpers.post(
       body: {
         "oyuncubakid": userID,
@@ -175,6 +195,8 @@ class UtilsServices {
     required String password,
     required int page,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     Map<String, dynamic> result = await _apiHelpers.post(
       body: {"sayfa": page},
       endpoint: "$username/$password/${_EndpointConstants.xpordering}/0/0",
@@ -187,6 +209,8 @@ class UtilsServices {
     required String password,
     required int page,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     Map<String, dynamic> result = await _apiHelpers.post(
       body: {"sayfa": page},
       endpoint: "$username/$password/${_EndpointConstants.popordering}/0/0",
@@ -201,6 +225,8 @@ class UtilsServices {
     required String kategoridetay,
     required int page,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     Map<String, dynamic> result = await _apiHelpers.post(
       body: {
         "kategori": kategori,
@@ -218,6 +244,8 @@ class UtilsServices {
     required String password,
     required int page,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     Map<String, dynamic> result = await _apiHelpers.post(
       body: {
         "sayfa": page,
@@ -233,6 +261,8 @@ class UtilsServices {
     required String password,
     required int page,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     Map<String, dynamic> result = await _apiHelpers.post(
       body: {
         "sayfa": page,
@@ -248,6 +278,8 @@ class UtilsServices {
     required String password,
     required int chatID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     Map<String, dynamic> result = await _apiHelpers.post(
       body: {
         "sohbetID": chatID,
@@ -265,6 +297,8 @@ class UtilsServices {
     required String message,
     required String type,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     Map<String, dynamic> result = await _apiHelpers.post(
       body: {
         "oyuncubakid": "$userID",

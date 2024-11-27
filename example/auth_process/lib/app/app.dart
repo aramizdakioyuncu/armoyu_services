@@ -9,8 +9,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'ARMOYU Service',
       theme: appLightThemeData,
+      darkTheme: appDarkThemeData,
+      themeMode: ThemeMode.light,
       initialRoute: AppPages.initial,
       getPages: AppPages.routes,
     );

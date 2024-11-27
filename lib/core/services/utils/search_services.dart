@@ -24,6 +24,8 @@ class SearchServices {
     required String hashtag,
     required int page,
   }) async {
+    password == null ? password : _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "etiket": hashtag,
@@ -43,6 +45,8 @@ class SearchServices {
     required String searchword,
     required int page,
   }) async {
+    password == null ? password : _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "sayfa": "$page",
@@ -62,6 +66,8 @@ class SearchServices {
     required String searchword,
     required int page,
   }) async {
+    password == null ? password : _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "sayfa": "$page",
@@ -82,6 +88,8 @@ class SearchServices {
     required String searchword,
     required int page,
   }) async {
+    password == null ? password : _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "sayfa": "$page",
@@ -101,6 +109,8 @@ class SearchServices {
     required String searchword,
     required int page,
   }) async {
+    password == null ? password : _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "sayfa": "$page",

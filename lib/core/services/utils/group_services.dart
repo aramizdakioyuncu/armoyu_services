@@ -25,6 +25,8 @@ class GroupServices {
     required String password,
     required int grupID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "grupID": grupID,
@@ -41,6 +43,8 @@ class GroupServices {
     required String password,
     required int grupID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "grupID": grupID,
@@ -57,6 +61,8 @@ class GroupServices {
     required String password,
     required int grupID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "grupID": grupID,
@@ -79,6 +85,8 @@ class GroupServices {
     required String webLINK,
     required bool joinStatus,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "grupID": "$grupID",
@@ -103,6 +111,8 @@ class GroupServices {
     required int groupID,
     required String category,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     List<http.MultipartFile> photosCollection = [];
     for (var file in files) {
       photosCollection.add(await _apiHelpers.generateImageFile("media", file));
@@ -126,6 +136,8 @@ class GroupServices {
     required int groupID,
     required String answer,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "grupID": "$groupID",
@@ -145,6 +157,8 @@ class GroupServices {
     required int groupID,
     required List<String> userList, //Username
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     Map<String, String> formData = {"grupID": "$groupID"};
     for (int i = 0; i < userList.length; i++) {
       formData['users[$i]'] = userList[i];
@@ -165,6 +179,8 @@ class GroupServices {
     required int groupID,
     required int userID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "grupID": groupID,
@@ -186,6 +202,8 @@ class GroupServices {
     required int grupkategoridetay,
     required int varsayilanoyun,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "grupadi": grupadi,

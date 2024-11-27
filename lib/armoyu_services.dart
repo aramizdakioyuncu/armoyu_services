@@ -1,6 +1,7 @@
 library armoyu_services.dart;
 
 import 'package:armoyu_services/export.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 export 'package:armoyu_services/export.dart';
@@ -247,7 +248,7 @@ class ARMOYUServices {
     );
   }
 
-  Future<void> setup() async {
-    await _LoggingServices.instance.setup();
+  Future<bool> setup() async {
+    return await _LoggingServices.instance.setup(service: this);
   }
 }

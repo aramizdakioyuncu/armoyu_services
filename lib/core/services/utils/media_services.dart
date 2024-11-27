@@ -25,6 +25,8 @@ class MediaServices {
     required String category,
     required int page,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "oyuncubakid": "$uyeID",
@@ -45,6 +47,8 @@ class MediaServices {
     required int mediaID,
     required double rotate,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "fotografID": "$mediaID",
@@ -62,6 +66,8 @@ class MediaServices {
     required String password,
     required int mediaID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "medyaID": "$mediaID",
@@ -79,6 +85,8 @@ class MediaServices {
     required List<XFile> files,
     required String category,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     List<http.MultipartFile> photosCollection = [];
     for (XFile element in files) {
       photosCollection.add(

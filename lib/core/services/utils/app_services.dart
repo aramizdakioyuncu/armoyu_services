@@ -22,6 +22,8 @@ class AppServices {
     required String username,
     required String password,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       endpoint: "$username/$password/${_EndpointConstants.sitemessages}/0/0",
       headers: _apiHelpers.getRequestHeader(

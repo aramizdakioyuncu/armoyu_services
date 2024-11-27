@@ -22,6 +22,8 @@ class JoinUsServices {
     required String username,
     required String password,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       endpoint: "$username/$password/${_EndpointConstants.permissions}/0/0/",
       headers: _apiHelpers.getRequestHeader(
@@ -35,6 +37,8 @@ class JoinUsServices {
     required String password,
     required int page,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "sayfa": page,
@@ -54,6 +58,8 @@ class JoinUsServices {
     required String whyposition,
     required String howmachtime,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "positionID": "$positionID",

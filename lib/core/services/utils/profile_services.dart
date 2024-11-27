@@ -23,6 +23,8 @@ class ProfileServices {
     required String password,
     required int page,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "sayfa": page,
@@ -40,6 +42,8 @@ class ProfileServices {
     required String password,
     required int userID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "userID": "$userID",
@@ -55,6 +59,8 @@ class ProfileServices {
     required String username,
     required String password,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {},
       endpoint:
@@ -71,6 +77,8 @@ class ProfileServices {
     required int userID,
     required int page,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "oyuncubakid": userID,
@@ -89,6 +97,8 @@ class ProfileServices {
     required String password,
     required int userID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "oyuncubakid": userID,
@@ -106,6 +116,8 @@ class ProfileServices {
     required int userID,
     required int answer,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "oyuncubakid": userID,
@@ -124,6 +136,8 @@ class ProfileServices {
     required String password,
     required int userID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "oyuncubakid": userID,
@@ -140,6 +154,8 @@ class ProfileServices {
     required String password,
     required int userID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "oyuncubakid": userID,
@@ -155,6 +171,8 @@ class ProfileServices {
     required String username,
     required String password,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {},
       endpoint: "$username/$password/${_EndpointConstants.defaultavatar}/0/0/",
@@ -168,6 +186,8 @@ class ProfileServices {
     required String username,
     required String password,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {},
       endpoint: "$username/$password/${_EndpointConstants.defaultbanner}/0/0/",
@@ -182,6 +202,8 @@ class ProfileServices {
     required String password,
     required List<XFile> files,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     List<http.MultipartFile> photosCollection = [];
     for (var file in files) {
       photosCollection.add(await _apiHelpers.generateImageFile("resim", file));
@@ -201,6 +223,8 @@ class ProfileServices {
     required String password,
     required List<XFile> files,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     List<http.MultipartFile> photosCollection = [];
     for (var file in files) {
       photosCollection.add(await _apiHelpers.generateImageFile("resim", file));
@@ -220,6 +244,8 @@ class ProfileServices {
     required String password,
     int? teamID,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {"favoritakimID": "$teamID"},
       endpoint: "$username/$password/${_EndpointConstants.selectfavteam}/0/",
@@ -242,6 +268,8 @@ class ProfileServices {
     required String phoneNumber,
     required String passwordControl,
   }) async {
+    password = _apiHelpers.generateMd5(password);
+
     return await _apiHelpers.post(
       body: {
         "ad": firstname,
