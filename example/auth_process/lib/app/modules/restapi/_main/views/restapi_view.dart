@@ -1,6 +1,8 @@
 import 'package:armoyu_services/armoyu_services.dart';
+import 'package:armoyu_services/widgets/widget.dart';
 import 'package:auth_process/app/modules/restapi/_main/controllers/restapi_controller.dart';
 import 'package:auth_process/app/services/armoyu.dart';
+import 'package:auth_process/app/utils/app_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -67,6 +69,9 @@ class RestapiView extends StatelessWidget {
                             apiKey: controller.apikeyController.value.text,
                             usePreviousAPI: true,
                           );
+                          ARMOYU.widgets =
+                              ARMOYUWidget(service: ARMOYU.service);
+
                           bool status = await ARMOYU.service.setup();
                           controller.statusController.value = status;
 
@@ -81,82 +86,89 @@ class RestapiView extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Wrap(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ARMOYU.widgets.elevatedButton.costum1(
-                    text: "Login",
-                    onPressed: () async {
-                      Get.toNamed("/restapi/login");
-                    },
-                    loadingStatus: false,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ARMOYU.widgets.elevatedButton.costum1(
-                    text: "Register",
-                    enabled: false,
-                    onPressed: () async {
-                      controller.registerstaus.value = true;
-                      await controller.register(
-                        firstname: "TEST1",
-                        lastname: "SOYAD2",
-                        email: "tesst@ema32il.com",
-                        password: "12345678",
-                        username: "test23",
-                      );
-                      controller.registerstaus.value = false;
-                    },
-                    loadingStatus: controller.registerstaus.value,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ARMOYU.widgets.elevatedButton.costum1(
-                    text: "News",
-                    onPressed: () async {
-                      Get.toNamed("/restapi/news");
-                    },
-                    loadingStatus: controller.addfriendstaus.value,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ARMOYU.widgets.elevatedButton.costum1(
-                    text: "Friends",
-                    enabled: false,
-                    onPressed: () async {
-                      controller.addfriendstaus.value = true;
+            child: Obx(
+              () => controller.statusController.value == null
+                  ? Container()
+                  : Obx(
+                      () => Wrap(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ARMOYU.widgets.elevatedButton.costum1(
+                              text: "Login",
+                              enabled: controller.statusController.value!,
+                              onPressed: () async {
+                                Get.toNamed("/restapi/login");
+                              },
+                              loadingStatus: false,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ARMOYU.widgets.elevatedButton.costum1(
+                              text: "Register",
+                              enabled: controller.statusController.value!,
+                              onPressed: () async {
+                                controller.registerstaus.value = true;
 
-                      await controller.befriend();
-                      controller.addfriendstaus.value = false;
-                    },
-                    loadingStatus: controller.addfriendstaus.value,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ARMOYU.widgets.elevatedButton.costum1(
-                    text: "Search Engine",
-                    onPressed: () async {
-                      Get.toNamed("/restapi/search-engine");
-                    },
-                    loadingStatus: controller.addfriendstaus.value,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ARMOYU.widgets.elevatedButton.costum1(
-                    text: "Other",
-                    onPressed: () async {
-                      Get.toNamed("/restapi/other");
-                    },
-                    loadingStatus: controller.addfriendstaus.value,
-                  ),
-                ),
-              ],
+                                controller.registerstaus.value = false;
+                              },
+                              loadingStatus: controller.registerstaus.value,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ARMOYU.widgets.elevatedButton.costum1(
+                              text: "News",
+                              enabled: controller.statusController.value! &&
+                                  AppList.user.value != null,
+                              onPressed: () async {
+                                Get.toNamed("/restapi/news");
+                              },
+                              loadingStatus: controller.addfriendstaus.value,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ARMOYU.widgets.elevatedButton.costum1(
+                              text: "Friends",
+                              enabled: controller.statusController.value! &&
+                                  AppList.user.value != null,
+                              onPressed: () async {
+                                controller.addfriendstaus.value = true;
+
+                                controller.addfriendstaus.value = false;
+                              },
+                              loadingStatus: controller.addfriendstaus.value,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ARMOYU.widgets.elevatedButton.costum1(
+                              text: "Search Engine",
+                              enabled: controller.statusController.value! &&
+                                  AppList.user.value != null,
+                              onPressed: () async {
+                                Get.toNamed("/restapi/search-engine");
+                              },
+                              loadingStatus: controller.addfriendstaus.value,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ARMOYU.widgets.elevatedButton.costum1(
+                              text: "Other",
+                              enabled: controller.statusController.value! &&
+                                  AppList.user.value != null,
+                              onPressed: () async {
+                                Get.toNamed("/restapi/other");
+                              },
+                              loadingStatus: controller.addfriendstaus.value,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
             ),
           ),
         ],

@@ -1,5 +1,5 @@
 import 'package:armoyu_services/armoyu_services.dart';
-import 'package:auth_process/app/data/models/user.dart';
+import 'package:armoyu_services/core/models/ARMOYU/user.dart';
 import 'package:auth_process/app/services/armoyu.dart';
 import 'package:auth_process/app/utils/app_list.dart';
 import 'package:flutter/material.dart';
@@ -72,6 +72,10 @@ class LoginController extends GetxController {
     );
 
     log(AppList.user.value!.username!);
+  }
+
+  logout() {
+    AppList.user.value = null;
   }
 
   Future<void> befriend() async {

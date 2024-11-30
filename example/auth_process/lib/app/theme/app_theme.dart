@@ -8,6 +8,7 @@ final ThemeData appDarkThemeData = ThemeData.dark().copyWith(
   appBarTheme: const AppBarTheme(
     color: Colors.black,
     foregroundColor: Colors.white,
+    surfaceTintColor: Colors.transparent,
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
@@ -142,6 +143,7 @@ final ThemeData appLightThemeData = ThemeData.light().copyWith(
       color: Colors.black,
     ),
     foregroundColor: Colors.black,
+    surfaceTintColor: Colors.transparent,
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(

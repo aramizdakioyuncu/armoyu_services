@@ -9,6 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'ARMOYU Service',
       theme: appLightThemeData,
       darkTheme: appDarkThemeData,

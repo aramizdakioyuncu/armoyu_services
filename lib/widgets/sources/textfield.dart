@@ -9,6 +9,7 @@ class ARMOYUTextfields {
   ARMOYUTextfields(this.service);
 
   Widget costum3({
+    Key? key,
     String? title,
     required TextEditingController controller,
     required Function(String val)? onChanged,
@@ -34,6 +35,7 @@ class ARMOYUTextfields {
     }
 
     return Column(
+      key: key,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Visibility(
@@ -77,7 +79,7 @@ class ARMOYUTextfields {
             counter: minLength != null || maxLength != null
                 ? minLength != null && controller.value.text.length < minLength
                     ? Text(
-                        "${controller.value.text.length}/${maxLength}",
+                        "${controller.value.text.length}/$maxLength",
                         style: TextStyle(
                           color: controller.value.text.length < minLength
                               ? Colors.red

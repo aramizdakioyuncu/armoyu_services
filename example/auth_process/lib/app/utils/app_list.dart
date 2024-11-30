@@ -1,4 +1,4 @@
-import 'package:auth_process/app/data/models/user.dart';
+import 'package:armoyu_services/core/models/ARMOYU/user.dart';
 import 'package:get/get.dart';
 
 class AppList {
