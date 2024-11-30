@@ -1,3 +1,3 @@
-## [1.0.0+9]
+## [1.0.0+11]
 
-- Examples örnekleri artırıldı
+- Searchbar eklendi
