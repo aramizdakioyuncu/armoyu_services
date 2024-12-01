@@ -71,7 +71,9 @@ final class ApiHelpers {
       'Authorization': token != null ? 'Bearer $token' : '',
       'Content-Type':
           isJson ? 'application/json' : 'application/x-www-form-urlencoded',
-      'X-Client-Version': _LoggingServices.instance.version ?? '',
+      // 'X-Client-Version': _LoggingServices.instance.version ?? '',
+
+      //Nedense X-Client-Version ekleyince Chromeda hata veriyor
     };
 
     map.removeWhere((k, v) => v.trim() == '' || v.trim().isEmpty);
