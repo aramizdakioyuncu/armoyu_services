@@ -1,5 +1,8 @@
 library armoyu_services.dart;
 
+import 'package:armoyu_services/core/models/ARMOYU/group.dart';
+import 'package:armoyu_services/core/models/ARMOYU/media.dart';
+import 'package:armoyu_services/core/models/ARMOYU/news.dart';
 import 'package:armoyu_services/export.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';

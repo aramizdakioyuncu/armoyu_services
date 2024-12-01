@@ -171,6 +171,7 @@ Future<void> _launchAuthUrl(BuildContext context) async {
   if (await canLaunchUrlString(authUrl)) {
     await launchUrlString(authUrl);
   } else {
+    // ignore: use_build_context_synchronously
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text("Yetkilendirme ekranı açılamıyor.")),
     );

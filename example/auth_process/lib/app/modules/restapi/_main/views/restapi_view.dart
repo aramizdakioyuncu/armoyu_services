@@ -125,7 +125,7 @@ class RestapiView extends StatelessWidget {
                               onPressed: () async {
                                 Get.toNamed("/restapi/news");
                               },
-                              loadingStatus: controller.addfriendstaus.value,
+                              loadingStatus: false,
                             ),
                           ),
                           Padding(
@@ -134,12 +134,8 @@ class RestapiView extends StatelessWidget {
                               text: "Friends",
                               enabled: controller.statusController.value! &&
                                   AppList.user.value != null,
-                              onPressed: () async {
-                                controller.addfriendstaus.value = true;
-
-                                controller.addfriendstaus.value = false;
-                              },
-                              loadingStatus: controller.addfriendstaus.value,
+                              onPressed: () async {},
+                              loadingStatus: false,
                             ),
                           ),
                           Padding(
@@ -151,7 +147,7 @@ class RestapiView extends StatelessWidget {
                               onPressed: () async {
                                 Get.toNamed("/restapi/search-engine");
                               },
-                              loadingStatus: controller.addfriendstaus.value,
+                              loadingStatus: false,
                             ),
                           ),
                           Padding(
@@ -163,7 +159,31 @@ class RestapiView extends StatelessWidget {
                               onPressed: () async {
                                 Get.toNamed("/restapi/other");
                               },
-                              loadingStatus: controller.addfriendstaus.value,
+                              loadingStatus: false,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ARMOYU.widgets.elevatedButton.costum1(
+                              text: "Groups",
+                              enabled: controller.statusController.value! &&
+                                  AppList.user.value != null,
+                              onPressed: () async {
+                                Get.toNamed("/restapi/groups");
+                              },
+                              loadingStatus: false,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ARMOYU.widgets.elevatedButton.costum1(
+                              text: "Gallery",
+                              enabled: controller.statusController.value! &&
+                                  AppList.user.value != null,
+                              onPressed: () async {
+                                Get.toNamed("/restapi/gallery");
+                              },
+                              loadingStatus: false,
                             ),
                           ),
                         ],

@@ -18,7 +18,7 @@ class NewsServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<Map<String, dynamic>> fetch({
+  Future<List<News>> fetch({
     required String? username,
     required String? password,
     required int page,
@@ -27,7 +27,7 @@ class NewsServices {
       password = _apiHelpers.generateMd5(password);
     }
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "sayfa": page,
         "limit": "10",
@@ -38,6 +38,46 @@ class NewsServices {
         token: getToken(),
       ),
     );
+
+    List<News> list = [];
+
+    if (response['durum'] == 0) {
+      return list;
+    }
+
+    for (var element in response['icerik']) {
+      list.add(
+        News(
+          newsID: element['haberID'],
+          newsURL: element['link'],
+          newsOwner: NewsOwner(
+            userID: element['yazarID'],
+            displayname: element['yazar'],
+            avatar: MediaURL(
+              bigURL: element['yazaravatar'],
+              normalURL: element['yazaravatar'],
+              minURL: element['yazaravatar'],
+            ),
+          ),
+          title: element['haberbaslik'],
+          content: null,
+          summary: element['ozet'],
+          media: Media(
+            mediaID: 0,
+            mediaURL: MediaURL(
+              bigURL: element['resim'],
+              normalURL: element['resimorijinal'],
+              minURL: element['resimminnak'],
+            ),
+          ),
+          date: element['gecenzaman'],
+          category: element['kategori'],
+          views: element['goruntulen'],
+        ),
+      );
+    }
+
+    return list;
   }
 
   Future<Map<String, dynamic>> fetchnews({

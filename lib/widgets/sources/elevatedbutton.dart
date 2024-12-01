@@ -44,12 +44,11 @@ class ARMOYUElevatedButton {
                     }
                   },
             style: ElevatedButton.styleFrom(
-              backgroundColor: background, // Arka plan rengini belirleyin
+              backgroundColor: background,
               foregroundColor: foregroundColor,
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 18),
               shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.circular(10), // Kenar yarıçapını ayarlayın
+                borderRadius: BorderRadius.circular(10),
               ),
             ),
             child: Text(

@@ -1,4 +1,7 @@
 import 'package:auth_process/app/modules/restapi/_main/views/restapi_view.dart';
+import 'package:auth_process/app/modules/restapi/gallery/views/gallery_detail_view.dart';
+import 'package:auth_process/app/modules/restapi/gallery/views/gallery_view.dart';
+import 'package:auth_process/app/modules/restapi/group/views/group_view.dart';
 import 'package:auth_process/app/modules/restapi/login/views/login_view.dart';
 import 'package:auth_process/app/modules/restapi/news/views/news_view.dart';
 import 'package:auth_process/app/modules/restapi/other/views/other_view.dart';
@@ -28,6 +31,18 @@ class RestapiModule {
     GetPage(
       name: "$route/search-engine",
       page: () => const SearchEngineView(),
+    ),
+    GetPage(
+      name: "$route/groups",
+      page: () => const GroupView(),
+    ),
+    GetPage(
+      name: "$route/gallery",
+      page: () => const GalleryView(),
+    ),
+    GetPage(
+      name: "$route/gallery/:gallery",
+      page: () => const GalleryDetailView(),
     ),
   ];
 }

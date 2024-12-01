@@ -15,7 +15,6 @@ class RestapiController extends GetxController {
 
   var savestaus = false.obs;
   var loginstaus = false.obs;
-  var addfriendstaus = false.obs;
   var registerstaus = false.obs;
 
   @override

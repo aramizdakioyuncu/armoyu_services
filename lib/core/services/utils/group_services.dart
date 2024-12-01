@@ -19,6 +19,81 @@ class GroupServices {
   }
 
   //Group
+  Future<List<Group>> groupList({
+    required String username,
+    required String password,
+    int? category,
+    required int page,
+  }) async {
+    password = _apiHelpers.generateMd5(password);
+
+    Map<String, dynamic> response = await _apiHelpers.post(
+      body: {
+        "kategori": category ?? "",
+        "sayfa": page,
+      },
+      endpoint: "$username/$password/${_EndpointConstants.groups}/liste/0",
+      headers: _apiHelpers.getRequestHeader(
+        token: getToken(),
+      ),
+    );
+
+    List<Group> list = [];
+
+    if (response['durum'] == 0) {
+      return list;
+    }
+
+    for (var element in response['icerik']) {
+      list.add(
+        Group(
+          groupID: element['group_ID'],
+          name: element['group_name'],
+          shortname: element['group_shortname'],
+          registerdate: element['group_registered'],
+          membercount: element['group_membercount'],
+          category: element['group_category'],
+          categorydetail: element['group_categorydetail'],
+          defaultgame: element['group_defaultgame'],
+          joinable: element['group_joinstatus'] == 1 ? true : false,
+          description: element['group_description'],
+          socail: GroupSocial(
+            website: element['group_social']['group_website'],
+            discord: element['group_social']['group_discord'],
+          ),
+          groupURL: element['group_URL'],
+          groupOwner: GroupOwner(
+            userID: element['group_owner']['player_ID'],
+            displayname: element['group_owner']['player_displayname'],
+            username: element['group_owner']['player_userlogin'],
+            avatar: MediaURL(
+              bigURL: element['group_owner']['player_avatar'],
+              normalURL: element['group_owner']['player_avatar'],
+              minURL: element['group_owner']['player_avatar'],
+            ),
+          ),
+          logo: Media(
+            mediaID: element['group_logo']['media_ID'],
+            mediaURL: MediaURL(
+              bigURL: element['group_logo']['media_bigURL'],
+              normalURL: element['group_logo']['media_URL'],
+              minURL: element['group_logo']['media_minURL'],
+            ),
+          ),
+          banner: Media(
+            mediaID: element['group_banner']['media_ID'],
+            mediaURL: MediaURL(
+              bigURL: element['group_banner']['media_bigURL'],
+              normalURL: element['group_banner']['media_URL'],
+              minURL: element['group_banner']['media_minURL'],
+            ),
+          ),
+        ),
+      );
+    }
+
+    return list;
+  }
 
   Future<Map<String, dynamic>> groupFetch({
     required String username,
