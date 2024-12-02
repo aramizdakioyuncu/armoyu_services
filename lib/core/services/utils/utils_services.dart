@@ -159,8 +159,7 @@ class UtilsServices {
       return armoyuresponse;
     }
 
-    armoyuresponse.response =
-        APILogin.updateclass(armoyuresponse.response!, response);
+    armoyuresponse.response = APILogin.updateclass(response);
     return armoyuresponse;
   }
 
@@ -191,8 +190,7 @@ class UtilsServices {
       return armoyuresponse;
     }
 
-    armoyuresponse.response =
-        APILogin.updateclass(armoyuresponse.response!, response);
+    armoyuresponse.response = APILogin.updateclass(response);
     return armoyuresponse;
   }
 

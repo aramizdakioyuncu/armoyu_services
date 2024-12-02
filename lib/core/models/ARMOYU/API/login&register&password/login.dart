@@ -189,8 +189,10 @@ class APILogin {
     };
   }
 
-  static APILogin updateclass(
-      APILogin? armoyuresponse, Map<String, dynamic> response) {
+  static APILogin? updateclass(Map<String, dynamic> response) {
+    if (response['aciklama'] == "Oyuncu bilgileri yanlış!") {
+      return null;
+    }
     List<Friend> friendlist = [];
     for (var friendInfo in response['icerik']['arkadasliste']) {
       friendlist.add(
@@ -248,7 +250,7 @@ class APILogin {
       );
     }
 
-    armoyuresponse = APILogin(
+    return APILogin(
       arkadasdurum: response['icerik']['arkadasdurum'],
       cinsiyet: response['icerik']['cinsiyet'],
       arkadasdurumaciklama: response['icerik']['arkadasdurumaciklama'],
@@ -303,26 +305,30 @@ class APILogin {
                   ['lastloginDateV2'],
               lastfailedDate: response['icerik']['detailInfo']
                   ['lastfailedDate'],
-              country: APICountry(
-                countryID: response['icerik']['detailInfo']['country']
-                    ['country_ID'],
-                name: response['icerik']['detailInfo']['country']
-                    ['country_name'],
-                code: response['icerik']['detailInfo']['country']
-                    ['country_code'],
-                phonecode: response['icerik']['detailInfo']['country']
-                    ['country_phoneCode'],
-              ),
-              province: APIProvince(
-                provinceID: response['icerik']['detailInfo']['province']
-                    ['province_ID'],
-                name: response['icerik']['detailInfo']['province']
-                    ['province_name'],
-                platecode: response['icerik']['detailInfo']['province']
-                    ['province_plateCode'],
-                phonecode: response['icerik']['detailInfo']['province']
-                    ['province_phoneCode'],
-              ),
+              country: response['icerik']['detailInfo']['country'] == null
+                  ? null
+                  : APICountry(
+                      countryID: response['icerik']['detailInfo']['country']
+                          ['country_ID'],
+                      name: response['icerik']['detailInfo']['country']
+                          ['country_name'],
+                      code: response['icerik']['detailInfo']['country']
+                          ['country_code'],
+                      phonecode: response['icerik']['detailInfo']['country']
+                          ['country_phoneCode'],
+                    ),
+              province: response['icerik']['detailInfo']['province'] == null
+                  ? null
+                  : APIProvince(
+                      provinceID: response['icerik']['detailInfo']['province']
+                          ['province_ID'],
+                      name: response['icerik']['detailInfo']['province']
+                          ['province_name'],
+                      platecode: response['icerik']['detailInfo']['province']
+                          ['province_plateCode'],
+                      phonecode: response['icerik']['detailInfo']['province']
+                          ['province_phoneCode'],
+                    ),
             ),
       userRole: response['icerik']['userRole'] == null
           ? null
@@ -427,7 +433,6 @@ class APILogin {
       mevcutoyunsayisi: response['icerik']['mevcutoyunsayisi'],
       popularGames: popularGames,
     );
-    return armoyuresponse;
   }
 }
 

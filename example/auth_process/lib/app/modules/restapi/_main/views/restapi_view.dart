@@ -117,6 +117,18 @@ class RestapiView extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: ARMOYU.widgets.elevatedButton.costum1(
+                              text: "Profile",
+                              enabled: controller.statusController.value! &&
+                                  AppList.user.value != null,
+                              onPressed: () async {
+                                Get.toNamed("/restapi/profile");
+                              },
+                              loadingStatus: false,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ARMOYU.widgets.elevatedButton.costum1(
                               text: "News",
                               enabled: controller.statusController.value! &&
                                   AppList.user.value != null,

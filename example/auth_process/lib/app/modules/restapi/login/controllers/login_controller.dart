@@ -31,17 +31,12 @@ class LoginController extends GetxController {
     try {
       Get.snackbar(
         "Sistem",
-        "$description\n$descriptiondetail",
-        colorText: Colors.white,
-        backgroundColor: Colors.black38,
-      );
-    } catch (e) {
-      Get.snackbar(
-        "Sistem",
         description,
         colorText: Colors.white,
         backgroundColor: Colors.black38,
       );
+    } catch (e) {
+      log("Hata");
     }
   }
 
