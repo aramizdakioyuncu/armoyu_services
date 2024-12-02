@@ -53,7 +53,7 @@ class HomeView extends StatelessWidget {
             ),
           ),
           const Center(
-            child: Text("Version : 1.0.0+17"),
+            child: Text("Version : 1.0.0+18"),
           ),
         ],
       ),

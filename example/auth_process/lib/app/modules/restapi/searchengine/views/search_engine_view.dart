@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auth_process/app/modules/restapi/searchengine/controllers/search_engine_controller.dart';
 import 'package:auth_process/app/services/armoyu.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +26,9 @@ class SearchEngineView extends StatelessWidget {
                   searchController: controller.search.value,
                   allItems: controller.allItems,
                   filteredItems: controller.filteredItems,
+                  itemSelected: (id, val) {
+                    log(id.toString() + val.toString());
+                  },
                 ),
               ),
             ],
