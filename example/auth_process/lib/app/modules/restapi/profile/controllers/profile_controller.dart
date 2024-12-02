@@ -15,6 +15,9 @@ class ProfileController extends GetxController {
 
   var user = Rx<APILogin?>(null);
   lookprofile() async {
+    if (userIDController.value.text.isEmpty) {
+      return;
+    }
     proccessStatus.value = true;
     LookProfileResponse getUsersResult =
         await ARMOYU.service.utilsServices.lookProfile(
@@ -32,6 +35,9 @@ class ProfileController extends GetxController {
   }
 
   lookprofilewithusername() async {
+    if (usernameController.value.text.isEmpty) {
+      return;
+    }
     proccessStatus.value = true;
 
     LookProfilewithUsernameResponse getUsersResult =

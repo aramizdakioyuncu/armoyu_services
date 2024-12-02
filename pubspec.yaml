@@ -2,7 +2,7 @@ name: armoyu_services
 description: 'ARMOYU kütüphanesidir'
 # publish_to: https://pub.dev/packages/armoyu_services
 repository: https://github.com/aramizdakioyuncu/armoyu_services
-version: 1.0.0+18
+version: 1.0.0+19
 
 environment:
   sdk: '>=3.4.4 <4.0.0'

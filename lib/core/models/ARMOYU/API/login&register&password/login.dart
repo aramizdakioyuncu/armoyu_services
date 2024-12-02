@@ -194,60 +194,65 @@ class APILogin {
       return null;
     }
     List<Friend> friendlist = [];
-    for (var friendInfo in response['icerik']['arkadasliste']) {
-      friendlist.add(
-        Friend(
-          oyuncuID: friendInfo['oyuncuID'],
-          oyuncuMinnakAvatar: MediaURL(
-            bigURL: friendInfo['oyuncuminnakavatar'],
-            normalURL: friendInfo['oyuncuminnakavatar'],
-            minURL: friendInfo['oyuncuminnakavatar'],
+    if (response['icerik']['arkadasliste'] != null) {
+      for (var friendInfo in response['icerik']['arkadasliste']) {
+        friendlist.add(
+          Friend(
+            oyuncuID: friendInfo['oyuncuID'],
+            oyuncuMinnakAvatar: MediaURL(
+              bigURL: friendInfo['oyuncuminnakavatar'],
+              normalURL: friendInfo['oyuncuminnakavatar'],
+              minURL: friendInfo['oyuncuminnakavatar'],
+            ),
+            oyuncuKullaniciAdi: friendInfo['oyuncukullaniciadi'],
           ),
-          oyuncuKullaniciAdi: friendInfo['oyuncukullaniciadi'],
-        ),
-      );
+        );
+      }
     }
 
     List<Friend> commonfriendlist = [];
-    for (var friendInfo in response['icerik']['ortakarkadasliste']) {
-      commonfriendlist.add(
-        Friend(
-          oyuncuID: friendInfo['oyuncuID'],
-          oyuncuMinnakAvatar: MediaURL(
-            bigURL: friendInfo['oyuncuminnakavatar'],
-            normalURL: friendInfo['oyuncuminnakavatar'],
-            minURL: friendInfo['oyuncuminnakavatar'],
-          ),
-          oyuncuKullaniciAdi: friendInfo['oyuncukullaniciadi'],
-        ),
-      );
-    }
-
-    List<PopularGame> popularGames = [];
-    for (var gameInfo in response['icerik']['popularGames']) {
-      popularGames.add(
-        PopularGame(
-          gameID: gameInfo['game_ID'],
-          gameName: gameInfo['game_name'],
-          gameShortName: gameInfo['game_shortName'],
-          gameURL: gameInfo['game_URL'],
-          gameScore: gameInfo['game_score'],
-          gameMoney: gameInfo['game_money'],
-          gameLogo: Media(
-            mediaID: gameInfo['game_logo']['media_ID'],
-            mediaURL: MediaURL(
-              bigURL: gameInfo['game_logo']['media_bigURL'],
-              normalURL: gameInfo['game_logo']['media_URL'],
-              minURL: gameInfo['game_logo']['media_minURL'],
+    if (response['icerik']['ortakarkadasliste'] != null) {
+      for (var friendInfo in response['icerik']['ortakarkadasliste']) {
+        commonfriendlist.add(
+          Friend(
+            oyuncuID: friendInfo['oyuncuID'],
+            oyuncuMinnakAvatar: MediaURL(
+              bigURL: friendInfo['oyuncuminnakavatar'],
+              normalURL: friendInfo['oyuncuminnakavatar'],
+              minURL: friendInfo['oyuncuminnakavatar'],
             ),
+            oyuncuKullaniciAdi: friendInfo['oyuncukullaniciadi'],
           ),
-          gameRole: GameRole(
-            roleID: gameInfo['game_role']['role_ID'],
-            roleName: gameInfo['game_role']['role_name'],
+        );
+      }
+    }
+    List<PopularGame> popularGames = [];
+    if (response['icerik']['popularGames'] != null) {
+      for (var gameInfo in response['icerik']['popularGames']) {
+        popularGames.add(
+          PopularGame(
+            gameID: gameInfo['game_ID'],
+            gameName: gameInfo['game_name'],
+            gameShortName: gameInfo['game_shortName'],
+            gameURL: gameInfo['game_URL'],
+            gameScore: gameInfo['game_score'],
+            gameMoney: gameInfo['game_money'],
+            gameLogo: Media(
+              mediaID: gameInfo['game_logo']['media_ID'],
+              mediaURL: MediaURL(
+                bigURL: gameInfo['game_logo']['media_bigURL'],
+                normalURL: gameInfo['game_logo']['media_URL'],
+                minURL: gameInfo['game_logo']['media_minURL'],
+              ),
+            ),
+            gameRole: GameRole(
+              roleID: gameInfo['game_role']['role_ID'],
+              roleName: gameInfo['game_role']['role_name'],
+            ),
+            gameClan: gameInfo['game_clan'],
           ),
-          gameClan: gameInfo['game_clan'],
-        ),
-      );
+        );
+      }
     }
 
     return APILogin(

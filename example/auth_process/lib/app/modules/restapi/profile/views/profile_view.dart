@@ -30,10 +30,12 @@ class ProfileView extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  ARMOYU.widgets.elevatedButton.costum1(
-                    text: "Fetch Profile",
-                    onPressed: () => controller.lookprofile(),
-                    loadingStatus: false,
+                  Obx(
+                    () => ARMOYU.widgets.elevatedButton.costum1(
+                      text: "Fetch Profile",
+                      onPressed: () => controller.lookprofile(),
+                      loadingStatus: controller.proccessStatus.value,
+                    ),
                   ),
                 ],
               ),
@@ -52,10 +54,12 @@ class ProfileView extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  ARMOYU.widgets.elevatedButton.costum1(
-                    text: "Fetch Profile with username",
-                    onPressed: () => controller.lookprofilewithusername(),
-                    loadingStatus: false,
+                  Obx(
+                    () => ARMOYU.widgets.elevatedButton.costum1(
+                      text: "Fetch Profile with username",
+                      onPressed: () => controller.lookprofilewithusername(),
+                      loadingStatus: controller.proccessStatus.value,
+                    ),
                   ),
                 ],
               ),
