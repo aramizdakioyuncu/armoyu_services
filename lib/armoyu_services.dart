@@ -1,8 +1,24 @@
 library armoyu_services.dart;
 
-import 'package:armoyu_services/core/models/ARMOYU/group.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/category/category.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/country&province/country.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/country&province/province.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/event/event.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/event/event_detail.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/event/event_participant.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/group/group_detail.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/group/group_user.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/login&register&password/login.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/news/news_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/search/search_hashtaglist.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/search/search_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/_response/response.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/blocking/blocking_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/group/group_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/media.dart';
-import 'package:armoyu_services/core/models/ARMOYU/news.dart';
+import 'package:armoyu_services/core/models/ARMOYU/_response/service_result.dart';
+import 'package:armoyu_services/core/models/ARMOYU/sitemessage.dart';
+import 'package:armoyu_services/core/models/ARMOYU/user.dart';
 import 'package:armoyu_services/export.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
@@ -68,19 +84,20 @@ class ARMOYUServices {
   late final TeamsServices teamsServices;
 
 //WİDGETSLIST
-  final List<Map<String, dynamic>> peopleList = [];
-  final List<Map<String, dynamic>> hashtagList = [];
+  final List<APISearchDetail> peopleList = [];
+  final List<APISearcHashtagDetail> hashtagList = [];
 
-  void addpeopleList(Map<String, dynamic> newPerson) {
-    if (!peopleList.any((person) => person['id'] == newPerson['id'])) {
+  void addpeopleList({required APISearchDetail newPerson}) {
+    if (!peopleList.any((person) => person.id == newPerson.id)) {
       peopleList.add(newPerson);
     } else {
       log("Kişi zaten listede bulunmaktadır.");
     }
   }
 
-  void addhashtagList(Map<String, dynamic> newHashtag) {
-    if (!hashtagList.any((hashtag) => hashtag['id'] == newHashtag['id'])) {
+  void addhashtagList({required APISearcHashtagDetail newHashtag}) {
+    if (!hashtagList
+        .any((hashtag) => hashtag.hashtagID == newHashtag.hashtagID)) {
       hashtagList.add(newHashtag);
     } else {
       log("Hashtag zaten listede bulunmaktadır.");

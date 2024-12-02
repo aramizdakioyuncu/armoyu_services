@@ -18,7 +18,7 @@ class SearchServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<Map<String, dynamic>> hashtag({
+  Future<SearchHashtagListResponse> hashtag({
     String? username,
     String? password,
     required String hashtag,
@@ -26,7 +26,7 @@ class SearchServices {
   }) async {
     password == null ? password : _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "etiket": hashtag,
         "sayfa": page,
@@ -37,9 +37,33 @@ class SearchServices {
         token: getToken(),
       ),
     );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+    SearchHashtagListResponse armoyuresponse =
+        SearchHashtagListResponse(result: result);
+
+    List<APISearcHashtagDetail> list = [];
+    for (var element in response['icerik']) {
+      list.add(
+        APISearcHashtagDetail(
+          hashtagID: element['hashtag_ID'],
+          value: element['hashtag_value'],
+          firstdate: element['hashtag_firstdate'],
+          numberofuses: element['hashtag_numberofuses'],
+        ),
+      );
+    }
+    armoyuresponse.response = APISearchHashtagList(search: list);
+    if (response['durum'] == 0) {
+      return armoyuresponse;
+    }
+    return armoyuresponse;
   }
 
-  Future<Map<String, dynamic>> searchengine({
+  Future<SearchListResponse> searchengine({
     String? username,
     String? password,
     required String searchword,
@@ -47,7 +71,7 @@ class SearchServices {
   }) async {
     password == null ? password : _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "sayfa": "$page",
         "oyuncuadi": searchword,
@@ -58,9 +82,35 @@ class SearchServices {
         token: getToken(),
       ),
     );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+    SearchListResponse armoyuresponse = SearchListResponse(result: result);
+
+    List<APISearchDetail> list = [];
+    for (var element in response['icerik']) {
+      list.add(
+        APISearchDetail(
+          id: element['ID'],
+          value: element['Value'],
+          turu: element['turu'],
+          username: element['username'],
+          avatar: element['avatar'],
+          gender: element['cins'],
+        ),
+      );
+    }
+    armoyuresponse.response = APISearchList(search: list);
+
+    if (response['durum'] == 0) {
+      return armoyuresponse;
+    }
+    return armoyuresponse;
   }
 
-  Future<Map<String, dynamic>> onlyusers({
+  Future<SearchListResponse> onlyusers({
     String? username,
     String? password,
     required String searchword,
@@ -68,7 +118,7 @@ class SearchServices {
   }) async {
     password == null ? password : _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "sayfa": "$page",
         "oyuncuadi": searchword,
@@ -80,9 +130,35 @@ class SearchServices {
         token: getToken(),
       ),
     );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    SearchListResponse armoyuresponse = SearchListResponse(result: result);
+    List<APISearchDetail> list = [];
+    for (var element in response['icerik']) {
+      list.add(
+        APISearchDetail(
+          id: element['ID'],
+          value: element['Value'],
+          turu: element['turu'],
+          username: element['username'],
+          avatar: element['avatar'],
+          gender: element['cins'],
+        ),
+      );
+    }
+    armoyuresponse.response = APISearchList(search: list);
+
+    if (response['durum'] == 0) {
+      return armoyuresponse;
+    }
+    return armoyuresponse;
   }
 
-  Future<Map<String, dynamic>> onlyschools({
+  Future<ServiceResult> onlyschools({
     String? username,
     String? password,
     required String searchword,
@@ -90,7 +166,7 @@ class SearchServices {
   }) async {
     password == null ? password : _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "sayfa": "$page",
         "oyuncuadi": searchword,
@@ -101,9 +177,19 @@ class SearchServices {
         token: getToken(),
       ),
     );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> onlyworks({
+  Future<ServiceResult> onlyworks({
     String? username,
     String? password,
     required String searchword,
@@ -111,7 +197,7 @@ class SearchServices {
   }) async {
     password == null ? password : _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "sayfa": "$page",
         "oyuncuadi": searchword,
@@ -122,5 +208,15 @@ class SearchServices {
         token: getToken(),
       ),
     );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 }

@@ -18,14 +18,14 @@ class LoginRegisterServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<Map<String, dynamic>> inviteCodeTest({
+  Future<ServiceResult> inviteCodeTest({
     required String username,
     required String password,
     required String code,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "davetkodu": code,
       },
@@ -35,5 +35,16 @@ class LoginRegisterServices {
         token: getToken(),
       ),
     );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+
+    return result;
   }
 }

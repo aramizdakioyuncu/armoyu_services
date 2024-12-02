@@ -18,14 +18,14 @@ class SurveyServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<Map<String, dynamic>> fetchSurveys({
+  Future<ServiceResult> fetchSurveys({
     required String username,
     required String password,
     required int page,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "sayfa": page,
       },
@@ -34,16 +34,26 @@ class SurveyServices {
         token: getToken(),
       ),
     );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> fetchSurvey({
+  Future<ServiceResult> fetchSurvey({
     required String username,
     required String password,
     required int surveyID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "anketID": surveyID,
       },
@@ -52,9 +62,20 @@ class SurveyServices {
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> answerSurvey({
+  Future<ServiceResult> answerSurvey({
     required String username,
     required String password,
     required int surveyID,
@@ -62,7 +83,7 @@ class SurveyServices {
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "anketID": surveyID,
         "secenekID": optionID,
@@ -72,16 +93,27 @@ class SurveyServices {
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> deleteSurvey({
+  Future<ServiceResult> deleteSurvey({
     required String username,
     required String password,
     required int surveyID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "anketID": surveyID,
       },
@@ -90,9 +122,20 @@ class SurveyServices {
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> createSurvey({
+  Future<ServiceResult> createSurvey({
     required String username,
     required String password,
     required String surveyQuestion,
@@ -111,12 +154,23 @@ class SurveyServices {
       formData['secenekler[$i]'] = options[i];
     }
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: formData,
       endpoint: "$username/$password/${_EndpointConstants.createsurvey}/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 }

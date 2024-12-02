@@ -18,28 +18,39 @@ class JoinUsServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<Map<String, dynamic>> fetchdepartment({
+  Future<ServiceResult> fetchdepartment({
     required String username,
     required String password,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       endpoint: "$username/$password/${_EndpointConstants.permissions}/0/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
     );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+
+    return result;
   }
 
-  Future<Map<String, dynamic>> applicationList({
+  Future<ServiceResult> applicationList({
     required String username,
     required String password,
     required int page,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "sayfa": page,
       },
@@ -48,9 +59,20 @@ class JoinUsServices {
         token: getToken(),
       ),
     );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+
+    return result;
   }
 
-  Future<Map<String, dynamic>> requestjoindepartment({
+  Future<ServiceResult> requestjoindepartment({
     required String username,
     required String password,
     required int positionID,
@@ -60,7 +82,7 @@ class JoinUsServices {
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "positionID": "$positionID",
         "whyjoin": whyjoin,
@@ -73,5 +95,17 @@ class JoinUsServices {
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+
+    return result;
   }
 }

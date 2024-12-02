@@ -18,14 +18,14 @@ class StoryServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<Map<String, dynamic>> stories({
+  Future<ServiceResult> stories({
     required String username,
     required String password,
     required int page,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "sayfa": page,
         "limit": "20",
@@ -35,9 +35,20 @@ class StoryServices {
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> addstory({
+  Future<ServiceResult> addstory({
     required String username,
     required String password,
     required String imageURL,
@@ -45,7 +56,7 @@ class StoryServices {
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "hikayemedya": imageURL,
         "hikayepaylasimkategori": isEveryonePublish
@@ -55,117 +66,205 @@ class StoryServices {
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> removestory({
+  Future<ServiceResult> removestory({
     required String username,
     required String password,
     required int storyID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {"hikayeID": "$storyID"},
       endpoint: "$username/$password/${_EndpointConstants.removestory}/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> hidestory({
+  Future<ServiceResult> hidestory({
     required String username,
     required String password,
     required int storyID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {"hikayeID": "$storyID"},
       endpoint: "$username/$password/${_EndpointConstants.hidestory}/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> view({
+  Future<ServiceResult> view({
     required String username,
     required String password,
     required int storyID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {"hikayeID": "$storyID"},
       endpoint: "$username/$password/${_EndpointConstants.viewstory}/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> fetchviewlist({
+  Future<ServiceResult> fetchviewlist({
     required String username,
     required String password,
     required int storyID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {"hikayeID": "$storyID"},
       endpoint: "$username/$password/${_EndpointConstants.viewliststory}/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> like({
+  Future<ServiceResult> like({
     required String username,
     required String password,
     required int storyID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {"hikayeID": "$storyID"},
       endpoint: "$username/$password/${_EndpointConstants.likestory}/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> likeremove({
+  Future<ServiceResult> likeremove({
     required String username,
     required String password,
     required int storyID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {"hikayeID": "$storyID"},
       endpoint: "$username/$password/${_EndpointConstants.likeremovestory}/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> likerslist({
+  Future<ServiceResult> likerslist({
     required String username,
     required String password,
     required int storyID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {"hikayeID": "$storyID"},
       endpoint: "$username/$password/${_EndpointConstants.likestory}/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 }

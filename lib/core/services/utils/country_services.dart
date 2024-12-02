@@ -18,38 +18,72 @@ class CountryServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  //Country - Province
-
-  Future<Map<String, dynamic>> countryfetch({
+  Future<CountryResponse> countryfetch({
     required String username,
     required String password,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {},
       endpoint: "$username/$password/${_EndpointConstants.countries}/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+    CountryResponse armoyuresponse = CountryResponse(result: result);
+
+    if (response['durum'] == 0) {
+      return armoyuresponse;
+    }
+
+    armoyuresponse.response = APICountry(
+      countryID: response['icerik']['country_ID'],
+      name: response['icerik']['country_name'],
+      code: response['icerik']['country_code'],
+      phonecode: response['icerik']['country_phoneCode'],
+    );
+
+    return armoyuresponse;
   }
 
-  Future<Map<String, dynamic>> fetchprovince({
+  Future<ProvinceResponse> fetchprovince({
     required String username,
     required String password,
     required int countryID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {"countryID": countryID},
       endpoint: "$username/$password/${_EndpointConstants.provinces}/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
     );
-  }
 
-//Country - Province
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+    ProvinceResponse armoyuresponse = ProvinceResponse(result: result);
+
+    if (response['durum'] == 0) {
+      return armoyuresponse;
+    }
+    armoyuresponse.response = APIProvince(
+      provinceID: response['icerik']['province_ID'],
+      name: response['icerik']['province_name'],
+      platecode: response['icerik']['province_plateCode'],
+      phonecode: response['icerik']['province_phoneCode'],
+    );
+    return armoyuresponse;
+  }
 }

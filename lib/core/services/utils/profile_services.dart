@@ -18,14 +18,14 @@ class ProfileServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<Map<String, dynamic>> invitelist({
+  Future<ServiceResult> invitelist({
     required String username,
     required String password,
     required int page,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "sayfa": page,
         "limit": "30",
@@ -35,16 +35,26 @@ class ProfileServices {
         token: getToken(),
       ),
     );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> sendauthmailURL({
+  Future<ServiceResult> sendauthmailURL({
     required String username,
     required String password,
     required int userID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "userID": "$userID",
       },
@@ -53,15 +63,26 @@ class ProfileServices {
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> invitecoderefresh({
+  Future<ServiceResult> invitecoderefresh({
     required String username,
     required String password,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {},
       endpoint:
           "$username/$password/${_EndpointConstants.invitecoderefresh}/0/",
@@ -69,9 +90,19 @@ class ProfileServices {
         token: getToken(),
       ),
     );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> friendlist({
+  Future<ServiceResult> friendlist({
     required String username,
     required String password,
     required int userID,
@@ -79,7 +110,7 @@ class ProfileServices {
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "oyuncubakid": userID,
         "sayfa": "$page",
@@ -90,16 +121,26 @@ class ProfileServices {
         token: getToken(),
       ),
     );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> friendrequest({
+  Future<ServiceResult> friendrequest({
     required String username,
     required String password,
     required int userID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "oyuncubakid": userID,
       },
@@ -108,9 +149,19 @@ class ProfileServices {
         token: getToken(),
       ),
     );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> friendrequestanswer({
+  Future<ServiceResult> friendrequestanswer({
     required String username,
     required String password,
     required int userID,
@@ -118,7 +169,7 @@ class ProfileServices {
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "oyuncubakid": userID,
         "cevap": answer,
@@ -129,16 +180,26 @@ class ProfileServices {
         token: getToken(),
       ),
     );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> userdurting({
+  Future<ServiceResult> userdurting({
     required String username,
     required String password,
     required int userID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "oyuncubakid": userID,
       },
@@ -147,16 +208,26 @@ class ProfileServices {
         token: getToken(),
       ),
     );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> friendremove({
+  Future<ServiceResult> friendremove({
     required String username,
     required String password,
     required int userID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "oyuncubakid": userID,
       },
@@ -165,39 +236,69 @@ class ProfileServices {
         token: getToken(),
       ),
     );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> defaultavatar({
+  Future<ServiceResult> defaultavatar({
     required String username,
     required String password,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {},
       endpoint: "$username/$password/${_EndpointConstants.defaultavatar}/0/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
     );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> defaultbanner({
+  Future<ServiceResult> defaultbanner({
     required String username,
     required String password,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {},
       endpoint: "$username/$password/${_EndpointConstants.defaultbanner}/0/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
     );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> changeavatar({
+  Future<ServiceResult> changeavatar({
     required String username,
     required String password,
     required List<XFile> files,
@@ -208,7 +309,7 @@ class ProfileServices {
     for (var file in files) {
       photosCollection.add(await _apiHelpers.generateImageFile("resim", file));
     }
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {},
       files: photosCollection,
       endpoint: "$username/$password/${_EndpointConstants.changeavatar}/0/0/",
@@ -216,9 +317,19 @@ class ProfileServices {
         token: getToken(),
       ),
     );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> changebanner({
+  Future<ServiceResult> changebanner({
     required String username,
     required String password,
     required List<XFile> files,
@@ -229,7 +340,7 @@ class ProfileServices {
     for (var file in files) {
       photosCollection.add(await _apiHelpers.generateImageFile("resim", file));
     }
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {},
       files: photosCollection,
       endpoint: "$username/$password/${_EndpointConstants.changebanner}/0/0/",
@@ -237,25 +348,45 @@ class ProfileServices {
         token: getToken(),
       ),
     );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> selectfavteam({
+  Future<ServiceResult> selectfavteam({
     required String username,
     required String password,
     int? teamID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {"favoritakimID": "$teamID"},
       endpoint: "$username/$password/${_EndpointConstants.selectfavteam}/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
     );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> saveprofiledetails({
+  Future<ServiceResult> saveprofiledetails({
     required String username,
     required String password,
     required String firstname,
@@ -270,7 +401,7 @@ class ProfileServices {
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "ad": firstname,
         "soyad": lastname,
@@ -290,5 +421,16 @@ class ProfileServices {
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 }

@@ -1,3 +1,5 @@
+import 'package:armoyu_services/core/models/ARMOYU/media.dart';
+
 class User {
   int? userID;
   String? username;
@@ -18,4 +20,37 @@ class User {
     this.banner,
     this.displayname,
   });
+}
+
+class UserInfo {
+  int userID;
+  String displayname;
+  String? username;
+  MediaURL avatar;
+  String? role;
+  UserInfo({
+    required this.userID,
+    required this.displayname,
+    this.username,
+    this.role,
+    required this.avatar,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'userID': userID,
+      'displayname': displayname,
+      'username': username,
+      'avatar': avatar,
+    };
+  }
+
+  factory UserInfo.fromJson(Map<String, dynamic> json) {
+    return UserInfo(
+      userID: json['userID'],
+      displayname: json['displayname'],
+      username: json['username'],
+      avatar: MediaURL.fromJson(json['avatar']),
+    );
+  }
 }

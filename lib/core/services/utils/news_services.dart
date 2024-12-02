@@ -18,7 +18,7 @@ class NewsServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<List<News>> fetch({
+  Future<NewsListResponse> fetch({
     required String? username,
     required String? password,
     required int page,
@@ -39,18 +39,25 @@ class NewsServices {
       ),
     );
 
-    List<News> list = [];
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+    NewsListResponse armoyuresponse = NewsListResponse(result: result);
 
     if (response['durum'] == 0) {
-      return list;
+      return armoyuresponse;
     }
+
+    List<APINewsDetail> list = [];
 
     for (var element in response['icerik']) {
       list.add(
-        News(
+        APINewsDetail(
           newsID: element['haberID'],
           newsURL: element['link'],
-          newsOwner: NewsOwner(
+          newsOwner: UserInfo(
             userID: element['yazarID'],
             displayname: element['yazar'],
             avatar: MediaURL(
@@ -77,17 +84,18 @@ class NewsServices {
       );
     }
 
-    return list;
+    armoyuresponse.response = APINewsList(news: list);
+    return armoyuresponse;
   }
 
-  Future<Map<String, dynamic>> fetchnews({
+  Future<ServiceResult> fetchnews({
     required String username,
     required String password,
     required int newsID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "haberID": "$newsID",
       },
@@ -96,5 +104,17 @@ class NewsServices {
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+
+    return result;
   }
 }

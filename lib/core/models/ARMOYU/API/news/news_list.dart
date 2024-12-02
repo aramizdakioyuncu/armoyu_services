@@ -1,9 +1,31 @@
 import 'package:armoyu_services/core/models/ARMOYU/media.dart';
+import 'package:armoyu_services/core/models/ARMOYU/user.dart';
 
-class News {
+class APINewsList {
+  List<APINewsDetail> news;
+  APINewsList({
+    required this.news,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'news': news.map((player) => player.toJson()).toList(),
+    };
+  }
+
+  factory APINewsList.fromJson(Map<String, dynamic> json) {
+    return APINewsList(
+      news: (json['news'] as List<dynamic>)
+          .map((player) => APINewsDetail.fromJson(player))
+          .toList(),
+    );
+  }
+}
+
+class APINewsDetail {
   final int newsID;
   final String newsURL;
-  final NewsOwner newsOwner;
+  final UserInfo newsOwner;
   final String title;
   final String? content;
   final String summary;
@@ -12,7 +34,7 @@ class News {
   final String category;
   final int views;
 
-  News({
+  APINewsDetail({
     required this.newsID,
     required this.newsURL,
     required this.newsOwner,
@@ -40,11 +62,11 @@ class News {
     };
   }
 
-  factory News.fromJson(Map<String, dynamic> json) {
-    return News(
+  factory APINewsDetail.fromJson(Map<String, dynamic> json) {
+    return APINewsDetail(
       newsID: json['newsID'],
       newsURL: json['newsURL'],
-      newsOwner: NewsOwner.fromJson(json['newsOwner']),
+      newsOwner: UserInfo.fromJson(json['newsOwner']),
       title: json['title'],
       content: json['content'],
       summary: json['summary'],
@@ -52,33 +74,6 @@ class News {
       date: json['date'],
       category: json['category'],
       views: json['views'],
-    );
-  }
-}
-
-class NewsOwner {
-  int userID;
-  String displayname;
-  MediaURL avatar;
-  NewsOwner({
-    required this.userID,
-    required this.displayname,
-    required this.avatar,
-  });
-
-  Map<String, dynamic> toJson() {
-    return {
-      'userID': userID,
-      'displayname': displayname,
-      'avatar': avatar,
-    };
-  }
-
-  factory NewsOwner.fromJson(Map<String, dynamic> json) {
-    return NewsOwner(
-      userID: json['userID'],
-      displayname: json['displayname'],
-      avatar: MediaURL.fromJson(json['avatar']),
     );
   }
 }

@@ -18,15 +18,14 @@ class CategoryServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  //Category
-  Future<Map<String, dynamic>> category({
+  Future<CategoryResponse> category({
     required String username,
     required String password,
     required String categoryID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "kategoriID": categoryID,
       },
@@ -35,16 +34,34 @@ class CategoryServices {
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    CategoryResponse armoyuresponse = CategoryResponse(result: result);
+
+    if (response['durum'] == 0) {
+      return armoyuresponse;
+    }
+
+    armoyuresponse.response = APICategory(
+      categoryID: response['icerik']['kategori_ID'],
+      name: response['icerik']['kategori_adi'],
+    );
+    return armoyuresponse;
   }
 
-  Future<Map<String, dynamic>> categorydetail({
+  Future<CategoryResponse> categorydetail({
     required String username,
     required String password,
     required String categoryID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "kategoriID": categoryID,
       },
@@ -53,7 +70,22 @@ class CategoryServices {
         token: getToken(),
       ),
     );
-  }
 
-//Category
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+    CategoryResponse armoyuresponse = CategoryResponse(result: result);
+
+    if (response['durum'] == 0) {
+      return armoyuresponse;
+    }
+
+    armoyuresponse.response = APICategory(
+      categoryID: response['icerik']['kategori_ID'],
+      name: response['icerik']['kategori_adi'],
+    );
+    return armoyuresponse;
+  }
 }

@@ -1,5 +1,7 @@
 import 'package:armoyu_services/armoyu_services.dart';
 import 'package:armoyu_services/core/debouncer.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/search/search_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/_response/response.dart';
 import 'package:armoyu_services/core/models/ARMOYU/user.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -55,23 +57,23 @@ class ARMOYUSearchBar {
           }
 
           // API'den veri çekme
-          Map<String, dynamic> response = await service.searchServices
+          SearchListResponse response = await service.searchServices
               .searchengine(searchword: value, page: 1);
 
-          if (response['durum'] == 0) {
-            log(response['aciklama']);
+          if (response.result.status == false) {
+            log(response.result.description);
             return;
           }
 
           // Yeni kullanıcıları ekleme
-          for (var element in response['icerik']) {
-            if (!allItems.any(
-                (filterelement) => filterelement.userID == element['ID'])) {
+          for (APISearchDetail element in response.response!.search) {
+            if (!allItems
+                .any((filterelement) => filterelement.userID == element.id)) {
               allItems.add(
                 User(
-                  userID: element['ID'],
-                  displayname: element['Value'],
-                  avatar: element['avatar'],
+                  userID: element.id,
+                  displayname: element.value,
+                  avatar: element.avatar,
                 ),
               );
             }
@@ -194,23 +196,23 @@ class MyStatefulWidgetState extends State<MyStatefulWidget> {
           }
 
           // API'den veri çekme
-          Map<String, dynamic> response = await widget.service.searchServices
+          SearchListResponse response = await widget.service.searchServices
               .searchengine(searchword: value, page: 1);
 
-          if (response['durum'] == 0) {
-            log(response['aciklama']);
+          if (response.result.status == false) {
+            log(response.result.description);
             return;
           }
 
           // Yeni kullanıcıları ekleme
-          for (var element in response['icerik']) {
-            if (!widget.allItems.any(
-                (filterelement) => filterelement.userID == element['ID'])) {
+          for (APISearchDetail element in response.response!.search) {
+            if (!widget.allItems
+                .any((filterelement) => filterelement.userID == element.id)) {
               widget.allItems.add(
                 User(
-                  userID: element['ID'],
-                  displayname: element['Value'],
-                  avatar: element['avatar'],
+                  userID: element.id,
+                  displayname: element.value,
+                  avatar: element.avatar,
                 ),
               );
             }

@@ -1,6 +1,29 @@
 import 'package:armoyu_services/core/models/ARMOYU/media.dart';
+import 'package:armoyu_services/core/models/ARMOYU/user.dart';
 
-class Group {
+class APIGroupList {
+  final List<APIGroupListDetail> groups;
+
+  APIGroupList({
+    required this.groups,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'groups': groups.map((player) => player.toJson()).toList(),
+    };
+  }
+
+  factory APIGroupList.fromJson(Map<String, dynamic> json) {
+    return APIGroupList(
+      groups: (json['groups'] as List<dynamic>)
+          .map((player) => APIGroupListDetail.fromJson(player))
+          .toList(),
+    );
+  }
+}
+
+class APIGroupListDetail {
   final int groupID;
   final String name;
   final String shortname;
@@ -15,11 +38,11 @@ class Group {
   final String? description;
   final GroupSocial socail;
   final String groupURL;
-  final GroupOwner groupOwner;
+  final UserInfo groupOwner;
   final Media logo;
   final Media banner;
 
-  Group({
+  APIGroupListDetail({
     required this.groupID,
     required this.name,
     required this.shortname,
@@ -57,8 +80,8 @@ class Group {
     };
   }
 
-  factory Group.fromJson(Map<String, dynamic> json) {
-    return Group(
+  factory APIGroupListDetail.fromJson(Map<String, dynamic> json) {
+    return APIGroupListDetail(
       groupID: json['groupID'],
       name: json['name'],
       shortname: json['shortname'],
@@ -71,7 +94,7 @@ class Group {
       description: json['description'],
       socail: GroupSocial.fromJson(json['socail']),
       groupURL: json['groupURL'],
-      groupOwner: GroupOwner.fromJson(json['groupOwner']),
+      groupOwner: UserInfo.fromJson(json['groupOwner']),
       logo: Media.fromJson(json['logo']),
       banner: Media.fromJson(json['banner']),
     );
@@ -98,37 +121,6 @@ class GroupSocial {
     return GroupSocial(
       website: json['website'],
       discord: json['discord'],
-    );
-  }
-}
-
-class GroupOwner {
-  int userID;
-  String displayname;
-  String username;
-  MediaURL avatar;
-  GroupOwner({
-    required this.userID,
-    required this.displayname,
-    required this.username,
-    required this.avatar,
-  });
-
-  Map<String, dynamic> toJson() {
-    return {
-      'userID': userID,
-      'displayname': displayname,
-      'username': username,
-      'avatar': avatar,
-    };
-  }
-
-  factory GroupOwner.fromJson(Map<String, dynamic> json) {
-    return GroupOwner(
-      userID: json['userID'],
-      displayname: json['displayname'],
-      username: json['username'],
-      avatar: MediaURL.fromJson(json['avatar']),
     );
   }
 }

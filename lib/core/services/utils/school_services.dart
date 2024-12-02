@@ -18,29 +18,40 @@ class SchoolServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<Map<String, dynamic>> getschools({
+  Future<ServiceResult> getschools({
     required String username,
     required String password,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {},
       endpoint: "$username/$password/${_EndpointConstants.getschools}/0/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> fetchSchool({
+  Future<ServiceResult> fetchSchool({
     required String username,
     required String password,
     required int schoolID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "okulID": schoolID,
       },
@@ -49,9 +60,20 @@ class SchoolServices {
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> joinschool({
+  Future<ServiceResult> joinschool({
     required String username,
     required String password,
     required String schoolID,
@@ -61,7 +83,7 @@ class SchoolServices {
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "isyeriidi": schoolID,
         "hangisinif": classID,
@@ -73,21 +95,42 @@ class SchoolServices {
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> getschoolclass({
+  Future<ServiceResult> getschoolclass({
     required String username,
     required String password,
     required String schoolID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {"hangisyeri": schoolID},
       endpoint: "$username/$password/${_EndpointConstants.getschoolclass}/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
     );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 }

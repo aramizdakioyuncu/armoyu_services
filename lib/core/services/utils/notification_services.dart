@@ -18,13 +18,13 @@ class NotificationServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<Map<String, dynamic>> listNotificationSettings({
+  Future<ServiceResult> listNotificationSettings({
     required String username,
     required String password,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {},
       endpoint:
           "$username/$password/${_EndpointConstants.notificationsettings}/",
@@ -32,9 +32,19 @@ class NotificationServices {
         token: getToken(),
       ),
     );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 
-  Future<Map<String, dynamic>> updateNotificationSettings({
+  Future<ServiceResult> updateNotificationSettings({
     required String username,
     required String password,
     required List<String> options,
@@ -46,7 +56,7 @@ class NotificationServices {
     for (int i = 0; i < options.length; i++) {
       formData['notification[$i]'] = options[i];
     }
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: formData,
       endpoint:
           "$username/$password/${_EndpointConstants.notificationsettingsupdate}/0/",
@@ -54,5 +64,16 @@ class NotificationServices {
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+    return result;
   }
 }

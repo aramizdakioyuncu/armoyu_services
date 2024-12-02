@@ -5,9 +5,9 @@ final class _EndpointConstants {
   static const String previousBaseUrl = "https://aramizdakioyuncu.com/botlar";
   static const String previusAuthServicesLogin = "0";
 
-  static const String authServicesLogin = "login";
+  // static const String authServicesLogin = "login";
   static const String users = "users";
-  static const String requests = "requests";
+  // static const String requests = "requests";
   static const String register = "kayit-ol";
   static const String logout = "cikis-yap";
   static const String forgotPassword = "sifremi-unuttum";

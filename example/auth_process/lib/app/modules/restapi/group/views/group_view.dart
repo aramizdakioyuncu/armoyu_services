@@ -1,4 +1,4 @@
-import 'package:armoyu_services/core/models/ARMOYU/group.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/group/group_list.dart';
 import 'package:auth_process/app/modules/restapi/group/controllers/group_controller.dart';
 import 'package:auth_process/app/services/armoyu.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -35,7 +35,8 @@ class GroupView extends StatelessWidget {
                       ...List.generate(
                         controller.newsList.length,
                         (index) {
-                          Group groupInfo = controller.newsList[index];
+                          APIGroupListDetail groupInfo =
+                              controller.newsList[index];
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: SizedBox(

@@ -18,50 +18,102 @@ class BlockingServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-//Blocking
-  Future<Map<String, dynamic>> list({
+  Future<BlockingListResponse> list({
     required String username,
     required String password,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       endpoint: "$username/$password/${_EndpointConstants.blockinglist}/0/0",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+    BlockingListResponse armoyuresponse = BlockingListResponse(result: result);
+
+    if (response['durum'] == 0) {
+      return armoyuresponse;
+    }
+
+    armoyuresponse.response = APIBlockingList(
+      blockID: response['engel_ID'],
+      blockeduser: UserInfo(
+        userID: response['engel_kimeID'],
+        displayname: response['engel_kime'],
+        username: response['engel_kadi'],
+        avatar: MediaURL(
+          bigURL: response['engel_avatar'],
+          normalURL: response['engel_avatar'],
+          minURL: response['engel_avatar'],
+        ),
+      ),
+      date: response['engel_zaman'],
+    );
+
+    return armoyuresponse;
   }
 
-  Future<Map<String, dynamic>> add({
+  Future<BlockingAddResponse> add({
     required String username,
     required String password,
     required int userID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
-        endpoint: "$username/$password/${_EndpointConstants.bloclistadd}/0",
-        headers: _apiHelpers.getRequestHeader(
-          token: getToken(),
-        ),
-        body: {"userID": userID});
+    Map<String, dynamic> response = await _apiHelpers.post(
+      endpoint: "$username/$password/${_EndpointConstants.bloclistadd}/0",
+      body: {"userID": userID},
+      headers: _apiHelpers.getRequestHeader(
+        token: getToken(),
+      ),
+    );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+    BlockingAddResponse armoyuresponse = BlockingAddResponse(result: result);
+
+    if (response['durum'] == 0) {
+      return armoyuresponse;
+    }
+
+    return armoyuresponse;
   }
 
-  Future<Map<String, dynamic>> remove({
+  Future<BlockingRemoveResponse> remove({
     required String username,
     required String password,
     required int userID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
-        endpoint: "$username/$password/${_EndpointConstants.bloclistremove}/0",
-        headers: _apiHelpers.getRequestHeader(
-          token: getToken(),
-        ),
-        body: {"userID": userID});
-  }
+    Map<String, dynamic> response = await _apiHelpers.post(
+      body: {"userID": userID},
+      endpoint: "$username/$password/${_EndpointConstants.bloclistremove}/0",
+      headers: _apiHelpers.getRequestHeader(
+        token: getToken(),
+      ),
+    );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+    BlockingRemoveResponse armoyuresponse =
+        BlockingRemoveResponse(result: result);
 
-//Blocking
+    if (response['durum'] == 0) {
+      return armoyuresponse;
+    }
+    return armoyuresponse;
+  }
 }

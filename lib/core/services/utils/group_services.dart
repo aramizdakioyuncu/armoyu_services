@@ -18,8 +18,7 @@ class GroupServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  //Group
-  Future<List<Group>> groupList({
+  Future<GroupListResponse> groupList({
     required String username,
     required String password,
     int? category,
@@ -38,15 +37,21 @@ class GroupServices {
       ),
     );
 
-    List<Group> list = [];
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
 
+    GroupListResponse armoyuresponse = GroupListResponse(result: result);
     if (response['durum'] == 0) {
-      return list;
+      return armoyuresponse;
     }
 
+    List<APIGroupListDetail> list = [];
     for (var element in response['icerik']) {
       list.add(
-        Group(
+        APIGroupListDetail(
           groupID: element['group_ID'],
           name: element['group_name'],
           shortname: element['group_shortname'],
@@ -62,7 +67,7 @@ class GroupServices {
             discord: element['group_social']['group_discord'],
           ),
           groupURL: element['group_URL'],
-          groupOwner: GroupOwner(
+          groupOwner: UserInfo(
             userID: element['group_owner']['player_ID'],
             displayname: element['group_owner']['player_displayname'],
             username: element['group_owner']['player_userlogin'],
@@ -92,17 +97,19 @@ class GroupServices {
       );
     }
 
-    return list;
+    armoyuresponse.response = APIGroupList(groups: list);
+
+    return armoyuresponse;
   }
 
-  Future<Map<String, dynamic>> groupFetch({
+  Future<GroupDetailResponse> groupFetch({
     required String username,
     required String password,
     required int grupID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "grupID": grupID,
       },
@@ -111,16 +118,64 @@ class GroupServices {
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    GroupDetailResponse armoyuresponse = GroupDetailResponse(result: result);
+
+    if (response['durum'] == 0) {
+      return armoyuresponse;
+    }
+
+    armoyuresponse.response = APIGroupDetail(
+      groupID: response['icerik']['group_ID'],
+      groupName: response['icerik']['group_name'],
+      groupShortname: response['icerik']['group_shortname'],
+      groupJoinStatus:
+          response['icerik']['group_joinstatus'] == 1 ? true : false,
+      groupDescription: response['icerik']['group_description'],
+      groupSocial: GroupSocial(
+        discord: response['icerik']['group_social']['group_discord'],
+        website: response['icerik']['group_social']['group_website'],
+      ),
+      groupURL: response['icerik']['group_URL'],
+      groupOwner: UserInfo(
+        userID: response['icerik']['group_owner']['player_ID'],
+        displayname: response['icerik']['group_owner']['player_displayname'],
+        username: response['icerik']['group_owner']['player_userlogin'],
+        avatar: MediaURL(
+          bigURL: response['icerik']['group_owner']['player_avatar'],
+          normalURL: response['icerik']['group_owner']['player_avatar'],
+          minURL: response['icerik']['group_owner']['player_avatar'],
+        ),
+      ),
+      groupLogo: MediaURL(
+        bigURL: response['icerik']['group_logo']['media_bigURL'],
+        normalURL: response['icerik']['group_logo']['media_URL'],
+        minURL: response['icerik']['group_logo']['media_minURL'],
+      ),
+      groupBanner: MediaURL(
+        bigURL: response['icerik']['group_banner']['media_bigURL'],
+        normalURL: response['icerik']['group_banner']['media_URL'],
+        minURL: response['icerik']['group_banner']['media_minURL'],
+      ),
+    );
+
+    return armoyuresponse;
   }
 
-  Future<Map<String, dynamic>> groupusersFetch({
+  Future<GroupUsersResponse> groupusersFetch({
     required String username,
     required String password,
     required int grupID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "grupID": grupID,
       },
@@ -129,16 +184,47 @@ class GroupServices {
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+    GroupUsersResponse armoyuresponse = GroupUsersResponse(result: result);
+
+    if (response['durum'] == 0) {
+      return armoyuresponse;
+    }
+
+    List<UserInfo> users = [];
+
+    for (var element in response['aciklama']) {
+      users.add(
+        UserInfo(
+          userID: element['player_ID'],
+          displayname: element['player_displayname'],
+          username: element['player_userlogin'],
+          avatar: MediaURL(
+            bigURL: element['player_avatar']['media_bigURL'],
+            normalURL: element['player_avatar']['media_URL'],
+            minURL: element['player_avatar']['media_minURL'],
+          ),
+          role: element['player_role'],
+        ),
+      );
+    }
+    armoyuresponse.response = APIGroupUser(user: users);
+    return armoyuresponse;
   }
 
-  Future<Map<String, dynamic>> groupLeave({
+  Future<GroupLeaveResponse> groupLeave({
     required String username,
     required String password,
     required int grupID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "grupID": grupID,
       },
@@ -147,9 +233,21 @@ class GroupServices {
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+    GroupLeaveResponse armoyuresponse = GroupLeaveResponse(result: result);
+
+    if (response['durum'] == 0) {
+      return armoyuresponse;
+    }
+    return armoyuresponse;
   }
 
-  Future<Map<String, dynamic>> groupsettingsSave({
+  Future<GroupSettingsResponse> groupsettingsSave({
     required String username,
     required String password,
     required int grupID,
@@ -162,7 +260,7 @@ class GroupServices {
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "grupID": "$grupID",
         "baslik": groupName,
@@ -177,9 +275,23 @@ class GroupServices {
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+    GroupSettingsResponse armoyuresponse =
+        GroupSettingsResponse(result: result);
+
+    if (response['durum'] == 0) {
+      return armoyuresponse;
+    }
+
+    return armoyuresponse;
   }
 
-  Future<Map<String, dynamic>> changegroupmedia({
+  Future<ServiceResult> changegroupmedia({
     required String username,
     required String password,
     required List<XFile> files,
@@ -193,7 +305,7 @@ class GroupServices {
       photosCollection.add(await _apiHelpers.generateImageFile("media", file));
     }
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "groupID": "$groupID",
         "category": category,
@@ -203,9 +315,21 @@ class GroupServices {
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+
+    return result;
   }
 
-  Future<Map<String, dynamic>> grouprequestanswer({
+  Future<ServiceResult> grouprequestanswer({
     required String username,
     required String password,
     required int groupID,
@@ -213,7 +337,7 @@ class GroupServices {
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "grupID": "$groupID",
         "cevap": answer,
@@ -224,9 +348,21 @@ class GroupServices {
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+
+    return result;
   }
 
-  Future<Map<String, dynamic>> groupuserInvite({
+  Future<ServiceResult> groupuserInvite({
     required String username,
     required String password,
     required int groupID,
@@ -239,16 +375,28 @@ class GroupServices {
       formData['users[$i]'] = userList[i];
     }
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: formData,
       endpoint: "$username/$password/${_EndpointConstants.groupInvite}/0/",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+
+    return result;
   }
 
-  Future<Map<String, dynamic>> groupuserRemove({
+  Future<ServiceResult> groupuserRemove({
     required String username,
     required String password,
     required int groupID,
@@ -256,7 +404,7 @@ class GroupServices {
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "grupID": groupID,
         "userID": userID,
@@ -266,9 +414,21 @@ class GroupServices {
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+
+    return result;
   }
 
-  Future<Map<String, dynamic>> groupcreate({
+  Future<ServiceResult> groupcreate({
     required String username,
     required String password,
     required String grupadi,
@@ -279,7 +439,7 @@ class GroupServices {
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "grupadi": grupadi,
         "kisaltmaadi": kisaltmaadi,
@@ -292,7 +452,17 @@ class GroupServices {
         token: getToken(),
       ),
     );
-  }
 
-  //Group
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+
+    return result;
+  }
 }

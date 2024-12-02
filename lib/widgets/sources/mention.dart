@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:armoyu_services/armoyu_services.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/search/search_hashtaglist.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/search/search_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/_response/response.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mentions/flutter_mentions.dart';
@@ -9,29 +12,6 @@ class ARMOYUMention {
   final ARMOYUServices service;
 
   ARMOYUMention(this.service);
-
-  // List<Map<String, dynamic>> peopleList = [];
-  // List<Map<String, dynamic>> hashtagList = [];
-
-  // void addpeopleList(Map<String, dynamic> newPerson) {
-  //   // Eklemeden önce listede aynı kişinin olup olmadığını kontrol et
-  //   // Eğer kişi listede yoksa ekle
-  //   if (!peopleList.any((person) => person['id'] == newPerson['id'])) {
-  //     peopleList.add(newPerson);
-  //   } else {
-  //     log("Kişi zaten listede bulunmaktadır.");
-  //   }
-  // }
-
-  // void addhashtagList(Map<String, dynamic> newHashtag) {
-  //   // Eklemeden önce listede aynı kişinin olup olmadığını kontrol et
-  //   // Eğer hashtag listede yoksa ekle
-  //   if (!hashtagList.any((hashtag) => hashtag['id'] == newHashtag['id'])) {
-  //     hashtagList.add(newHashtag);
-  //   } else {
-  //     log("Hashtag zaten listede bulunmaktadır.");
-  //   }
-  // }
 
   FlutterMentions mentionTextFiled({
     required GlobalKey<FlutterMentionsState> key,
@@ -65,23 +45,25 @@ class ARMOYUMention {
         //Oyuncu listesi bomboşsa
         if (service.peopleList.isEmpty) {
           searchTimer = Timer(const Duration(milliseconds: 500), () async {
-            Map<String, dynamic> response =
+            SearchListResponse response =
                 await service.searchServices.onlyusers(searchword: "", page: 1);
 
-            // SearchAPI f = SearchAPI(currentUser: currentUser);
-            // Map<String, dynamic> response =
-            //     await f.onlyusers(searchword: "", page: 1);
-            if (response["durum"] == 0) {
-              log(response["aciklama"]);
+            if (response.result.status == false) {
+              log(response.result.description);
               return;
             }
-            for (var element in response["icerik"]) {
-              service.addpeopleList({
-                'id': element["ID"].toString(),
-                'display': element["username"].toString(),
-                'full_name': element["Value"].toString(),
-                'photo': element["avatar"].toString()
-              });
+
+            for (APISearchDetail element in response.response!.search) {
+              service.addpeopleList(
+                newPerson: APISearchDetail(
+                  id: element.id,
+                  value: element.value,
+                  turu: element.turu,
+                  username: element.username,
+                  avatar: element.avatar,
+                  gender: element.gender,
+                ),
+              );
             }
             // key.refresh();
           });
@@ -89,23 +71,23 @@ class ARMOYUMention {
         //Hashtag listesi bomboşsa
         if (service.hashtagList.isEmpty) {
           searchTimer = Timer(const Duration(milliseconds: 500), () async {
-            // SearchAPI f = SearchAPI(currentUser: currentUser);
-            // Map<String, dynamic> response =
-            //     await f.hashtag(hashtag: "", page: 1);
-
-            Map<String, dynamic> response =
+            SearchHashtagListResponse response =
                 await service.searchServices.hashtag(hashtag: "", page: 1);
 
-            if (response["durum"] == 0) {
-              log(response["aciklama"]);
+            if (response.result.status == false) {
+              log(response.result.description);
               return;
             }
-            for (var element in response["icerik"]) {
-              service.addhashtagList({
-                'id': element["hashtag_ID"].toString(),
-                'display': element["hashtag_value"].toString(),
-                'numberofuses': element["hashtag_numberofuses"],
-              });
+
+            for (APISearcHashtagDetail element in response.response!.search) {
+              service.addhashtagList(
+                newHashtag: APISearcHashtagDetail(
+                  hashtagID: element.hashtagID,
+                  value: element.value,
+                  firstdate: element.firstdate,
+                  numberofuses: element.numberofuses,
+                ),
+              );
             }
             // key.refresh();
           });
@@ -126,47 +108,39 @@ class ARMOYUMention {
         searchTimer = Timer(const Duration(milliseconds: 500), () async {
           // SearchAPI f = SearchAPI(currentUser: currentUser);
 
-          Map<String, dynamic> response;
           if (lastWord[0] == "@") {
-            // response = await f.onlyusers(searchword: lastWord.substring(1), page: 1);
-
-            response = await service.searchServices
+            SearchListResponse response = await service.searchServices
                 .onlyusers(searchword: lastWord.substring(1), page: 1);
-          } else if (lastWord[0] == "#") {
-            // response = await f.hashtag(hashtag: lastWord.substring(1), page: 1);
 
-            response = await service.searchServices
+            if (response.result.status == false) {
+              log(response.result.description);
+              return;
+            }
+            for (APISearchDetail element in response.response!.search) {
+              if (lastWord[0] == "@") {
+                service.addpeopleList(newPerson: element);
+              }
+            }
+          } else if (lastWord[0] == "#") {
+            SearchHashtagListResponse response = await service.searchServices
                 .hashtag(hashtag: lastWord.substring(1), page: 1);
+
+            if (response.result.status == false) {
+              log(response.result.description);
+              return;
+            }
+            for (APISearcHashtagDetail element in response.response!.search) {
+              if (lastWord[0] == "#") {
+                service.addhashtagList(newHashtag: element);
+              }
+            }
           } else {
             return;
-          }
-
-          if (response["durum"] == 0) {
-            log(response["aciklama"]);
-            return;
-          }
-          for (var element in response["icerik"]) {
-            if (lastWord[0] == "@") {
-              service.addpeopleList({
-                'id': element["ID"].toString(),
-                'display': element["username"].toString(),
-                'full_name': element["Value"].toString(),
-                'photo': element["avatar"].toString()
-              });
-            }
-            if (lastWord[0] == "#") {
-              service.addhashtagList({
-                'id': element["hashtag_ID"].toString(),
-                'display': element["hashtag_value"].toString(),
-                'numberofuses': element["hashtag_numberofuses"],
-              });
-            }
           }
 
           // key.refresh();
         });
       },
-      // decoration: InputDecoration(hintText: SocialKeys.socialwritesomething.tr),
       decoration: InputDecoration(hintText: hinttext),
       mentions: [
         poplementions(peopleList: service.peopleList),
@@ -176,11 +150,11 @@ class ARMOYUMention {
   }
 
   Mention poplementions(
-      {required List<Map<String, dynamic>> peopleList, Color? textcolor}) {
+      {required List<APISearchDetail> peopleList, Color? textcolor}) {
     return Mention(
       trigger: '@',
       style: const TextStyle(color: Colors.amber),
-      data: peopleList,
+      data: peopleList.map((people) => people.toJson()).toList(),
       matchAll: false,
       suggestionBuilder: (data) {
         return Material(
@@ -194,7 +168,6 @@ class ARMOYUMention {
             subtitle: Text(
               "@${data['display']}",
               style: TextStyle(
-                // color: Get.theme.primaryColor.withOpacity(0.7),
                 color: textcolor,
               ),
             ),
@@ -205,11 +178,11 @@ class ARMOYUMention {
   }
 
   Mention hashtag(
-      {required List<Map<String, dynamic>> hashtagList, Color? textcolor}) {
+      {required List<APISearcHashtagDetail> hashtagList, Color? textcolor}) {
     return Mention(
       trigger: '#',
       style: const TextStyle(color: Colors.blue),
-      data: hashtagList,
+      data: hashtagList.map((hashtag) => hashtag.toJson()).toList(),
       matchAll: false,
       suggestionBuilder: (data) {
         return ListTile(
@@ -218,7 +191,6 @@ class ARMOYUMention {
             "Gündemdekiler",
             style: TextStyle(
               color: textcolor,
-              // color: Get.theme.primaryColor.withOpacity(0.7),
             ),
           ),
         );

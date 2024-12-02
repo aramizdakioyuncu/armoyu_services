@@ -1,4 +1,5 @@
 import 'package:armoyu_services/armoyu_services.dart';
+import 'package:armoyu_services/core/models/ARMOYU/_response/response.dart';
 import 'package:armoyu_services/core/models/ARMOYU/user.dart';
 import 'package:auth_process/app/services/armoyu.dart';
 import 'package:auth_process/app/utils/app_list.dart';
@@ -26,18 +27,18 @@ class LoginController extends GetxController {
     super.onInit();
   }
 
-  static void getSnackBar(getUsersResult) {
+  static void getSnackBar(String description, dynamic descriptiondetail) {
     try {
       Get.snackbar(
         "Sistem",
-        "${getUsersResult['aciklama'].toString()}${getUsersResult['icerik'].length != 0 ? "\n${getUsersResult['icerik']}" : ""}",
+        "$description\n$descriptiondetail",
         colorText: Colors.white,
         backgroundColor: Colors.black38,
       );
     } catch (e) {
       Get.snackbar(
         "Sistem",
-        "${getUsersResult['aciklama'].toString()}${getUsersResult['icerik'] != null ? "\n${getUsersResult['icerik']}" : ""}",
+        description,
         colorText: Colors.white,
         backgroundColor: Colors.black38,
       );
@@ -45,30 +46,33 @@ class LoginController extends GetxController {
   }
 
   Future<void> login() async {
-    final getUsersResult = await ARMOYU.service.authServices.previuslogin(
+    LoginResponse getUsersResult = await ARMOYU.service.authServices.login(
       username: usernameController.value.text,
       password: passcordController.value.text,
     );
 
-    if (getUsersResult['durum'] == 0 ||
-        getUsersResult['aciklama'] == "Oyuncu bilgileri yanlış!") {
-      getSnackBar(getUsersResult);
+    if (getUsersResult.result.status == false ||
+        getUsersResult.result.description == "Oyuncu bilgileri yanlış!") {
+      getSnackBar(
+        getUsersResult.result.description,
+        getUsersResult.result.descriptiondetail,
+      );
       return;
     }
-    log(getUsersResult['icerik'].toString());
+    log(getUsersResult.response.toString());
 
     useravatarController.value =
-        getUsersResult['icerik']['avatar']['media_minURL'];
+        getUsersResult.response!.avatar!.mediaURL.minURL;
 
     AppList.user.value = User(
-      userID: getUsersResult['icerik']['playerID'],
-      username: getUsersResult['icerik']["username"],
+      userID: getUsersResult.response!.playerID,
+      username: getUsersResult.response!.username,
       password: passcordController.value.text,
-      displayname: getUsersResult['icerik']["displayName"],
-      firstname: getUsersResult['icerik']["firstName"],
-      lastname: getUsersResult['icerik']['lastName'],
-      avatar: getUsersResult['icerik']['avatar']['media_minURL'],
-      banner: getUsersResult['icerik']['banner']['media_minURL'],
+      displayname: getUsersResult.response!.displayName,
+      firstname: getUsersResult.response!.firstName,
+      lastname: getUsersResult.response!.lastName,
+      avatar: getUsersResult.response!.avatar!.mediaURL.minURL,
+      banner: getUsersResult.response!.banner!.mediaURL.minURL,
     );
 
     log(AppList.user.value!.username!);
@@ -86,7 +90,10 @@ class LoginController extends GetxController {
     );
 
     if (getUsersResult['durum'] != 1) {
-      getSnackBar(getUsersResult);
+      // getSnackBar(
+      //   getUsersResult.result.description,
+      //   getUsersResult.result.descriptiondetail,
+      // );
       return;
     }
   }
@@ -110,7 +117,7 @@ class LoginController extends GetxController {
     );
 
     if (getUsersResult['durum'] != 1) {
-      getSnackBar(getUsersResult);
+      // getSnackBar(getUsersResult);
       return;
     }
   }

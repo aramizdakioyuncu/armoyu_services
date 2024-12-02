@@ -1,4 +1,4 @@
-import 'package:armoyu_services/core/models/ARMOYU/news.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/news/news_list.dart';
 import 'package:auth_process/app/modules/restapi/news/controllers/news_controller.dart';
 import 'package:auth_process/app/services/armoyu.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -35,7 +35,7 @@ class NewsView extends StatelessWidget {
                     children: List.generate(
                       controller.newsList.length,
                       (index) {
-                        News newsInfo = controller.newsList[index];
+                        APINewsDetail newsInfo = controller.newsList[index];
                         return Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: InkWell(

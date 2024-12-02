@@ -18,17 +18,45 @@ class AppServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<Map<String, dynamic>> sitemesaji({
+  Future<SitemessageResponse> sitemesaji({
     required String username,
     required String password,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       endpoint: "$username/$password/${_EndpointConstants.sitemessages}/0/0",
       headers: _apiHelpers.getRequestHeader(
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    SitemessageResponse armoyuresponse = SitemessageResponse(result: result);
+
+    if (response['durum'] == 0) {
+      return armoyuresponse;
+    }
+
+    Sitemessage sitemessage = Sitemessage(
+      status: response['icerik']['durum'] == 1 ? true : false,
+      currentMembers: response['icerik']['mevcutoyuncu'],
+      onlineMembers: response['icerik']['cevrimicikac'],
+      chatcount: response['icerik']['sohbetbildirim'],
+      avaiblepolls: response['icerik']['mevcutanket'],
+      avaibleEvents: response['icerik']['mevcutetkinlik'],
+      avaiblegroupEvents: response['icerik']['grupetkinlik'],
+      downloads: response['icerik']['indirmeler'],
+      friendrequests: response['icerik']['arkadaslikistekleri'],
+      grouprequests: response['icerik']['grupistekleri'],
+    );
+
+    armoyuresponse.response = sitemessage;
+    return armoyuresponse;
   }
 }

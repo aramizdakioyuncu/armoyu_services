@@ -18,7 +18,7 @@ class MediaServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<Map<String, dynamic>> fetch({
+  Future<ServiceResult> fetch({
     required String username,
     required String password,
     required int uyeID,
@@ -27,7 +27,7 @@ class MediaServices {
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "oyuncubakid": "$uyeID",
         "kategori": category,
@@ -39,9 +39,21 @@ class MediaServices {
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+
+    return result;
   }
 
-  Future<Map<String, dynamic>> rotation({
+  Future<ServiceResult> rotation({
     required String username,
     required String password,
     required int mediaID,
@@ -49,7 +61,7 @@ class MediaServices {
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "fotografID": "$mediaID",
         "derece": "$rotate",
@@ -59,16 +71,28 @@ class MediaServices {
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+
+    return result;
   }
 
-  Future<Map<String, dynamic>> delete({
+  Future<ServiceResult> delete({
     required String username,
     required String password,
     required int mediaID,
   }) async {
     password = _apiHelpers.generateMd5(password);
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "medyaID": "$mediaID",
       },
@@ -77,9 +101,21 @@ class MediaServices {
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+
+    return result;
   }
 
-  Future<Map<String, dynamic>> upload({
+  Future<ServiceResult> upload({
     required String username,
     required String password,
     required List<XFile> files,
@@ -97,7 +133,7 @@ class MediaServices {
       );
     }
 
-    return await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "category": category,
       },
@@ -107,5 +143,17 @@ class MediaServices {
         token: getToken(),
       ),
     );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    if (response['durum'] == 0) {
+      return result;
+    }
+
+    return result;
   }
 }
