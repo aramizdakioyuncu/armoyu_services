@@ -5,6 +5,7 @@ import 'package:auth_process/app/modules/restapi/group/views/group_view.dart';
 import 'package:auth_process/app/modules/restapi/login/views/login_view.dart';
 import 'package:auth_process/app/modules/restapi/news/views/news_view.dart';
 import 'package:auth_process/app/modules/restapi/other/views/other_view.dart';
+import 'package:auth_process/app/modules/restapi/register/views/register_view.dart';
 import 'package:auth_process/app/modules/restapi/searchengine/views/search_engine_view.dart';
 import 'package:get/get.dart';
 
@@ -19,6 +20,10 @@ class RestapiModule {
     GetPage(
       name: "$route/login",
       page: () => const LoginView(),
+    ),
+    GetPage(
+      name: "$route/register",
+      page: () => const RegisterView(),
     ),
     GetPage(
       name: "$route/news",

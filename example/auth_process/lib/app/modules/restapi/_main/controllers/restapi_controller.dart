@@ -15,7 +15,6 @@ class RestapiController extends GetxController {
 
   var savestaus = false.obs;
   var loginstaus = false.obs;
-  var registerstaus = false.obs;
 
   @override
   // ignore: unnecessary_overrides

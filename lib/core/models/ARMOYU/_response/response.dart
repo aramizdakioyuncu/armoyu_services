@@ -149,3 +149,17 @@ class LoginResponse {
   APILogin? response;
   LoginResponse({required this.result, this.response});
 }
+
+//Look Profile
+
+class LookProfileResponse {
+  final ServiceResult result;
+  APILogin? response;
+  LookProfileResponse({required this.result, this.response});
+}
+
+class LookProfilewithUsernameResponse {
+  final ServiceResult result;
+  APILogin? response;
+  LookProfilewithUsernameResponse({required this.result, this.response});
+}

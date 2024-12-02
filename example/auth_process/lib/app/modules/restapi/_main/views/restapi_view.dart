@@ -109,11 +109,9 @@ class RestapiView extends StatelessWidget {
                               text: "Register",
                               enabled: controller.statusController.value!,
                               onPressed: () async {
-                                controller.registerstaus.value = true;
-
-                                controller.registerstaus.value = false;
+                                Get.toNamed("/restapi/register");
                               },
-                              loadingStatus: controller.registerstaus.value,
+                              loadingStatus: false,
                             ),
                           ),
                           Padding(

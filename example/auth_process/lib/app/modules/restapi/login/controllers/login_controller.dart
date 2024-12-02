@@ -59,7 +59,6 @@ class LoginController extends GetxController {
       );
       return;
     }
-    log(getUsersResult.response.toString());
 
     useravatarController.value =
         getUsersResult.response!.avatar!.mediaURL.minURL;
@@ -74,8 +73,6 @@ class LoginController extends GetxController {
       avatar: getUsersResult.response!.avatar!.mediaURL.minURL,
       banner: getUsersResult.response!.banner!.mediaURL.minURL,
     );
-
-    log(AppList.user.value!.username!);
   }
 
   logout() {
@@ -107,13 +104,13 @@ class LoginController extends GetxController {
   }) async {
     final Map<String, dynamic> getUsersResult =
         await ARMOYU.service.authServices.register(
-      registerRequestModel: RegisterRequestModel(
-        firstname: firstname,
-        lastname: lastname,
-        username: username,
-        email: email,
-        password: password,
-      ),
+      username: "",
+      name: firstname,
+      lastname: lastname,
+      email: email,
+      //  inviteCode:  ,
+      password: password,
+      rpassword: password,
     );
 
     if (getUsersResult['durum'] != 1) {

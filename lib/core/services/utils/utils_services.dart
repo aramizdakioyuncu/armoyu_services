@@ -133,7 +133,7 @@ class UtilsServices {
     return result;
   }
 
-  Future<ServiceResult> lookProfile({
+  Future<LookProfileResponse> lookProfile({
     required String username,
     required String password,
     required int userID,
@@ -153,13 +153,18 @@ class UtilsServices {
       descriptiondetail: response['aciklamadetay'],
     );
 
+    LookProfileResponse armoyuresponse = LookProfileResponse(result: result);
+
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
-    return result;
+
+    armoyuresponse.response =
+        APILogin.updateclass(armoyuresponse.response!, response);
+    return armoyuresponse;
   }
 
-  Future<ServiceResult> lookProfilewithusername({
+  Future<LookProfilewithUsernameResponse> lookProfilewithusername({
     required String username,
     required String password,
     required String userusername,
@@ -179,10 +184,16 @@ class UtilsServices {
       descriptiondetail: response['aciklamadetay'],
     );
 
+    LookProfilewithUsernameResponse armoyuresponse =
+        LookProfilewithUsernameResponse(result: result);
+
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
-    return result;
+
+    armoyuresponse.response =
+        APILogin.updateclass(armoyuresponse.response!, response);
+    return armoyuresponse;
   }
 
   Future<ServiceResult> myGroups({
