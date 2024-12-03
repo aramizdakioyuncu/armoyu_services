@@ -26,8 +26,8 @@ class SearchEngineView extends StatelessWidget {
                   searchController: controller.search.value,
                   allItems: controller.allItems,
                   filteredItems: controller.filteredItems,
-                  itemSelected: (id, val) {
-                    log(id.toString() + val.toString());
+                  itemSelected: (id, val, username) {
+                    log(id.toString() + val.toString() + username.toString());
                   },
                 ),
               ),
