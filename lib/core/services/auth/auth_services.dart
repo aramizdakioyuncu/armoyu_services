@@ -18,8 +18,10 @@ final class AuthServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<LoginResponse> login(
-      {required String username, required String password}) async {
+  Future<LoginResponse> login({
+    required String username,
+    required String password,
+  }) async {
     password = _apiHelpers.generateMd5(password);
 
     Map<String, dynamic> response = await _apiHelpers.post(
@@ -39,6 +41,32 @@ final class AuthServices {
 
     //TOKEN AYARLARMA
     setToken(response['aciklama']);
+    //TOKEN AYARLARMA
+
+    armoyuresponse.response = APILogin.updateclass(response);
+
+    return armoyuresponse;
+  }
+
+  Future<LoginResponse> loginwithbarriertoken(
+      {required String barriertoken}) async {
+    Map<String, dynamic> response = await _apiHelpers.post(
+      endpoint: "0/0/${_EndpointConstants.previusAuthServicesLogin}/0/0/",
+      headers: _apiHelpers.getRequestHeader(token: barriertoken),
+    );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+    LoginResponse armoyuresponse = LoginResponse(result: result);
+    if (armoyuresponse.result.status == false ||
+        armoyuresponse.result.description == "Oyuncu bilgileri yanlış!") {
+      return armoyuresponse;
+    }
+
+    //TOKEN AYARLARMA
+    setToken(barriertoken);
     //TOKEN AYARLARMA
 
     armoyuresponse.response = APILogin.updateclass(response);

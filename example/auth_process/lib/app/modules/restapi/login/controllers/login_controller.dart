@@ -10,6 +10,7 @@ class LoginController extends GetxController {
   var apikeyController = TextEditingController().obs;
   var usernameController = TextEditingController().obs;
   var passcordController = TextEditingController().obs;
+  var barriertokenController = TextEditingController().obs;
 
 //Profile
 
@@ -74,19 +75,35 @@ class LoginController extends GetxController {
     AppList.user.value = null;
   }
 
-  Future<void> befriend() async {
-    final getUsersResult = await ARMOYU.service.userServices.addFriend(
-      addFriendRequestModel: AddFriendRequestModel(
-        kiminle: 2,
-      ),
+  Future<void> savebarriertoken() async {
+    // ARMOYU.service.barriertoken = barriertokenController.value.text;
+    log(barriertokenController.value.text);
+    LoginResponse getUsersResult =
+        await ARMOYU.service.authServices.loginwithbarriertoken(
+      barriertoken: barriertokenController.value.text,
     );
 
-    if (getUsersResult['durum'] != 1) {
-      // getSnackBar(
-      //   getUsersResult.result.description,
-      //   getUsersResult.result.descriptiondetail,
-      // );
+    if (getUsersResult.result.status == false ||
+        getUsersResult.result.description == "Oyuncu bilgileri yanlış!") {
+      getSnackBar(
+        getUsersResult.result.description,
+        getUsersResult.result.descriptiondetail,
+      );
       return;
     }
+
+    useravatarController.value =
+        getUsersResult.response!.avatar!.mediaURL.minURL;
+
+    AppList.user.value = User(
+      userID: getUsersResult.response!.playerID,
+      username: getUsersResult.response!.username,
+      password: passcordController.value.text,
+      displayname: getUsersResult.response!.displayName,
+      firstname: getUsersResult.response!.firstName,
+      lastname: getUsersResult.response!.lastName,
+      avatar: getUsersResult.response!.avatar!.mediaURL.minURL,
+      banner: getUsersResult.response!.banner!.mediaURL.minURL,
+    );
   }
 }

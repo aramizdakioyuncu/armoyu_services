@@ -153,12 +153,28 @@ class LoginView extends StatelessWidget {
                       ),
                     ],
                   ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: ARMOYU.widgets.textField.costum3(
+                            title: "BARRIER TOKEN",
+                            controller: controller.barriertokenController.value,
+                            onChanged: (val) {}),
+                      ),
+                      const SizedBox(width: 10),
+                      Obx(
+                        () => ARMOYU.widgets.elevatedButton.costum1(
+                          text: "KAYDET",
+                          onPressed: () => controller.savebarriertoken(),
+                          loadingStatus: controller.loginstaus.value,
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
-            ),
-            ElevatedButton(
-              onPressed: () => _launchAuthUrl(context),
-              child: const Text("ARMOYU ile Giriş"),
             ),
           ],
         ),
@@ -167,6 +183,7 @@ class LoginView extends StatelessWidget {
   }
 }
 
+// ignore: unused_element
 Future<void> _launchAuthUrl(BuildContext context) async {
   if (await canLaunchUrlString(authUrl)) {
     await launchUrlString(authUrl);
