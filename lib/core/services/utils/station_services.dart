@@ -18,18 +18,11 @@ class StationServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<ServiceResult> fetchStations({
-    required String username,
-    required String password,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<ServiceResult> fetchStations() async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {},
-      endpoint: "$username/$password/${_EndpointConstants.stations}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.stations}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -44,18 +37,11 @@ class StationServices {
     return result;
   }
 
-  Future<ServiceResult> fetchfoodstation({
-    required String username,
-    required String password,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<ServiceResult> fetchfoodstation() async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {"kategori": "yemek"},
-      endpoint: "$username/$password/${_EndpointConstants.stations}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.stations}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -70,20 +56,11 @@ class StationServices {
     return result;
   }
 
-  Future<ServiceResult> fetchEquipments({
-    required String username,
-    required String password,
-    required int stationID,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<ServiceResult> fetchEquipments({required int stationID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {"istasyonID": stationID},
-      endpoint:
-          "$username/$password/${_EndpointConstants.stationequipments}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.stationequipments}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(

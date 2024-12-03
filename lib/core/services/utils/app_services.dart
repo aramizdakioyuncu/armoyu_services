@@ -18,17 +18,10 @@ class AppServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<SitemessageResponse> sitemesaji({
-    required String username,
-    required String password,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<SitemessageResponse> sitemesaji() async {
     Map<String, dynamic> response = await _apiHelpers.post(
-      endpoint: "$username/$password/${_EndpointConstants.sitemessages}/0/0",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.sitemessages}/0/0",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(

@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:armoyu_services/core/models/ARMOYU/API/login&register&password/login.dart';
 import 'package:armoyu_services/core/models/ARMOYU/_response/response.dart';
 import 'package:auth_process/app/services/armoyu.dart';
-import 'package:auth_process/app/utils/app_list.dart';
+
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
@@ -21,8 +21,6 @@ class ProfileController extends GetxController {
     proccessStatus.value = true;
     LookProfileResponse getUsersResult =
         await ARMOYU.service.utilsServices.lookProfile(
-      username: AppList.user.value!.username!,
-      password: AppList.user.value!.password!,
       userID: int.parse(userIDController.value.text),
     );
     proccessStatus.value = false;
@@ -42,8 +40,8 @@ class ProfileController extends GetxController {
 
     LookProfilewithUsernameResponse getUsersResult =
         await ARMOYU.service.utilsServices.lookProfilewithusername(
-      username: AppList.user.value!.username!,
-      password: AppList.user.value!.password!,
+      // username: AppList.user.value!.username!,
+      // password: AppList.user.value!.password!,
       userusername: usernameController.value.text,
     );
     proccessStatus.value = false;

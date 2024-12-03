@@ -19,21 +19,12 @@ class LoginRegisterServices {
   }
 
   Future<ServiceResult> inviteCodeTest({
-    required String username,
-    required String password,
     required String code,
   }) async {
-    password = _apiHelpers.generateMd5(password);
-
     Map<String, dynamic> response = await _apiHelpers.post(
-      body: {
-        "davetkodu": code,
-      },
-      endpoint:
-          "$username/$password/${_EndpointConstants.invitecodefetch}/0/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      body: {"davetkodu": code},
+      endpoint: "0/0/${_EndpointConstants.invitecodefetch}/0/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
     ServiceResult result = ServiceResult(
       status: response['durum'] == 1 ? true : false,

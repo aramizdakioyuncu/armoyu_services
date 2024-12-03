@@ -18,17 +18,10 @@ class BlockingServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<BlockingListResponse> list({
-    required String username,
-    required String password,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<BlockingListResponse> list() async {
     Map<String, dynamic> response = await _apiHelpers.post(
-      endpoint: "$username/$password/${_EndpointConstants.blockinglist}/0/0",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.blockinglist}/0/0",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -60,19 +53,11 @@ class BlockingServices {
     return armoyuresponse;
   }
 
-  Future<BlockingAddResponse> add({
-    required String username,
-    required String password,
-    required int userID,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<BlockingAddResponse> add({required int userID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
-      endpoint: "$username/$password/${_EndpointConstants.bloclistadd}/0",
+      endpoint: "0/0/${_EndpointConstants.bloclistadd}/0",
       body: {"userID": userID},
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -89,19 +74,11 @@ class BlockingServices {
     return armoyuresponse;
   }
 
-  Future<BlockingRemoveResponse> remove({
-    required String username,
-    required String password,
-    required int userID,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<BlockingRemoveResponse> remove({required int userID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {"userID": userID},
-      endpoint: "$username/$password/${_EndpointConstants.bloclistremove}/0",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.bloclistremove}/0",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
     ServiceResult result = ServiceResult(
       status: response['durum'] == 1 ? true : false,

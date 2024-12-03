@@ -18,21 +18,13 @@ class CategoryServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<CategoryResponse> category({
-    required String username,
-    required String password,
-    required String categoryID,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<CategoryResponse> category({required String categoryID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "kategoriID": categoryID,
       },
-      endpoint: "$username/$password/${_EndpointConstants.categories}/0/0",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.categories}/0/0",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -54,21 +46,13 @@ class CategoryServices {
     return armoyuresponse;
   }
 
-  Future<CategoryResponse> categorydetail({
-    required String username,
-    required String password,
-    required String categoryID,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<CategoryResponse> categorydetail({required String categoryID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "kategoriID": categoryID,
       },
-      endpoint: "$username/$password/${_EndpointConstants.categorydetail}/0",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.categorydetail}/0",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(

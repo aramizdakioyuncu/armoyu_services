@@ -18,18 +18,11 @@ class TeamsServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<ServiceResult> fetch({
-    required String username,
-    required String password,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<ServiceResult> fetch() async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {},
-      endpoint: "$username/$password/${_EndpointConstants.teamslist}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.teamslist}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
     ServiceResult result = ServiceResult(
       status: response['durum'] == 1 ? true : false,

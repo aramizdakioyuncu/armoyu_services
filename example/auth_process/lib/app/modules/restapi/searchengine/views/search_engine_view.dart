@@ -31,6 +31,14 @@ class SearchEngineView extends StatelessWidget {
                   },
                 ),
               ),
+              // ARMOYU.widgets.searchBar.buildStatefulWidget(
+              //   searchController: controller.search.value,
+              //   allItems: controller.allItemsV2,
+              //   filteredItems: controller.filteredItemsV2,
+              //   itemSelected: (id, val) {
+              //     log(id.toString() + val.toString());
+              //   },
+              // ),
             ],
           ),
         ),

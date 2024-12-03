@@ -7,6 +7,9 @@ class SearchEngineController extends GetxController {
   final filteredItems = <User>[].obs;
   final allItems = <User>[].obs;
 
+  final filteredItemsV2 = <User>[];
+  final allItemsV2 = <User>[];
+
   var searchQuery = "".obs;
 
   @override

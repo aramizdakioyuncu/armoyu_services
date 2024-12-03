@@ -14,6 +14,28 @@ class ARMOYUSearchBar {
   final Debouncer debouncer =
       Debouncer(delay: const Duration(milliseconds: 500));
 
+  List<User> filter(List<User> users, String? value) {
+    final o1 = users
+        .where((element) =>
+            element.displayname!.toLowerCase().startsWith(value!.toLowerCase()))
+        .toList();
+    final o2 = users
+        .where((element) =>
+            element.displayname!.toLowerCase().contains(value!.toLowerCase()))
+        .toList();
+
+    final result = o1;
+    final temp = result.map((r) => r.userID.toString()).toSet();
+
+    for (User u in o2) {
+      if (temp.add(u.userID.toString())) {
+        result.add(u);
+      }
+    }
+
+    return result;
+  }
+
   Widget custom1({
     required RxList<User> allItems,
     required RxList<User> filteredItems,
@@ -28,24 +50,16 @@ class ARMOYUSearchBar {
       isFullScreen: false,
       viewConstraints: const BoxConstraints(maxHeight: 400),
       viewOnChanged: (value) {
-        if (value.length < 4) {
-          filteredItems.clear();
-          return;
-        }
         // Yerel filtreleme
-        filteredItems.value = allItems
-            .where((element) => element.displayname!
-                .toLowerCase()
-                .contains(value.toLowerCase()))
-            .toList();
+        filteredItems.value = filter(allItems, value);
         filteredItems.refresh();
 
-        debouncer(() async {
-          if (value.length < 3) {
-            filteredItems.clear();
-            return;
-          }
+        if (value.length < 3) {
+          // filteredItems.clear();
+          return;
+        }
 
+        debouncer(() async {
           // API'den veri çekme
           SearchListResponse response = await service.searchServices
               .searchengine(searchword: value, page: 1);
@@ -70,12 +84,7 @@ class ARMOYUSearchBar {
           }
 
           // Güncellenmiş filtreleme
-          filteredItems.value = allItems
-              .where((element) => element.displayname!
-                  .toLowerCase()
-                  .contains(value.toLowerCase()))
-              .toList();
-
+          filteredItems.value = filter(allItems, value);
           filteredItems.refresh();
         });
       },
@@ -131,15 +140,19 @@ class ARMOYUSearchBar {
     );
   }
 
-  //  Widget buildStatefulWidget({
-  //   required RxList<User> allItems,
-  //   required RxList<User> filteredItems,
+  // Widget buildStatefulWidget({
+  //   required List<User> allItems,
+  //   required List<User> filteredItems,
   //   required SearchController searchController,
+  //   required Function(int id, String val)? itemSelected,
+  //   bool autofocus = false,
   // }) {
   //   return MyStatefulWidget(
   //     allItems: allItems,
   //     searchController: searchController,
   //     service: service,
+  //     itemSelected: itemSelected,
+  //     autofocus: autofocus,
   //   );
   // }
 }
@@ -147,13 +160,17 @@ class ARMOYUSearchBar {
 // class MyStatefulWidget extends StatefulWidget {
 //   final ARMOYUServices service;
 //   final List<User> allItems;
-
 //   final SearchController searchController;
+
+//   final Function(int id, String val)? itemSelected;
+//   final bool autofocus;
 //   const MyStatefulWidget({
 //     super.key,
 //     required this.service,
 //     required this.allItems,
 //     required this.searchController,
+//     required this.itemSelected,
+//     required this.autofocus,
 //   });
 
 //   @override
@@ -161,14 +178,61 @@ class ARMOYUSearchBar {
 // }
 
 // class MyStatefulWidgetState extends State<MyStatefulWidget> {
-//   List<User> filteredItems = [];
+//   late List<User> filteredItems;
 //   late Debouncer debouncer;
 
 //   @override
 //   void initState() {
 //     super.initState();
+//     filteredItems = [];
 //     debouncer = Debouncer(delay: const Duration(milliseconds: 500));
 //     log("asd");
+
+//     widget.searchController.addListener(() async {
+//       final value = widget.searchController.text;
+//       debugPrint("Value: $value");
+
+//       if (value.length < 4) {
+//         return;
+//       }
+
+//       filteredItems = widget.allItems
+//           .where((element) =>
+//               element.displayname!.toLowerCase().contains(value.toLowerCase()))
+//           .toList();
+
+//       // API'den veri çekme
+//       SearchListResponse response = await widget.service.searchServices
+//           .searchengine(searchword: value, page: 1);
+
+//       if (response.result.status == false) {
+//         log(response.result.description);
+//         return;
+//       }
+
+//       List<User> items = [];
+
+//       // Yeni kullanıcıları ekleme
+//       for (APISearchDetail element in response.response!.search) {
+//         if (!widget.allItems
+//             .any((filterelement) => filterelement.userID == element.id)) {
+//           items.add(
+//             User(
+//               userID: element.id,
+//               displayname: element.value,
+//               avatar: element.avatar,
+//             ),
+//           );
+//         }
+//       }
+
+//       if (mounted) {
+//         // Güncellenmiş filtreleme
+//         filteredItems.assignAll(items.where((element) =>
+//             element.displayname!.toLowerCase().contains(value.toLowerCase())));
+//         setState(() {});
+//       }
+//     });
 //   }
 
 //   @override
@@ -179,70 +243,14 @@ class ARMOYUSearchBar {
 //       viewShape: const LinearBorder(),
 //       isFullScreen: false,
 //       viewConstraints: const BoxConstraints(maxHeight: 400),
-//       viewOnChanged: (value) {
-//         if (value.length < 4) {
-//           setState(() {
-//             filteredItems.clear();
-//           });
-//           return;
-//         }
-
-//         // Yerel filtreleme
-//         setState(() {
-//           filteredItems = widget.allItems
-//               .where((element) => element.displayname!
-//                   .toLowerCase()
-//                   .contains(value.toLowerCase()))
-//               .toList();
-//         });
-
-//         debouncer(() async {
-//           if (value.length < 3) {
-//             setState(() {
-//               filteredItems.clear();
-//             });
-//             return;
-//           }
-
-//           // API'den veri çekme
-//           SearchListResponse response = await widget.service.searchServices
-//               .searchengine(searchword: value, page: 1);
-
-//           if (response.result.status == false) {
-//             log(response.result.description);
-//             return;
-//           }
-
-//           // Yeni kullanıcıları ekleme
-//           for (APISearchDetail element in response.response!.search) {
-//             if (!widget.allItems
-//                 .any((filterelement) => filterelement.userID == element.id)) {
-//               widget.allItems.add(
-//                 User(
-//                   userID: element.id,
-//                   displayname: element.value,
-//                   avatar: element.avatar,
-//                 ),
-//               );
-//             }
-//           }
-
-//           setState(() {
-//             // Güncellenmiş filtreleme
-//             filteredItems = widget.allItems
-//                 .where((element) => element.displayname!
-//                     .toLowerCase()
-//                     .contains(value.toLowerCase()))
-//                 .toList();
-//           });
-//         });
-//       },
 //       builder: (context, controllerv2) {
 //         return SearchBar(
 //           controller: widget.searchController,
 //           hintText: "Arama...",
+//           autoFocus: widget.autofocus,
 //           onChanged: (value) {
 //             controllerv2.openView();
+//             setState(() {});
 //           },
 //           onTap: () {
 //             controllerv2.openView();
@@ -250,25 +258,32 @@ class ARMOYUSearchBar {
 //         );
 //       },
 //       suggestionsBuilder: (context, controllerv2) {
+//         final items = filteredItems.take(10).toList();
+
 //         return [
 //           SizedBox(
 //             child: Wrap(
 //               children: List.generate(
-//                 filteredItems.length.clamp(0, 10),
+//                 items.length,
 //                 (index) {
 //                   return ListTile(
 //                     leading: CircleAvatar(
 //                       backgroundColor: Colors.transparent,
 //                       foregroundImage: CachedNetworkImageProvider(
-//                         filteredItems[index].avatar!,
+//                         items[index].avatar!,
 //                       ),
 //                     ),
 //                     title: Text(
-//                       filteredItems[index].displayname!,
+//                       items[index].displayname!,
 //                     ),
 //                     onTap: () {
-//                       widget.searchController.text =
-//                           filteredItems[index].displayname!;
+//                       if (widget.itemSelected != null) {
+//                         widget.itemSelected!(
+//                           items[index].userID!,
+//                           items[index].displayname!,
+//                         );
+//                       }
+//                       widget.searchController.text = items[index].displayname!;
 //                     },
 //                   );
 //                 },

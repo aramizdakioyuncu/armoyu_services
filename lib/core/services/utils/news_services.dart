@@ -18,25 +18,14 @@ class NewsServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<NewsListResponse> fetch({
-    required String? username,
-    required String? password,
-    required int page,
-  }) async {
-    if (password != null) {
-      password = _apiHelpers.generateMd5(password);
-    }
-
+  Future<NewsListResponse> fetch({required int page}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "sayfa": page,
         "limit": "10",
       },
-      endpoint:
-          "${username ?? "0"}/${password ?? "0"}/${_EndpointConstants.newsList}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.newsList}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -88,21 +77,11 @@ class NewsServices {
     return armoyuresponse;
   }
 
-  Future<ServiceResult> fetchnews({
-    required String username,
-    required String password,
-    required int newsID,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<ServiceResult> fetchnews({required int newsID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
-      body: {
-        "haberID": "$newsID",
-      },
-      endpoint: "$username/$password/${_EndpointConstants.newsDetail}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      body: {"haberID": "$newsID"},
+      endpoint: "0/0/${_EndpointConstants.newsDetail}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(

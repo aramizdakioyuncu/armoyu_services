@@ -1,5 +1,4 @@
 import 'package:auth_process/app/services/armoyu.dart';
-import 'package:auth_process/app/utils/app_list.dart';
 import 'package:flutter/material.dart';
 
 class OtherView extends StatelessWidget {
@@ -20,10 +19,7 @@ class OtherView extends StatelessWidget {
                   child: ARMOYU.widgets.elevatedButton.costum1(
                     text: "sitemesaji",
                     onPressed: () async {
-                      await ARMOYU.service.appServices.sitemesaji(
-                        username: AppList.user.value!.username!,
-                        password: AppList.user.value!.password!,
-                      );
+                      await ARMOYU.service.appServices.sitemesaji();
                     },
                     loadingStatus: false,
                   ),

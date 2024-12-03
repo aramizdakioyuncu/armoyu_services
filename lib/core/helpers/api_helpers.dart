@@ -75,6 +75,7 @@ final class ApiHelpers {
 
       //Nedense X-Client-Version ekleyince Chromeda hata veriyor
     };
+    log(token.toString());
     log(map.toString());
     map.removeWhere((k, v) => v.trim() == '' || v.trim().isEmpty);
     return map;

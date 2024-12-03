@@ -18,18 +18,10 @@ class CountryServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<CountryResponse> countryfetch({
-    required String username,
-    required String password,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<CountryResponse> countryfetch() async {
     Map<String, dynamic> response = await _apiHelpers.post(
-      body: {},
-      endpoint: "$username/$password/${_EndpointConstants.countries}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.countries}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -53,19 +45,11 @@ class CountryServices {
     return armoyuresponse;
   }
 
-  Future<ProvinceResponse> fetchprovince({
-    required String username,
-    required String password,
-    required int countryID,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<ProvinceResponse> fetchprovince({required int countryID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {"countryID": countryID},
-      endpoint: "$username/$password/${_EndpointConstants.provinces}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.provinces}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(

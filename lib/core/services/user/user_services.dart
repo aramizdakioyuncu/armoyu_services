@@ -20,18 +20,14 @@ class UserServices {
   Future<Map<String, dynamic>> getUsers() async {
     return await _apiHelpers.get(
       endpoint: _EndpointConstants.users,
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
   }
 
   Future<Map<String, dynamic>> deleteUser({required int userId}) async {
     return await _apiHelpers.delete(
       endpoint: '${_EndpointConstants.users}/$userId',
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
   }
 
@@ -40,9 +36,7 @@ class UserServices {
   }) async {
     return await _apiHelpers.post(
       endpoint: '${_EndpointConstants.users}/friends',
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
       body: addFriendRequestModel.toMap(),
     );
   }

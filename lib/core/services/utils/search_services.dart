@@ -19,23 +19,16 @@ class SearchServices {
   }
 
   Future<SearchHashtagListResponse> hashtag({
-    String? username,
-    String? password,
     required String hashtag,
     required int page,
   }) async {
-    password == null ? password : _apiHelpers.generateMd5(password);
-
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "etiket": hashtag,
         "sayfa": page,
       },
-      endpoint:
-          "${username ?? "0"}/${password ?? "0"}/${_EndpointConstants.hashtag}/0/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.hashtag}/0/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
     ServiceResult result = ServiceResult(
       status: response['durum'] == 1 ? true : false,
@@ -64,23 +57,16 @@ class SearchServices {
   }
 
   Future<SearchListResponse> searchengine({
-    String? username,
-    String? password,
     required String searchword,
     required int page,
   }) async {
-    password == null ? password : _apiHelpers.generateMd5(password);
-
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "sayfa": "$page",
         "oyuncuadi": searchword,
       },
-      endpoint:
-          "${username ?? "0"}/${password ?? "0"}/${_EndpointConstants.searchengine}/0/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.searchengine}/0/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
     ServiceResult result = ServiceResult(
       status: response['durum'] == 1 ? true : false,
@@ -111,24 +97,17 @@ class SearchServices {
   }
 
   Future<SearchListResponse> onlyusers({
-    String? username,
-    String? password,
     required String searchword,
     required int page,
   }) async {
-    password == null ? password : _apiHelpers.generateMd5(password);
-
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "sayfa": "$page",
         "oyuncuadi": searchword,
         "kategori": "oyuncular",
       },
-      endpoint:
-          "${username ?? "0"}/${password ?? "0"}/${_EndpointConstants.searchengine}/0/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.searchengine}/0/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
     ServiceResult result = ServiceResult(
       status: response['durum'] == 1 ? true : false,
@@ -159,23 +138,16 @@ class SearchServices {
   }
 
   Future<ServiceResult> onlyschools({
-    String? username,
-    String? password,
     required String searchword,
     required int page,
   }) async {
-    password == null ? password : _apiHelpers.generateMd5(password);
-
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "sayfa": "$page",
         "oyuncuadi": searchword,
       },
-      endpoint:
-          "${username ?? "0"}/${password ?? "0"}/${_EndpointConstants.searchengine}/0/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.searchengine}/0/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
     ServiceResult result = ServiceResult(
       status: response['durum'] == 1 ? true : false,
@@ -190,23 +162,16 @@ class SearchServices {
   }
 
   Future<ServiceResult> onlyworks({
-    String? username,
-    String? password,
     required String searchword,
     required int page,
   }) async {
-    password == null ? password : _apiHelpers.generateMd5(password);
-
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "sayfa": "$page",
         "oyuncuadi": searchword,
       },
-      endpoint:
-          "${username ?? "0"}/${password ?? "0"}/${_EndpointConstants.searchengine}/0/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.searchengine}/0/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
     ServiceResult result = ServiceResult(
       status: response['durum'] == 1 ? true : false,

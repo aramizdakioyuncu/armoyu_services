@@ -150,6 +150,10 @@ class LoginResponse {
   LoginResponse({required this.result, this.response});
 }
 
+class RegisterResponse {
+  final ServiceResult result;
+  RegisterResponse({required this.result});
+}
 //Look Profile
 
 class LookProfileResponse {

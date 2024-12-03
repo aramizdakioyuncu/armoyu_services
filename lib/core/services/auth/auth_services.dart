@@ -18,24 +18,6 @@ final class AuthServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  // Future<Map<String, dynamic>> logout() async {
-  //   final result = await _apiHelpers.post(
-  //     endpoint: _EndpointConstants.users,
-  //     headers: _apiHelpers.getRequestHeader(
-  //       token: getToken(),
-  //     ),
-  //     body: {},
-  //   );
-
-  //   if (result['durum'] == 1) {
-  //     setToken(null);
-  //   }
-
-  //   return result;
-  // }
-
-  ////////////////////////////////////////////////////////////////////////////PREVIUS////////////////////////////////////////////////////////////////////////////
-
   Future<LoginResponse> login(
       {required String username, required String password}) async {
     password = _apiHelpers.generateMd5(password);
@@ -55,61 +37,52 @@ final class AuthServices {
       return armoyuresponse;
     }
 
-//TOKEN AYARLARMA
-    setToken(response['icerik']['aciklama']);
-//TOKEN AYARLARMA
+    //TOKEN AYARLARMA
+    setToken(response['aciklama']);
+    //TOKEN AYARLARMA
 
     armoyuresponse.response = APILogin.updateclass(response);
 
     return armoyuresponse;
   }
 
-  Future<Map<String, dynamic>> register({
-    required String username,
-    required String password,
-    required String name,
+  Future<RegisterResponse> register({
+    required String firstname,
     required String lastname,
+    required String username,
     required String email,
+    required String password,
     required String rpassword,
     String? inviteCode,
   }) async {
-    password = _apiHelpers.generateMd5(password);
-
-    Map<String, dynamic> result = await _apiHelpers.post(
+    Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "islem": "kayit-ol",
         "kullaniciadi": username,
-        "ad": name,
+        "ad": firstname,
         "soyad": lastname,
         "email": email,
         "parola": password,
         "parolakontrol": rpassword,
         "davetkodu": inviteCode ?? "",
       },
-      endpoint: "$username/$password/${_EndpointConstants.register}/0/0/",
+      endpoint: "0/0/${_EndpointConstants.register}/0/0/",
     );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+    RegisterResponse armoyuresponse = RegisterResponse(result: result);
 
-//TOKEN AYARLARMA
-    setToken(result['icerik']['aciklama']);
-//TOKEN AYARLARMA
-
-    return result;
+    return armoyuresponse;
   }
 
-  Future<Map<String, dynamic>> logOut({
-    required String username,
-    required String password,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<Map<String, dynamic>> logOut() async {
     Map<String, dynamic> result = await _apiHelpers.post(
-      body: {
-        "islem": "cikis-yap",
-      },
-      endpoint: "$username/$password/${_EndpointConstants.logout}/0/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      body: {"islem": "cikis-yap"},
+      endpoint: "0/0/${_EndpointConstants.logout}/0/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
     return result;
   }

@@ -18,18 +18,11 @@ class EventServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<EventResponse> fetch({
-    required String username,
-    required String password,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<EventResponse> fetch() async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {},
-      endpoint: "$username/$password/${_EndpointConstants.eventlist}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.eventlist}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -78,20 +71,10 @@ class EventServices {
     return armoyuresponse;
   }
 
-  Future<EventDetailResponse> detailfetch({
-    required String username,
-    required String password,
-    required int eventID,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<EventDetailResponse> detailfetch({required int eventID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
-      body: {},
-      endpoint:
-          "$username/$password/${_EndpointConstants.eventdetail}/$eventID/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.eventdetail}/$eventID/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -117,30 +100,22 @@ class EventServices {
   }
 
   Future<EventJoinorLeaveResponse> joinOrleave({
-    required String username,
-    required String password,
     required int eventID,
     required bool status,
   }) async {
-    password = _apiHelpers.generateMd5(password);
-
     int intStatus = 0;
 
     if (status) {
       intStatus = 1;
     }
 
-    password = _apiHelpers.generateMd5(password);
-
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "etkinlikID": "$eventID",
         "cevap": intStatus,
       },
-      endpoint: "$username/$password/${_EndpointConstants.joinleave}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.joinleave}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -159,20 +134,14 @@ class EventServices {
   }
 
   Future<EventParticipantResponse> participantList({
-    required String username,
-    required String password,
     required int eventID,
   }) async {
-    password = _apiHelpers.generateMd5(password);
-
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "etkinlikID": "$eventID",
       },
-      endpoint: "$username/$password/${_EndpointConstants.participant}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.participant}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(

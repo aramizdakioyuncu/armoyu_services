@@ -18,19 +18,10 @@ class NotificationServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<ServiceResult> listNotificationSettings({
-    required String username,
-    required String password,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<ServiceResult> listNotificationSettings() async {
     Map<String, dynamic> response = await _apiHelpers.post(
-      body: {},
-      endpoint:
-          "$username/$password/${_EndpointConstants.notificationsettings}/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.notificationsettings}/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
     ServiceResult result = ServiceResult(
       status: response['durum'] == 1 ? true : false,
@@ -44,13 +35,8 @@ class NotificationServices {
     return result;
   }
 
-  Future<ServiceResult> updateNotificationSettings({
-    required String username,
-    required String password,
-    required List<String> options,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<ServiceResult> updateNotificationSettings(
+      {required List<String> options}) async {
     Map<String, String> formData = {};
 
     for (int i = 0; i < options.length; i++) {
@@ -58,11 +44,8 @@ class NotificationServices {
     }
     Map<String, dynamic> response = await _apiHelpers.post(
       body: formData,
-      endpoint:
-          "$username/$password/${_EndpointConstants.notificationsettingsupdate}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.notificationsettingsupdate}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(

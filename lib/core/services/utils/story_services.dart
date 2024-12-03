@@ -18,22 +18,14 @@ class StoryServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<ServiceResult> stories({
-    required String username,
-    required String password,
-    required int page,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<ServiceResult> stories({required int page}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "sayfa": page,
         "limit": "20",
       },
-      endpoint: "$username/$password/${_EndpointConstants.story}/0/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.story}/0/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -49,22 +41,16 @@ class StoryServices {
   }
 
   Future<ServiceResult> addstory({
-    required String username,
-    required String password,
     required String imageURL,
     required bool isEveryonePublish,
   }) async {
-    password = _apiHelpers.generateMd5(password);
-
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "hikayemedya": imageURL,
         "hikayepaylasimkategori": isEveryonePublish
       },
-      endpoint: "$username/$password/${_EndpointConstants.addstory}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.addstory}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -79,19 +65,11 @@ class StoryServices {
     return result;
   }
 
-  Future<ServiceResult> removestory({
-    required String username,
-    required String password,
-    required int storyID,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<ServiceResult> removestory({required int storyID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {"hikayeID": "$storyID"},
-      endpoint: "$username/$password/${_EndpointConstants.removestory}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.removestory}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -106,19 +84,11 @@ class StoryServices {
     return result;
   }
 
-  Future<ServiceResult> hidestory({
-    required String username,
-    required String password,
-    required int storyID,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<ServiceResult> hidestory({required int storyID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {"hikayeID": "$storyID"},
-      endpoint: "$username/$password/${_EndpointConstants.hidestory}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.hidestory}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -133,19 +103,11 @@ class StoryServices {
     return result;
   }
 
-  Future<ServiceResult> view({
-    required String username,
-    required String password,
-    required int storyID,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<ServiceResult> view({required int storyID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {"hikayeID": "$storyID"},
-      endpoint: "$username/$password/${_EndpointConstants.viewstory}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.viewstory}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -160,19 +122,11 @@ class StoryServices {
     return result;
   }
 
-  Future<ServiceResult> fetchviewlist({
-    required String username,
-    required String password,
-    required int storyID,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<ServiceResult> fetchviewlist({required int storyID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {"hikayeID": "$storyID"},
-      endpoint: "$username/$password/${_EndpointConstants.viewliststory}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.viewliststory}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -187,19 +141,11 @@ class StoryServices {
     return result;
   }
 
-  Future<ServiceResult> like({
-    required String username,
-    required String password,
-    required int storyID,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<ServiceResult> like({required int storyID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {"hikayeID": "$storyID"},
-      endpoint: "$username/$password/${_EndpointConstants.likestory}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.likestory}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -214,19 +160,11 @@ class StoryServices {
     return result;
   }
 
-  Future<ServiceResult> likeremove({
-    required String username,
-    required String password,
-    required int storyID,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<ServiceResult> likeremove({required int storyID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {"hikayeID": "$storyID"},
-      endpoint: "$username/$password/${_EndpointConstants.likeremovestory}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.likeremovestory}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -241,19 +179,11 @@ class StoryServices {
     return result;
   }
 
-  Future<ServiceResult> likerslist({
-    required String username,
-    required String password,
-    required int storyID,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<ServiceResult> likerslist({required int storyID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {"hikayeID": "$storyID"},
-      endpoint: "$username/$password/${_EndpointConstants.likestory}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.likestory}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(

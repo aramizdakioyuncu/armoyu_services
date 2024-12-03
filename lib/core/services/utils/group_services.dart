@@ -19,22 +19,16 @@ class GroupServices {
   }
 
   Future<GroupListResponse> groupList({
-    required String username,
-    required String password,
     int? category,
     required int page,
   }) async {
-    password = _apiHelpers.generateMd5(password);
-
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "kategori": category ?? "",
         "sayfa": page,
       },
-      endpoint: "$username/$password/${_EndpointConstants.groups}/liste/0",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.groups}/liste/0",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -102,21 +96,11 @@ class GroupServices {
     return armoyuresponse;
   }
 
-  Future<GroupDetailResponse> groupFetch({
-    required String username,
-    required String password,
-    required int grupID,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<GroupDetailResponse> groupFetch({required int grupID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
-      body: {
-        "grupID": grupID,
-      },
-      endpoint: "$username/$password/${_EndpointConstants.groups}/0/0",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      body: {"grupID": grupID},
+      endpoint: "0/0/${_EndpointConstants.groups}/0/0",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -168,21 +152,13 @@ class GroupServices {
     return armoyuresponse;
   }
 
-  Future<GroupUsersResponse> groupusersFetch({
-    required String username,
-    required String password,
-    required int grupID,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<GroupUsersResponse> groupusersFetch({required int grupID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "grupID": grupID,
       },
-      endpoint: "$username/$password/${_EndpointConstants.groupmembers}/0",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.groupmembers}/0",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -217,21 +193,11 @@ class GroupServices {
     return armoyuresponse;
   }
 
-  Future<GroupLeaveResponse> groupLeave({
-    required String username,
-    required String password,
-    required int grupID,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<GroupLeaveResponse> groupLeave({required int grupID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
-      body: {
-        "grupID": grupID,
-      },
-      endpoint: "$username/$password/${_EndpointConstants.groupleave}/0",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      body: {"grupID": grupID},
+      endpoint: "0/0/${_EndpointConstants.groupleave}/0",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -248,8 +214,6 @@ class GroupServices {
   }
 
   Future<GroupSettingsResponse> groupsettingsSave({
-    required String username,
-    required String password,
     required int grupID,
     required String groupName,
     required String groupshortName,
@@ -258,8 +222,6 @@ class GroupServices {
     required String webLINK,
     required bool joinStatus,
   }) async {
-    password = _apiHelpers.generateMd5(password);
-
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "grupID": "$grupID",
@@ -270,10 +232,8 @@ class GroupServices {
         "website": webLINK,
         "alimdurum": joinStatus == true ? "1" : "0",
       },
-      endpoint: "$username/$password/${_EndpointConstants.groupsettings}/0",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.groupsettings}/0",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -292,14 +252,10 @@ class GroupServices {
   }
 
   Future<ServiceResult> changegroupmedia({
-    required String username,
-    required String password,
     required List<XFile> files,
     required int groupID,
     required String category,
   }) async {
-    password = _apiHelpers.generateMd5(password);
-
     List<http.MultipartFile> photosCollection = [];
     for (var file in files) {
       photosCollection.add(await _apiHelpers.generateImageFile("media", file));
@@ -310,10 +266,8 @@ class GroupServices {
         "groupID": "$groupID",
         "category": category,
       },
-      endpoint: "$username/$password/${_EndpointConstants.groupmedya}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.groupmedya}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -330,23 +284,16 @@ class GroupServices {
   }
 
   Future<ServiceResult> grouprequestanswer({
-    required String username,
-    required String password,
     required int groupID,
     required String answer,
   }) async {
-    password = _apiHelpers.generateMd5(password);
-
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "grupID": "$groupID",
         "cevap": answer,
       },
-      endpoint:
-          "$username/$password/${_EndpointConstants.groupInviteanswer}/0/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.groupInviteanswer}/0/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -363,13 +310,9 @@ class GroupServices {
   }
 
   Future<ServiceResult> groupuserInvite({
-    required String username,
-    required String password,
     required int groupID,
-    required List<String> userList, //Username
+    required List<String> userList, //Username Type
   }) async {
-    password = _apiHelpers.generateMd5(password);
-
     Map<String, String> formData = {"grupID": "$groupID"};
     for (int i = 0; i < userList.length; i++) {
       formData['users[$i]'] = userList[i];
@@ -377,10 +320,8 @@ class GroupServices {
 
     Map<String, dynamic> response = await _apiHelpers.post(
       body: formData,
-      endpoint: "$username/$password/${_EndpointConstants.groupInvite}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.groupInvite}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -397,22 +338,16 @@ class GroupServices {
   }
 
   Future<ServiceResult> groupuserRemove({
-    required String username,
-    required String password,
     required int groupID,
     required int userID,
   }) async {
-    password = _apiHelpers.generateMd5(password);
-
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "grupID": groupID,
         "userID": userID,
       },
-      endpoint: "$username/$password/${_EndpointConstants.groupuserremove}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.groupuserremove}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -429,16 +364,12 @@ class GroupServices {
   }
 
   Future<ServiceResult> groupcreate({
-    required String username,
-    required String password,
     required String grupadi,
     required String kisaltmaadi,
     required int grupkategori,
     required int grupkategoridetay,
     required int varsayilanoyun,
   }) async {
-    password = _apiHelpers.generateMd5(password);
-
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "grupadi": grupadi,
@@ -447,10 +378,8 @@ class GroupServices {
         "grupkategoridetay": "$grupkategoridetay",
         "varsayilanoyun": "$varsayilanoyun"
       },
-      endpoint: "$username/$password/${_EndpointConstants.groupcreate}/0/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.groupcreate}/0/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(

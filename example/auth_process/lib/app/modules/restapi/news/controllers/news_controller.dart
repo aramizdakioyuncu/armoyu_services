@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:armoyu_services/core/models/ARMOYU/API/news/news_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/_response/response.dart';
 import 'package:auth_process/app/services/armoyu.dart';
-import 'package:auth_process/app/utils/app_list.dart';
 import 'package:get/get.dart';
 
 class NewsController extends GetxController {
@@ -13,11 +12,8 @@ class NewsController extends GetxController {
 
   fetchnews() async {
     newsfetchStatus.value = true;
-    NewsListResponse response = await ARMOYU.service.newsServices.fetch(
-      username: AppList.user.value!.username!,
-      password: AppList.user.value!.password!,
-      page: 1,
-    );
+    NewsListResponse response =
+        await ARMOYU.service.newsServices.fetch(page: 1);
 
     if (response.result.status == false) {
       return log(response.result.description);

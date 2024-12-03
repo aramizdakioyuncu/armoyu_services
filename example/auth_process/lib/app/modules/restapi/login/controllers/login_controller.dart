@@ -89,28 +89,4 @@ class LoginController extends GetxController {
       return;
     }
   }
-
-  Future<void> register({
-    required String firstname,
-    required String lastname,
-    required String username,
-    required String email,
-    required String password,
-  }) async {
-    final Map<String, dynamic> getUsersResult =
-        await ARMOYU.service.authServices.register(
-      username: "",
-      name: firstname,
-      lastname: lastname,
-      email: email,
-      //  inviteCode:  ,
-      password: password,
-      rpassword: password,
-    );
-
-    if (getUsersResult['durum'] != 1) {
-      // getSnackBar(getUsersResult);
-      return;
-    }
-  }
 }

@@ -19,14 +19,10 @@ class MediaServices {
   }
 
   Future<ServiceResult> fetch({
-    required String username,
-    required String password,
     required int uyeID,
     required String category,
     required int page,
   }) async {
-    password = _apiHelpers.generateMd5(password);
-
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "oyuncubakid": "$uyeID",
@@ -34,10 +30,8 @@ class MediaServices {
         "limit": "30",
         "sayfa": page,
       },
-      endpoint: "$username/$password/${_EndpointConstants.media}/0/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.media}/0/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -54,22 +48,16 @@ class MediaServices {
   }
 
   Future<ServiceResult> rotation({
-    required String username,
-    required String password,
     required int mediaID,
     required double rotate,
   }) async {
-    password = _apiHelpers.generateMd5(password);
-
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "fotografID": "$mediaID",
         "derece": "$rotate",
       },
-      endpoint: "$username/$password/${_EndpointConstants.mediaturn}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.mediaturn}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -85,21 +73,13 @@ class MediaServices {
     return result;
   }
 
-  Future<ServiceResult> delete({
-    required String username,
-    required String password,
-    required int mediaID,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<ServiceResult> delete({required int mediaID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "medyaID": "$mediaID",
       },
-      endpoint: "$username/$password/${_EndpointConstants.mediaturn}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.mediaturn}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -116,13 +96,9 @@ class MediaServices {
   }
 
   Future<ServiceResult> upload({
-    required String username,
-    required String password,
     required List<XFile> files,
     required String category,
   }) async {
-    password = _apiHelpers.generateMd5(password);
-
     List<http.MultipartFile> photosCollection = [];
     for (XFile element in files) {
       photosCollection.add(
@@ -134,14 +110,10 @@ class MediaServices {
     }
 
     Map<String, dynamic> response = await _apiHelpers.post(
-      body: {
-        "category": category,
-      },
+      body: {"category": category},
       files: photosCollection,
-      endpoint: "$username/$password/${_EndpointConstants.mediaupload}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.mediaupload}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(

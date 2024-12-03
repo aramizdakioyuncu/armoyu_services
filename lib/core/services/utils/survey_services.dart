@@ -18,21 +18,11 @@ class SurveyServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<ServiceResult> fetchSurveys({
-    required String username,
-    required String password,
-    required int page,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<ServiceResult> fetchSurveys({required int page}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
-      body: {
-        "sayfa": page,
-      },
-      endpoint: "$username/$password/${_EndpointConstants.surveylist}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      body: {"sayfa": page},
+      endpoint: "0/0/${_EndpointConstants.surveylist}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
     ServiceResult result = ServiceResult(
       status: response['durum'] == 1 ? true : false,
@@ -46,21 +36,11 @@ class SurveyServices {
     return result;
   }
 
-  Future<ServiceResult> fetchSurvey({
-    required String username,
-    required String password,
-    required int surveyID,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<ServiceResult> fetchSurvey({required int surveyID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
-      body: {
-        "anketID": surveyID,
-      },
-      endpoint: "$username/$password/${_EndpointConstants.surveylist}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      body: {"anketID": surveyID},
+      endpoint: "0/0/${_EndpointConstants.surveylist}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -76,22 +56,16 @@ class SurveyServices {
   }
 
   Future<ServiceResult> answerSurvey({
-    required String username,
-    required String password,
     required int surveyID,
     required int optionID,
   }) async {
-    password = _apiHelpers.generateMd5(password);
-
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "anketID": surveyID,
         "secenekID": optionID,
       },
-      endpoint: "$username/$password/${_EndpointConstants.surveyreply}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.surveyreply}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -106,21 +80,11 @@ class SurveyServices {
     return result;
   }
 
-  Future<ServiceResult> deleteSurvey({
-    required String username,
-    required String password,
-    required int surveyID,
-  }) async {
-    password = _apiHelpers.generateMd5(password);
-
+  Future<ServiceResult> deleteSurvey({required int surveyID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
-      body: {
-        "anketID": surveyID,
-      },
-      endpoint: "$username/$password/${_EndpointConstants.deletesurvey}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      body: {"anketID": surveyID},
+      endpoint: "0/0/${_EndpointConstants.deletesurvey}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
@@ -136,14 +100,10 @@ class SurveyServices {
   }
 
   Future<ServiceResult> createSurvey({
-    required String username,
-    required String password,
     required String surveyQuestion,
     required List<String> options,
     required String date,
   }) async {
-    password = _apiHelpers.generateMd5(password);
-
     Map<String, String> formData = {
       "anketsoru": surveyQuestion,
       "bitiszaman": date,
@@ -156,10 +116,8 @@ class SurveyServices {
 
     Map<String, dynamic> response = await _apiHelpers.post(
       body: formData,
-      endpoint: "$username/$password/${_EndpointConstants.createsurvey}/0/",
-      headers: _apiHelpers.getRequestHeader(
-        token: getToken(),
-      ),
+      endpoint: "0/0/${_EndpointConstants.createsurvey}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
     ServiceResult result = ServiceResult(
