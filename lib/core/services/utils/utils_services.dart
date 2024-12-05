@@ -55,19 +55,16 @@ class UtilsServices {
 
   Future<ServiceResult> forgotpassword({
     required String username,
-    required String password,
     required String useremail,
     required String userresettype,
   }) async {
-    password = _apiHelpers.generateMd5(password);
-
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "kullaniciadi": username,
         "email": useremail,
         "sifirlamatercihi": userresettype
       },
-      endpoint: "$username/$password/${_EndpointConstants.forgotPassword}/0/0/",
+      endpoint: "0/0${_EndpointConstants.forgotPassword}/0/0/",
     );
     ServiceResult result = ServiceResult(
       status: response['durum'] == 1 ? true : false,
@@ -88,8 +85,6 @@ class UtilsServices {
     required String securitycode,
     required String repassword,
   }) async {
-    password = _apiHelpers.generateMd5(password);
-
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "kullaniciadi": username,
@@ -98,7 +93,7 @@ class UtilsServices {
         "sifre": password,
         "sifretekrar": repassword
       },
-      endpoint: "$username/$password/${_EndpointConstants.forgotPassword}/0/0/",
+      endpoint: "0/0/${_EndpointConstants.forgotPassword}/0/0/",
     );
     ServiceResult result = ServiceResult(
       status: response['durum'] == 1 ? true : false,

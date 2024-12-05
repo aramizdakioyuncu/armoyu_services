@@ -1,5 +1,5 @@
 import 'package:armoyu_services/armoyu_services.dart';
-import 'package:armoyu_services/widgets/widget.dart';
+import 'package:armoyu_widgets/widget.dart';
 import 'package:auth_process/app/modules/restapi/_main/controllers/restapi_controller.dart';
 import 'package:auth_process/app/services/armoyu.dart';
 import 'package:auth_process/app/utils/app_list.dart';

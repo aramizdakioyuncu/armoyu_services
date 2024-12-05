@@ -17,6 +17,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   armoyu_services:
     path: ../../
+  armoyu_widgets: ^1.0.0+2
 
   http: ^1.2.2
   device_info_plus: ^10.0.1

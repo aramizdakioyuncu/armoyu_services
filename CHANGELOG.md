@@ -1,3 +1,3 @@
-## [1.0.0+21]
+## [1.0.0+22]
 
-- Token eşitleme özellği geldi
+- Gereksiz Bağımlılklar kaldırıldı.
