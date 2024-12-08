@@ -18,9 +18,8 @@ class LoginRegisterServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<ServiceResult> inviteCodeTest({
-    required String code,
-  }) async {
+  Future<LoginRegisterInviteCodeResponse> inviteCodeTest(
+      {required String code}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {"davetkodu": code},
       endpoint: "0/0/${_EndpointConstants.invitecodefetch}/0/0/",
@@ -32,10 +31,22 @@ class LoginRegisterServices {
       descriptiondetail: response['aciklamadetay'],
     );
 
+    LoginRegisterInviteCodeResponse armoyuresponse =
+        LoginRegisterInviteCodeResponse(result: result);
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
 
-    return result;
+    armoyuresponse.response = APIInvitecode(
+      userID: response['aciklamadetay']['oyuncu_ID'],
+      displayname: response['aciklamadetay']['oyuncu_displayName'],
+      avatar: MediaURL(
+        bigURL: response['aciklamadetay']['oyuncu_avatar'],
+        normalURL: response['aciklamadetay']['oyuncu_avatar'],
+        minURL: response['aciklamadetay']['oyuncu_avatar'],
+      ),
+    );
+
+    return armoyuresponse;
   }
 }

@@ -18,7 +18,7 @@ class ProfileServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<ServiceResult> invitelist({required int page}) async {
+  Future<ProfileInviteListResponse> invitelist({required int page}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "sayfa": page,
@@ -32,11 +32,33 @@ class ProfileServices {
       description: response['aciklama'],
       descriptiondetail: response['aciklamadetay'],
     );
-
+    ProfileInviteListResponse armoyuresponse =
+        ProfileInviteListResponse(result: result);
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
-    return result;
+
+    List<APIProfileInvitelist> usersList = [];
+    for (var element in response['icerik']) {
+      usersList.add(
+        APIProfileInvitelist(
+          userID: element['oyuncu_ID'],
+          avatar: MediaURL(
+            bigURL: element['oyuncu_avatar'],
+            normalURL: element['oyuncu_avatar'],
+            minURL: element['oyuncu_avatar'],
+          ),
+          displayName: element['oyuncu_displayname'],
+          username: element['oyuncu_username'],
+          isVerified: element['oyuncu_dogrulama'],
+          verificationTime: element['oyuncu_dogrulamazaman'],
+          membershipDuration: element['oyuncu_zaman'],
+        ),
+      );
+    }
+
+    armoyuresponse.response = usersList;
+    return armoyuresponse;
   }
 
   Future<ServiceResult> sendauthmailURL({required int userID}) async {
@@ -75,7 +97,7 @@ class ProfileServices {
     return result;
   }
 
-  Future<ServiceResult> friendlist({
+  Future<ProfileFriendListResponse> friendlist({
     required int userID,
     required int page,
   }) async {
@@ -93,11 +115,36 @@ class ProfileServices {
       description: response['aciklama'],
       descriptiondetail: response['aciklamadetay'],
     );
-
+    ProfileFriendListResponse armoyuresponse =
+        ProfileFriendListResponse(result: result);
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
-    return result;
+
+    List<APIProfileFriendlist> friendList = [];
+
+    for (var element in response['icerik']) {
+      friendList.add(
+        APIProfileFriendlist(
+          playerID: element['oyuncuID'],
+          avatar: MediaURL(
+            bigURL: element['oyuncuavatar'],
+            normalURL: element['oyuncufakavatar'],
+            minURL: element['oyuncuminnakavatar'],
+          ),
+          playerLink: element['oyunculink'],
+          displayName: element['oyuncuad'],
+          username: element['oyuncukullaniciad'],
+          level: element['oyunculevel'],
+          status: element['oyuncudurum'],
+          lastLogin: element['songiris'],
+          friendshipStatus: element['oyuncuarkadasdurum'],
+        ),
+      );
+    }
+
+    armoyuresponse.response = friendList;
+    return armoyuresponse;
   }
 
   Future<ServiceResult> friendrequest({required int userID}) async {

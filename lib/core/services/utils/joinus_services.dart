@@ -18,7 +18,7 @@ class JoinUsServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<ServiceResult> fetchdepartment() async {
+  Future<JoinUsFetchDepartmentsResponse> fetchdepartment() async {
     Map<String, dynamic> response = await _apiHelpers.post(
       endpoint: "0/0/${_EndpointConstants.permissions}/0/0/",
       headers: _apiHelpers.getRequestHeader(token: getToken()),
@@ -29,16 +29,18 @@ class JoinUsServices {
       descriptiondetail: response['aciklamadetay'],
     );
 
+    JoinUsFetchDepartmentsResponse armoyuresponse =
+        JoinUsFetchDepartmentsResponse(result: result);
+
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
 
-    return result;
+    return armoyuresponse;
   }
 
-  Future<ServiceResult> applicationList({
-    required int page,
-  }) async {
+  Future<JoinUsApplicationsResponse> applicationList(
+      {required int page}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "sayfa": page,
@@ -52,14 +54,16 @@ class JoinUsServices {
       descriptiondetail: response['aciklamadetay'],
     );
 
+    JoinUsApplicationsResponse armoyuresponse =
+        JoinUsApplicationsResponse(result: result);
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
 
-    return result;
+    return armoyuresponse;
   }
 
-  Future<ServiceResult> requestjoindepartment({
+  Future<JoinUsRequestJoinDepartmentResponse> requestjoindepartment({
     required int positionID,
     required String whyjoin,
     required String whyposition,
@@ -82,10 +86,13 @@ class JoinUsServices {
       descriptiondetail: response['aciklamadetay'],
     );
 
+    JoinUsRequestJoinDepartmentResponse armoyuresponse =
+        JoinUsRequestJoinDepartmentResponse(result: result);
+
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
 
-    return result;
+    return armoyuresponse;
   }
 }

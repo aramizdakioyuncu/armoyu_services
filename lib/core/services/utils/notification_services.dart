@@ -18,7 +18,7 @@ class NotificationServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<ServiceResult> listNotificationSettings() async {
+  Future<NotificationSettingsListResponse> listNotificationSettings() async {
     Map<String, dynamic> response = await _apiHelpers.post(
       endpoint: "0/0/${_EndpointConstants.notificationsettings}/",
       headers: _apiHelpers.getRequestHeader(token: getToken()),
@@ -28,14 +28,28 @@ class NotificationServices {
       description: response['aciklama'],
       descriptiondetail: response['aciklamadetay'],
     );
+    NotificationSettingsListResponse armoyuresponse =
+        NotificationSettingsListResponse(result: result);
 
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
-    return result;
+
+    armoyuresponse.response = APINotificationList(
+      paylasimBegeni: response['icerik']['paylasimbegeni'],
+      paylasimYorum: response['icerik']['paylasimyorum'],
+      yorumBegeni: response['icerik']['yorumbegeni'],
+      dogumGunu: response['icerik']['dogumgunu'],
+      etkinlik: response['icerik']['etkinlik'],
+      yorumYanit: response['icerik']['yorumyanit'],
+      mesajlar: response['icerik']['mesajlar'],
+      aramalar: response['icerik']['aramalar'],
+      bahsetmeler: response['icerik']['bahsetmeler'],
+    );
+    return armoyuresponse;
   }
 
-  Future<ServiceResult> updateNotificationSettings(
+  Future<NotificationSettingsUpdateResponse> updateNotificationSettings(
       {required List<String> options}) async {
     Map<String, String> formData = {};
 
@@ -53,10 +67,11 @@ class NotificationServices {
       description: response['aciklama'],
       descriptiondetail: response['aciklamadetay'],
     );
-
+    NotificationSettingsUpdateResponse armoyuresponse =
+        NotificationSettingsUpdateResponse(result: result);
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
-    return result;
+    return armoyuresponse;
   }
 }

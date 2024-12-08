@@ -77,7 +77,7 @@ class NewsServices {
     return armoyuresponse;
   }
 
-  Future<ServiceResult> fetchnews({required int newsID}) async {
+  Future<NewsFetchResponse> fetchnews({required int newsID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {"haberID": "$newsID"},
       endpoint: "0/0/${_EndpointConstants.newsDetail}/0/",
@@ -90,10 +90,39 @@ class NewsServices {
       descriptiondetail: response['aciklamadetay'],
     );
 
+    NewsFetchResponse armoyuresponse = NewsFetchResponse(result: result);
+
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
 
-    return result;
+    armoyuresponse.response = APINewsDetail(
+      newsID: response['icerik']['haberID'],
+      newsURL: response['icerik']['link'],
+      newsOwner: UserInfo(
+        userID: response['icerik']['yazarID'],
+        displayname: response['icerik']['yazar'],
+        avatar: MediaURL(
+          bigURL: response['icerik']['yazaravatar'],
+          normalURL: response['icerik']['yazaravatar'],
+          minURL: response['icerik']['yazaravatar'],
+        ),
+      ),
+      title: response['icerik']['haberbaslik'],
+      content: null,
+      summary: response['icerik']['ozet'],
+      media: Media(
+        mediaID: 0,
+        mediaURL: MediaURL(
+          bigURL: response['icerik']['resim'],
+          normalURL: response['icerik']['resimorijinal'],
+          minURL: response['icerik']['resimminnak'],
+        ),
+      ),
+      date: response['icerik']['gecenzaman'],
+      category: response['icerik']['kategori'],
+      views: response['icerik']['goruntulen'],
+    );
+    return armoyuresponse;
   }
 }

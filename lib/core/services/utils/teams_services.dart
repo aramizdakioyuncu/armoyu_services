@@ -18,7 +18,7 @@ class TeamsServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<ServiceResult> fetch() async {
+  Future<TeamListResponse> fetch() async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {},
       endpoint: "0/0/${_EndpointConstants.teamslist}/0/",
@@ -29,10 +29,27 @@ class TeamsServices {
       description: response['aciklama'],
       descriptiondetail: response['aciklamadetay'],
     );
+    TeamListResponse armoyuresponse = TeamListResponse(result: result);
 
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
-    return result;
+
+    List<APITeamList> teamList = [];
+    for (var element in response['icerik']) {
+      teamList.add(
+        APITeamList(
+          teamId: element['takim_ID'],
+          teamName: element['takim_adi'],
+          teamLogo: MediaURL(
+            bigURL: element['takim_logo'],
+            normalURL: element['takim_logo'],
+            minURL: element['takim_logo'],
+          ),
+        ),
+      );
+    }
+    armoyuresponse.response = teamList;
+    return armoyuresponse;
   }
 }

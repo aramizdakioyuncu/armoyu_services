@@ -23,10 +23,7 @@ class GroupServices {
     required int page,
   }) async {
     Map<String, dynamic> response = await _apiHelpers.post(
-      body: {
-        "kategori": category ?? "",
-        "sayfa": page,
-      },
+      body: {"kategori": category ?? "", "sayfa": page},
       endpoint: "0/0/${_EndpointConstants.groups}/liste/0",
       headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
@@ -251,7 +248,7 @@ class GroupServices {
     return armoyuresponse;
   }
 
-  Future<ServiceResult> changegroupmedia({
+  Future<GroupChangeMediaResponse> changegroupmedia({
     required List<XFile> files,
     required int groupID,
     required String category,
@@ -276,14 +273,29 @@ class GroupServices {
       descriptiondetail: response['aciklamadetay'],
     );
 
-    if (response['durum'] == 0) {
-      return result;
-    }
+    GroupChangeMediaResponse armoyuresponse =
+        GroupChangeMediaResponse(result: result);
 
-    return result;
+    if (response['durum'] == 0) {
+      return armoyuresponse;
+    }
+    armoyuresponse.response = APIGroupMedia(
+      media: Media(
+        mediaID: response['icerik']['media_ID'],
+        mediaURL: MediaURL(
+          bigURL: response['icerik']['media_URL']['media_bigURL'],
+          normalURL: response['icerik']['media_URL']['media_URL'],
+          minURL: response['icerik']['media_URL']['media_minURL'],
+        ),
+      ),
+      category: response['icerik']['media_category'],
+      date: response['icerik']['media_date'],
+      type: response['icerik']['media_type'],
+    );
+    return armoyuresponse;
   }
 
-  Future<ServiceResult> grouprequestanswer({
+  Future<GroupRequestAnswerResponse> grouprequestanswer({
     required int groupID,
     required String answer,
   }) async {
@@ -301,15 +313,17 @@ class GroupServices {
       description: response['aciklama'],
       descriptiondetail: response['aciklamadetay'],
     );
+    GroupRequestAnswerResponse armoyuresponse =
+        GroupRequestAnswerResponse(result: result);
 
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
 
-    return result;
+    return armoyuresponse;
   }
 
-  Future<ServiceResult> groupuserInvite({
+  Future<GroupUserInviteResponse> groupuserInvite({
     required int groupID,
     required List<String> userList, //Username Type
   }) async {
@@ -329,15 +343,17 @@ class GroupServices {
       description: response['aciklama'],
       descriptiondetail: response['aciklamadetay'],
     );
+    GroupUserInviteResponse armoyuresponse =
+        GroupUserInviteResponse(result: result);
 
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
 
-    return result;
+    return armoyuresponse;
   }
 
-  Future<ServiceResult> groupuserRemove({
+  Future<GroupUserKickResponse> groupuserRemove({
     required int groupID,
     required int userID,
   }) async {
@@ -355,15 +371,17 @@ class GroupServices {
       description: response['aciklama'],
       descriptiondetail: response['aciklamadetay'],
     );
+    GroupUserKickResponse armoyuresponse =
+        GroupUserKickResponse(result: result);
 
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
 
-    return result;
+    return armoyuresponse;
   }
 
-  Future<ServiceResult> groupcreate({
+  Future<GroupCreateResponse> groupcreate({
     required String grupadi,
     required String kisaltmaadi,
     required int grupkategori,
@@ -388,10 +406,12 @@ class GroupServices {
       descriptiondetail: response['aciklamadetay'],
     );
 
+    GroupCreateResponse armoyuresponse = GroupCreateResponse(result: result);
+
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
 
-    return result;
+    return armoyuresponse;
   }
 }

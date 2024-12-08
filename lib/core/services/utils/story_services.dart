@@ -18,7 +18,7 @@ class StoryServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<ServiceResult> stories({required int page}) async {
+  Future<StoryFetchListResponse> stories({required int page}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "sayfa": page,
@@ -33,11 +33,46 @@ class StoryServices {
       description: response['aciklama'],
       descriptiondetail: response['aciklamadetay'],
     );
-
+    StoryFetchListResponse armoyuresponse =
+        StoryFetchListResponse(result: result);
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
-    return result;
+
+    List<APIStoryList> storyList = [];
+    for (var element in response['icerik']) {
+      List<StoryContent> storycontent = [];
+
+      for (var element2 in response['hikaye_icerik']) {
+        storycontent.add(
+          StoryContent(
+            hikayeId: element2['hikaye_ID'],
+            hikayeDurum: element2['hikaye_durum'],
+            hikayeSahip: element2['hikaye_sahip'],
+            hikayeZaman: element2['hikaye_zaman'],
+            hikayeBenBegeni: element2['hikaye_benbegeni'],
+            hikayeBenGoruntulenme: element2['hikaye_bengoruntulenme'],
+            hikayeMedya: element2['hikaye_medya'],
+          ),
+        );
+      }
+      storyList.add(
+        APIStoryList(
+          oyuncuId: element['oyuncu_ID'],
+          oyuncuAdSoyad: element['oyuncu_adsoyad'],
+          oyuncuKadi: element['oyuncu_kadi'],
+          oyuncuAvatar: MediaURL(
+            bigURL: element['oyuncu_avatar'],
+            normalURL: element['oyuncu_avatar'],
+            minURL: element['oyuncu_avatar'],
+          ),
+          hikayeSayisi: element['hikaye_sayisi'],
+          hikayeIcerik: storycontent,
+        ),
+      );
+    }
+    armoyuresponse.response = [];
+    return armoyuresponse;
   }
 
   Future<ServiceResult> addstory({
@@ -122,7 +157,7 @@ class StoryServices {
     return result;
   }
 
-  Future<ServiceResult> fetchviewlist({required int storyID}) async {
+  Future<StoryViewListResponse> fetchviewlist({required int storyID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {"hikayeID": "$storyID"},
       endpoint: "0/0/${_EndpointConstants.viewliststory}/0/",
@@ -134,11 +169,32 @@ class StoryServices {
       description: response['aciklama'],
       descriptiondetail: response['aciklamadetay'],
     );
-
+    StoryViewListResponse armoyuresponse =
+        StoryViewListResponse(result: result);
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
-    return result;
+
+    List<APIStoryViewlist> storyviewerList = [];
+    for (var element in response['icerik']) {
+      storyviewerList.add(
+        APIStoryViewlist(
+          goruntuleyenId: element['hgoruntuleyen_ID'],
+          goruntuleyenAdSoyad: element['hgoruntuleyen_adsoyad'],
+          goruntuleyenKullaniciAd: element['hgoruntuleyen_kullaniciad'],
+          goruntuleyenAvatar: MediaURL(
+            bigURL: element['hgoruntuleyen_avatar'],
+            normalURL: element['hgoruntuleyen_avatar'],
+            minURL: element['hgoruntuleyen_avatar'],
+          ),
+          goruntuleyenBegenme: element['hgoruntuleyen_begenme'],
+        ),
+      );
+    }
+
+    armoyuresponse.response = storyviewerList;
+
+    return armoyuresponse;
   }
 
   Future<ServiceResult> like({required int storyID}) async {
@@ -179,7 +235,7 @@ class StoryServices {
     return result;
   }
 
-  Future<ServiceResult> likerslist({required int storyID}) async {
+  Future<StoryLikerListResponse> likerslist({required int storyID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {"hikayeID": "$storyID"},
       endpoint: "0/0/${_EndpointConstants.likestory}/0/",
@@ -191,10 +247,15 @@ class StoryServices {
       description: response['aciklama'],
       descriptiondetail: response['aciklamadetay'],
     );
-
+    StoryLikerListResponse armoyuresponse =
+        StoryLikerListResponse(result: result);
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
-    return result;
+
+    for (var element in response['icerik']) {}
+
+    armoyuresponse.response = [];
+    return armoyuresponse;
   }
 }

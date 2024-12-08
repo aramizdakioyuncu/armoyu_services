@@ -104,8 +104,10 @@ final class _EndpointConstants {
   //School
   static const String getschools = "okullar";
   static const String fetchSchool = "okullar/detay";
-  static const String joinschool = "isyerleri/katil";
-  static const String getschoolclass = "isyerleri/icerik";
+
+  //WorkStation
+  static const String joinworkstation = "isyerleri/katil";
+  static const String workstationdetail = "isyerleri/icerik";
 
   //Search
   static const String hashtag = "etiketler";

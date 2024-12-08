@@ -18,7 +18,7 @@ class MediaServices {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
 
-  Future<ServiceResult> fetch({
+  Future<MediaFetchResponse> fetch({
     required int uyeID,
     required String category,
     required int page,
@@ -40,14 +40,41 @@ class MediaServices {
       descriptiondetail: response['aciklamadetay'],
     );
 
+    MediaFetchResponse armoyuresponse = MediaFetchResponse(result: result);
+
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
 
-    return result;
+    armoyuresponse.response = APIMediaFetch(
+      mediaOwner: MediaOwner(
+        userID: response['icerik']['media_ownerID'],
+        displayname: response['icerik']['media_ownerusername'],
+        avatar: MediaURL(
+          bigURL: response['icerik']['media_owneravatar'],
+          normalURL: response['icerik']['media_owneravatar'],
+          minURL: response['icerik']['media_owneravatar'],
+        ),
+      ),
+      mediaDate: response['icerik']['media_time'],
+      mediaSize: response['icerik']['media_size'],
+      category: response['icerik']['fotokategori'],
+      fotoPaylas: response['icerik']['fotopaylas'],
+      mediatype: response['icerik']['fotodosyatipi'],
+      media: Media(
+        mediaID: response['icerik']['media_ID'],
+        mediaURL: MediaURL(
+          bigURL: response['icerik']['fotoorijinalurl'],
+          normalURL: response['icerik']['fotoufaklikurl'],
+          minURL: response['icerik']['fotominnakurl'],
+        ),
+      ),
+    );
+
+    return armoyuresponse;
   }
 
-  Future<ServiceResult> rotation({
+  Future<MediaRotationResponse> rotation({
     required int mediaID,
     required double rotate,
   }) async {
@@ -66,14 +93,17 @@ class MediaServices {
       descriptiondetail: response['aciklamadetay'],
     );
 
+    MediaRotationResponse armoyuresponse =
+        MediaRotationResponse(result: result);
+
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
 
-    return result;
+    return armoyuresponse;
   }
 
-  Future<ServiceResult> delete({required int mediaID}) async {
+  Future<MediaDeleteResponse> delete({required int mediaID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "medyaID": "$mediaID",
@@ -87,15 +117,16 @@ class MediaServices {
       description: response['aciklama'],
       descriptiondetail: response['aciklamadetay'],
     );
+    MediaDeleteResponse armoyuresponse = MediaDeleteResponse(result: result);
 
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
 
-    return result;
+    return armoyuresponse;
   }
 
-  Future<ServiceResult> upload({
+  Future<MediaUploadResponse> upload({
     required List<XFile> files,
     required String category,
   }) async {
@@ -121,11 +152,31 @@ class MediaServices {
       description: response['aciklama'],
       descriptiondetail: response['aciklamadetay'],
     );
+    MediaUploadResponse armoyuresponse = MediaUploadResponse(result: result);
 
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
 
-    return result;
+    List<APIMediaUpload> medialist = [];
+    for (var element in response['durum']['icerik']) {
+      medialist.add(
+        APIMediaUpload(
+          status: element['durum'],
+          mediaID: element['media_ID'],
+          description: element['aciklama'],
+          filetype: element['dosyatipi'],
+          filecategory: element['fotokategori'],
+          mediaURL: MediaURL(
+            bigURL: element['orijinallink'],
+            normalURL: element['ufakliklink'],
+            minURL: element['minnaklink'],
+          ),
+        ),
+      );
+    }
+    armoyuresponse.response = medialist;
+
+    return armoyuresponse;
   }
 }

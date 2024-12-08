@@ -8,13 +8,34 @@ import 'package:armoyu_services/core/models/ARMOYU/API/event/event.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/event/event_detail.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/event/event_joinorleave.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/event/event_participant.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/group/group_create.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/group/group_detail.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/group/group_invite_answer.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/group/group_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/group/group_media.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/group/group_request.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/group/group_user.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/group/group_user_kick.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/login&register&password/invitecode.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/login&register&password/login.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/media/media_fetch.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/media/media_upload.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/news/news_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/notifications/notification_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/post/post_detail.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/profile/profile_friendlist.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/profile/profile_invitelist.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/school/school_detail.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/school/school_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/search/search_hashtaglist.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/search/search_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/station/station_detail.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/station/station_equipment_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/station/station_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/story/story_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/story/story_viewlist.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/survey/survey_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/team/team_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/_response/service_result.dart';
 import 'package:armoyu_services/core/models/ARMOYU/sitemessage.dart';
 
@@ -120,12 +141,273 @@ class GroupSettingsResponse {
   GroupSettingsResponse({required this.result, this.response});
 }
 
+class GroupChangeMediaResponse {
+  final ServiceResult result;
+  APIGroupMedia? response;
+  GroupChangeMediaResponse({required this.result, this.response});
+}
+
+class GroupRequestAnswerResponse {
+  final ServiceResult result;
+  APIGroupRequest? response;
+  GroupRequestAnswerResponse({required this.result, this.response});
+}
+
+class GroupUserInviteResponse {
+  final ServiceResult result;
+  APIGroupInviteAnswer? response;
+  GroupUserInviteResponse({required this.result, this.response});
+}
+
+class GroupUserKickResponse {
+  final ServiceResult result;
+  APIGroupUserKick? response;
+  GroupUserKickResponse({required this.result, this.response});
+}
+
+class GroupCreateResponse {
+  final ServiceResult result;
+  APIGroupCreate? response;
+  GroupCreateResponse({required this.result, this.response});
+}
+
+// #JoinUS
+
+class JoinUsFetchDepartmentsResponse {
+  final ServiceResult result;
+  APIGroupCreate? response;
+  JoinUsFetchDepartmentsResponse({required this.result, this.response});
+}
+
+class JoinUsApplicationsResponse {
+  final ServiceResult result;
+  APIGroupCreate? response;
+  JoinUsApplicationsResponse({required this.result, this.response});
+}
+
+class JoinUsRequestJoinDepartmentResponse {
+  final ServiceResult result;
+  APIGroupCreate? response;
+  JoinUsRequestJoinDepartmentResponse({required this.result, this.response});
+}
+
+// #LoginRegister
+
+class LoginRegisterInviteCodeResponse {
+  final ServiceResult result;
+  APIInvitecode? response;
+  LoginRegisterInviteCodeResponse({required this.result, this.response});
+}
+
+// #Media
+
+class MediaFetchResponse {
+  final ServiceResult result;
+  APIMediaFetch? response;
+  MediaFetchResponse({required this.result, this.response});
+}
+
+class MediaRotationResponse {
+  final ServiceResult result;
+  APIMediaFetch? response;
+  MediaRotationResponse({required this.result, this.response});
+}
+
+class MediaDeleteResponse {
+  final ServiceResult result;
+  APIMediaFetch? response;
+  MediaDeleteResponse({required this.result, this.response});
+}
+
+class MediaUploadResponse {
+  final ServiceResult result;
+  List<APIMediaUpload>? response;
+  MediaUploadResponse({required this.result, this.response});
+}
 // #News
 
 class NewsListResponse {
   final ServiceResult result;
   APINewsList? response;
   NewsListResponse({required this.result, this.response});
+}
+
+class NewsFetchResponse {
+  final ServiceResult result;
+  APINewsDetail? response;
+  NewsFetchResponse({required this.result, this.response});
+}
+
+// #Notifications
+
+class NotificationSettingsListResponse {
+  final ServiceResult result;
+  APINotificationList? response;
+  NotificationSettingsListResponse({required this.result, this.response});
+}
+
+class NotificationSettingsUpdateResponse {
+  final ServiceResult result;
+  // APINotificationList? response;
+  NotificationSettingsUpdateResponse({required this.result});
+}
+
+// #Posts
+class PostLikeResponse {
+  final ServiceResult result;
+  // APINotificationList? response;
+  PostLikeResponse({required this.result});
+}
+
+class PostUnLikeResponse {
+  final ServiceResult result;
+  // APINotificationList? response;
+  PostUnLikeResponse({required this.result});
+}
+
+class PostCommentLikeResponse {
+  final ServiceResult result;
+  // APINotificationList? response;
+  PostCommentLikeResponse({required this.result});
+}
+
+class PostCommentUnLikeResponse {
+  final ServiceResult result;
+  // APINotificationList? response;
+  PostCommentUnLikeResponse({required this.result});
+}
+
+class PostShareResponse {
+  final ServiceResult result;
+  // APINotificationList? response;
+  PostShareResponse({required this.result});
+}
+
+class PostRemoveResponse {
+  final ServiceResult result;
+  // APINotificationList? response;
+  PostRemoveResponse({required this.result});
+}
+
+class PostRemoveCommentResponse {
+  final ServiceResult result;
+  // APINotificationList? response;
+  PostRemoveCommentResponse({required this.result});
+}
+
+class PostFetchListResponse {
+  final ServiceResult result;
+  List<APIPostList>? response;
+
+  PostFetchListResponse({required this.result, this.response});
+}
+
+class PostFetchResponse {
+  final ServiceResult result;
+  APIPostList? response;
+
+  PostFetchResponse({required this.result, this.response});
+}
+
+class PostCommentsFetchResponse {
+  final ServiceResult result;
+  List<APIPostComments>? response;
+  PostCommentsFetchResponse({required this.result});
+}
+
+class PostCreateCommentResponse {
+  final ServiceResult result;
+  PostCreateCommentResponse({required this.result});
+}
+
+class PostLikesListResponse {
+  final ServiceResult result;
+  List<APIPostLiker>? response;
+
+  PostLikesListResponse({required this.result, this.response});
+}
+
+// #Profile
+
+class ProfileInviteListResponse {
+  final ServiceResult result;
+  List<APIProfileInvitelist>? response;
+
+  ProfileInviteListResponse({required this.result, this.response});
+}
+
+class ProfileFriendListResponse {
+  final ServiceResult result;
+  List<APIProfileFriendlist>? response;
+
+  ProfileFriendListResponse({required this.result, this.response});
+}
+
+// #School
+
+class SchoolFetchListResponse {
+  final ServiceResult result;
+  List<APISchoolList>? response;
+  SchoolFetchListResponse({required this.result, this.response});
+}
+
+class SchoolFetchDetailResponse {
+  final ServiceResult result;
+  APISchoolDetail? response;
+  SchoolFetchDetailResponse({required this.result, this.response});
+}
+
+// #Station
+class StationFetchDetailResponse {
+  final ServiceResult result;
+  List<APIStationDetail>? response;
+  StationFetchDetailResponse({required this.result, this.response});
+}
+
+class StationFetchListResponse {
+  final ServiceResult result;
+  List<APIStationList>? response;
+  StationFetchListResponse({required this.result, this.response});
+}
+
+class StationFetchEquipmentListResponse {
+  final ServiceResult result;
+  List<APIStationEquipmentList>? response;
+  StationFetchEquipmentListResponse({required this.result, this.response});
+}
+
+// #Story
+
+class StoryFetchListResponse {
+  final ServiceResult result;
+  List<APIStoryList>? response;
+  StoryFetchListResponse({required this.result, this.response});
+}
+
+class StoryViewListResponse {
+  final ServiceResult result;
+  List<APIStoryViewlist>? response;
+  StoryViewListResponse({required this.result, this.response});
+}
+
+class StoryLikerListResponse {
+  final ServiceResult result;
+  List<APIStoryViewlist>? response;
+  StoryLikerListResponse({required this.result, this.response});
+}
+
+// #Survey
+class SurveyListResponse {
+  final ServiceResult result;
+  List<APISurveyList>? response;
+  SurveyListResponse({required this.result, this.response});
+}
+
+// #Teams
+class TeamListResponse {
+  final ServiceResult result;
+  List<APITeamList>? response;
+  TeamListResponse({required this.result, this.response});
 }
 
 // #Search
