@@ -1,3 +1,3 @@
-## [1.0.0+24]
+## [1.0.0+25]
 
-- Fonksyion dönütlerinin classları yazılmaya başlandı.
+- Çalışır hale getirilmesi için çalışmalara başlandı.

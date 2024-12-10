@@ -36,6 +36,19 @@ class JoinUsServices {
       return armoyuresponse;
     }
 
+    List<APIJoinusPermissionList> permissionList = [];
+    for (var element in response['icerik']) {
+      permissionList.add(
+        APIJoinusPermissionList(
+          id: element['ID'],
+          value: element['Value'],
+          category: element['category'],
+          about: element['about'],
+          joinStatus: element['joinstatus'],
+        ),
+      );
+    }
+    armoyuresponse.response = permissionList;
     return armoyuresponse;
   }
 
@@ -60,6 +73,37 @@ class JoinUsServices {
       return armoyuresponse;
     }
 
+    List<APIJoinusList> applicationList = [];
+    for (var element in response['icerik']) {
+      applicationList.add(
+        APIJoinusList(
+          applicationId: element['application_ID'],
+          applicationUser: ApplicationUser(
+            playerId: element['sapplication_user']['player_ID'],
+            playerDisplayName: element['sapplication_user']
+                ['player_displayname'],
+            playerAvatar: MediaURL(
+              bigURL: element['sapplication_user']['player_avatar']
+                  ['media_bigURL'],
+              normalURL: element['sapplication_user']['player_avatar']
+                  ['media_URL'],
+              minURL: element['sapplication_user']['player_avatar']
+                  ['media_minURL'],
+            ),
+          ),
+          applicationPosition: ApplicationPosition(
+            positionId: element['sapplication_position']['position_ID'],
+            positionDepartment: element['sapplication_position']
+                ['position_department'],
+            positionName: element['sapplication_position']['position_name'],
+          ),
+          applicationDate: element['sapplication_date'],
+          applicationStatus: element['sapplication_status'],
+        ),
+      );
+    }
+
+    armoyuresponse.response = applicationList;
     return armoyuresponse;
   }
 

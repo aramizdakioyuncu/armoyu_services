@@ -39,10 +39,14 @@ class CategoryServices {
       return armoyuresponse;
     }
 
-    armoyuresponse.response = APICategory(
-      categoryID: response['icerik']['kategori_ID'],
-      name: response['icerik']['kategori_adi'],
-    );
+    List<APICategory> categoryList = [];
+    for (var element in response['icerik']) {
+      categoryList.add(APICategory(
+        categoryID: element['kategori_ID'],
+        name: element['kategori_adi'],
+      ));
+    }
+    armoyuresponse.response = categoryList;
     return armoyuresponse;
   }
 
@@ -65,11 +69,15 @@ class CategoryServices {
     if (response['durum'] == 0) {
       return armoyuresponse;
     }
-
-    armoyuresponse.response = APICategory(
-      categoryID: response['icerik']['kategori_ID'],
-      name: response['icerik']['kategori_adi'],
-    );
+    List<APICategory> categoryList = [];
+    for (var element in response['icerik']) {
+      categoryList.add(APICategory(
+        categoryID: element['kategori_ID'],
+        name: element['kategori_adi'],
+      ));
+    }
+    armoyuresponse.response = categoryList;
+    armoyuresponse.response = categoryList;
     return armoyuresponse;
   }
 }

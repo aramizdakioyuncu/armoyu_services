@@ -252,10 +252,20 @@ class StoryServices {
     if (response['durum'] == 0) {
       return armoyuresponse;
     }
+    List<APIStoryLikelist> storylikelist = [];
 
-    for (var element in response['icerik']) {}
+    for (var element in response['icerik']) {
+      storylikelist.add(
+        APIStoryLikelist(
+          viewerId: element['hgoruntuleyen_ID'],
+          viewerFullName: element['hgoruntuleyen_adsoyad'],
+          viewerUsername: element['hgoruntuleyen_kullaniciad'],
+          viewerAvatar: element['hgoruntuleyen_avatar'],
+        ),
+      );
+    }
 
-    armoyuresponse.response = [];
+    armoyuresponse.response = storylikelist;
     return armoyuresponse;
   }
 }

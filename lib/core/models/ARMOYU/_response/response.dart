@@ -16,6 +16,8 @@ import 'package:armoyu_services/core/models/ARMOYU/API/group/group_media.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/group/group_request.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/group/group_user.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/group/group_user_kick.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/joinus/joinus_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/joinus/joinus_permission_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/login&register&password/invitecode.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/login&register&password/login.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/media/media_fetch.dart';
@@ -32,6 +34,7 @@ import 'package:armoyu_services/core/models/ARMOYU/API/search/search_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/station/station_detail.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/station/station_equipment_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/station/station_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/story/story_likelist.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/story/story_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/story/story_viewlist.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/survey/survey_list.dart';
@@ -67,7 +70,7 @@ class BlockingRemoveResponse {
 // #Category
 class CategoryResponse {
   final ServiceResult result;
-  APICategory? response;
+  List<APICategory>? response;
   CategoryResponse({required this.result, this.response});
 }
 
@@ -88,7 +91,7 @@ class ProvinceResponse {
 // #Event
 class EventResponse {
   final ServiceResult result;
-  APIEvent? response;
+  List<APIEvent>? response;
   EventResponse({required this.result, this.response});
 }
 
@@ -175,13 +178,13 @@ class GroupCreateResponse {
 
 class JoinUsFetchDepartmentsResponse {
   final ServiceResult result;
-  APIGroupCreate? response;
+  List<APIJoinusPermissionList>? response;
   JoinUsFetchDepartmentsResponse({required this.result, this.response});
 }
 
 class JoinUsApplicationsResponse {
   final ServiceResult result;
-  APIGroupCreate? response;
+  List<APIJoinusList>? response;
   JoinUsApplicationsResponse({required this.result, this.response});
 }
 
@@ -392,7 +395,7 @@ class StoryViewListResponse {
 
 class StoryLikerListResponse {
   final ServiceResult result;
-  List<APIStoryViewlist>? response;
+  List<APIStoryLikelist>? response;
   StoryLikerListResponse({required this.result, this.response});
 }
 

@@ -36,38 +36,43 @@ class EventServices {
       return armoyuresponse;
     }
 
-    armoyuresponse.response = APIEvent(
-      eventID: response['icerik']['event_ID'],
-      status: response['icerik']['event_ID'],
-      link: response['icerik']['event_ID'],
-      foto: response['icerik']['event_ID'],
-      fotoDetail: response['icerik']['event_ID'],
-      name: response['icerik']['event_ID'],
-      gameID: response['icerik']['event_ID'],
-      gameName: response['icerik']['event_ID'],
-      gameBanner: response['icerik']['event_ID'],
-      gameLogo: response['icerik']['event_ID'],
-      organizer: UserInfo(
-        userID: response['icerik']['event_organizer']['player_ID'],
-        displayname: response['icerik']['event_organizer']
-            ['player_displayname'],
-        // username: response['icerik']['event_organizer']['player_ID'],
-        avatar: MediaURL(
-          bigURL: response['icerik']['event_organizer']['player_avatar'],
-          normalURL: response['icerik']['event_organizer']['player_avatar'],
-          minURL: response['icerik']['event_organizer']['player_avatar'],
+    List<APIEvent> eventlist = [];
+    for (var element in response['icerik']) {
+      eventlist.add(
+        APIEvent(
+          eventID: element['event_ID'],
+          status: element['event_ID'],
+          link: element['event_ID'],
+          foto: element['event_ID'],
+          fotoDetail: element['event_ID'],
+          name: element['event_ID'],
+          gameID: element['event_ID'],
+          gameName: element['event_ID'],
+          gameBanner: element['event_ID'],
+          gameLogo: element['event_ID'],
+          organizer: UserInfo(
+            userID: element['event_organizer']['player_ID'],
+            displayname: element['event_organizer']['player_displayname'],
+            // username: element['event_organizer']['player_ID'],
+            avatar: MediaURL(
+              bigURL: element['event_organizer']['player_avatar'],
+              normalURL: element['event_organizer']['player_avatar'],
+              minURL: element['event_organizer']['player_avatar'],
+            ),
+          ),
+          type: element['event_ID'],
+          date: element['event_ID'],
+          participantType: element['event_ID'],
+          participantLimit: element['event_ID'],
+          participantGroupPlayerLimit: element['event_ID'],
+          participantCurrent: element['event_ID'],
+          location: element['event_ID'],
+          description: element['event_ID'],
+          rules: element['event_ID'],
         ),
-      ),
-      type: response['icerik']['event_ID'],
-      date: response['icerik']['event_ID'],
-      participantType: response['icerik']['event_ID'],
-      participantLimit: response['icerik']['event_ID'],
-      participantGroupPlayerLimit: response['icerik']['event_ID'],
-      participantCurrent: response['icerik']['event_ID'],
-      location: response['icerik']['event_ID'],
-      description: response['icerik']['event_ID'],
-      rules: response['icerik']['event_ID'],
-    );
+      );
+    }
+    armoyuresponse.response = eventlist;
     return armoyuresponse;
   }
 
