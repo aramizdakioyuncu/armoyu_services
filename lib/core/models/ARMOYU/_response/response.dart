@@ -39,6 +39,8 @@ import 'package:armoyu_services/core/models/ARMOYU/API/story/story_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/story/story_viewlist.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/survey/survey_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/team/team_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/utils/player_pop_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/utils/player_xp_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/_response/service_result.dart';
 import 'package:armoyu_services/core/models/ARMOYU/sitemessage.dart';
 
@@ -451,4 +453,18 @@ class LookProfilewithUsernameResponse {
   final ServiceResult result;
   APILogin? response;
   LookProfilewithUsernameResponse({required this.result, this.response});
+}
+
+//
+
+class PlayerPopResponse {
+  final ServiceResult result;
+  List<APIPlayerPop>? response;
+  PlayerPopResponse({required this.result, this.response});
+}
+
+class PlayerXPResponse {
+  final ServiceResult result;
+  List<APIPlayerXp>? response;
+  PlayerXPResponse({required this.result, this.response});
 }

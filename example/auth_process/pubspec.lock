@@ -7,15 +7,15 @@ packages:
       path: "../.."
       relative: true
     source: path
-    version: "1.0.0+22"
+    version: "1.0.0+25"
   armoyu_widgets:
     dependency: "direct main"
     description:
       name: armoyu_widgets
-      sha256: ab2cc8d0134add49787d2f1c62584948d101c7bf29d5c64f087dfc6b56f0adfa
+      sha256: "5a206c6116c8ff8c46ab387901f9750e1d81c472ead13713c3df413b01507bd6"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0+2"
+    version: "1.0.0+3"
   async:
     dependency: transitive
     description:

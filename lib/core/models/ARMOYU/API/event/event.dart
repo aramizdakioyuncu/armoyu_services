@@ -11,7 +11,7 @@ class APIEvent {
   String gameName;
   String gameBanner;
   String gameLogo;
-  UserInfo organizer;
+  List<UserInfo> organizer;
   String type;
   String date;
   String participantType;
@@ -58,7 +58,9 @@ class APIEvent {
       gameName: json['gameName'],
       gameBanner: json['gameBanner'],
       gameLogo: json['gameLogo'],
-      organizer: UserInfo.fromJson(json['organizer']),
+      organizer: (json['organizer'] as List<dynamic>)
+          .map((player) => UserInfo.fromJson(player))
+          .toList(),
       type: json['type'],
       date: json['date'],
       participantType: json['participantType'],
@@ -84,7 +86,7 @@ class APIEvent {
       'gameName': gameName,
       'gameBanner': gameBanner,
       'gameLogo': gameLogo,
-      'organizer': organizer.toJson(),
+      'organizer': organizer.map((e) => e.toJson()).toList(),
       'type': type,
       'date': date,
       'participantType': participantType,

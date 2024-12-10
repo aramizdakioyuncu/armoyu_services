@@ -233,7 +233,7 @@ class UtilsServices {
     return result;
   }
 
-  Future<ServiceResult> getplayerxp({required int page}) async {
+  Future<PlayerPopResponse> getplayerxp({required int page}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {"sayfa": page},
       endpoint: "0/0/${_EndpointConstants.xpordering}/0/0",
@@ -244,14 +244,31 @@ class UtilsServices {
       description: response['aciklama'],
       descriptiondetail: response['aciklamadetay'],
     );
-
+    PlayerPopResponse armoyuresponse = PlayerPopResponse(result: result);
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
-    return result;
+    List<APIPlayerPop> xplist = [];
+    for (var element in response['icerik']) {
+      xplist.add(
+        APIPlayerPop(
+          oyuncuID: element['oyuncuID'],
+          oyuncuAdSoyad: element['oyuncuadsoyad'],
+          oyuncuKullaniciAdi: element['oyuncukullaniciadi'],
+          oyuncuAvatar: element['oyuncuavatar'],
+          oyuncuSeviye: element['oyuncuseviye'],
+          oyuncuSeviyeXP: element['oyuncuseviyexp'],
+          oyuncuSeviyeSezonlukXP: element['oyuncuseviyesezonlukxp'],
+          oyuncuPop: element['oyuncupop'],
+        ),
+      );
+    }
+    armoyuresponse.response = xplist;
+
+    return armoyuresponse;
   }
 
-  Future<ServiceResult> getplayerpop({required int page}) async {
+  Future<PlayerPopResponse> getplayerpop({required int page}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {"sayfa": page},
       endpoint: "0/0/${_EndpointConstants.popordering}/0/0",
@@ -262,11 +279,30 @@ class UtilsServices {
       description: response['aciklama'],
       descriptiondetail: response['aciklamadetay'],
     );
+    PlayerPopResponse armoyuresponse = PlayerPopResponse(result: result);
 
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
-    return result;
+    List<APIPlayerPop> poplist = [];
+    for (var element in response['icerik']) {
+      poplist.add(
+        APIPlayerPop(
+          oyuncuID: element['oyuncuID'],
+          oyuncuAdSoyad: element['oyuncuadsoyad'],
+          oyuncuKullaniciAdi: element['oyuncukullaniciadi'],
+          oyuncuAvatar: element['oyuncuavatar'],
+          oyuncuSeviye: element['oyuncuseviye'],
+          oyuncuSeviyeXP: element['oyuncuseviyexp'],
+          oyuncuSeviyeSezonlukXP: element['oyuncuseviyesezonlukxp'],
+          oyuncuPop: element['oyuncupop'],
+        ),
+      );
+    }
+
+    armoyuresponse.response = poplist;
+
+    return armoyuresponse;
   }
 
   Future<ServiceResult> getnotifications({
@@ -293,6 +329,7 @@ class UtilsServices {
     if (response['durum'] == 0) {
       return result;
     }
+
     return result;
   }
 

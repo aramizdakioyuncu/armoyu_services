@@ -38,6 +38,21 @@ class EventServices {
 
     List<APIEvent> eventlist = [];
     for (var element in response['icerik']) {
+      List<UserInfo> organizerlist = [];
+
+      for (var element2 in element['event_organizer']) {
+        organizerlist.add(
+          UserInfo(
+            userID: element2['player_ID'],
+            displayname: element2['player_displayname'],
+            avatar: MediaURL(
+              bigURL: element2['player_avatar'],
+              normalURL: element2['player_avatar'],
+              minURL: element2['player_avatar'],
+            ),
+          ),
+        );
+      }
       eventlist.add(
         APIEvent(
           eventID: element['event_ID'],
@@ -50,16 +65,7 @@ class EventServices {
           gameName: element['event_ID'],
           gameBanner: element['event_ID'],
           gameLogo: element['event_ID'],
-          organizer: UserInfo(
-            userID: element['event_organizer']['player_ID'],
-            displayname: element['event_organizer']['player_displayname'],
-            // username: element['event_organizer']['player_ID'],
-            avatar: MediaURL(
-              bigURL: element['event_organizer']['player_avatar'],
-              normalURL: element['event_organizer']['player_avatar'],
-              minURL: element['event_organizer']['player_avatar'],
-            ),
-          ),
+          organizer: organizerlist,
           type: element['event_ID'],
           date: element['event_ID'],
           participantType: element['event_ID'],
