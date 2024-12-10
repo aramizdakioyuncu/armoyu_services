@@ -2,6 +2,8 @@ import 'package:armoyu_services/core/models/ARMOYU/API/blocking/blocking_add.dar
 import 'package:armoyu_services/core/models/ARMOYU/API/blocking/blocking_remove.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/blocking/blocking_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/category/category.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/chat/chat_detail_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/chat/chat_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/country&province/country.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/country&province/province.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/event/event.dart';
@@ -24,6 +26,7 @@ import 'package:armoyu_services/core/models/ARMOYU/API/media/media_fetch.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/media/media_upload.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/news/news_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/notifications/notification_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/notifications/notification_setting_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/post/post_detail.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/profile/profile_friendlist.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/profile/profile_invitelist.dart';
@@ -53,7 +56,7 @@ class SitemessageResponse {
 // #Blocking
 class BlockingListResponse {
   final ServiceResult result;
-  APIBlockingList? response;
+  List<APIBlockingList>? response;
   BlockingListResponse({required this.result, this.response});
 }
 
@@ -74,6 +77,19 @@ class CategoryResponse {
   final ServiceResult result;
   List<APICategory>? response;
   CategoryResponse({required this.result, this.response});
+}
+
+// #Chat
+class ChatListResponse {
+  final ServiceResult result;
+  List<APIChatList>? response;
+  ChatListResponse({required this.result, this.response});
+}
+
+class ChatFetchDetailResponse {
+  final ServiceResult result;
+  List<APIChatDetailList>? response;
+  ChatFetchDetailResponse({required this.result, this.response});
 }
 
 // #Country
@@ -205,10 +221,9 @@ class LoginRegisterInviteCodeResponse {
 }
 
 // #Media
-
 class MediaFetchResponse {
   final ServiceResult result;
-  APIMediaFetch? response;
+  List<APIMediaFetch>? response;
   MediaFetchResponse({required this.result, this.response});
 }
 
@@ -245,10 +260,16 @@ class NewsFetchResponse {
 
 // #Notifications
 
-class NotificationSettingsListResponse {
+class NotificationListResponse {
   final ServiceResult result;
-  APINotificationList? response;
-  NotificationSettingsListResponse({required this.result, this.response});
+  List<APINotificationList>? response;
+  NotificationListResponse({required this.result, this.response});
+}
+
+class NotificationSettingsResponse {
+  final ServiceResult result;
+  APINotificationSetting? response;
+  NotificationSettingsResponse({required this.result, this.response});
 }
 
 class NotificationSettingsUpdateResponse {

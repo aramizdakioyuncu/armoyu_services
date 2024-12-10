@@ -46,30 +46,36 @@ class MediaServices {
       return armoyuresponse;
     }
 
-    armoyuresponse.response = APIMediaFetch(
-      mediaOwner: MediaOwner(
-        userID: response['icerik']['media_ownerID'],
-        displayname: response['icerik']['media_ownerusername'],
-        avatar: MediaURL(
-          bigURL: response['icerik']['media_owneravatar'],
-          normalURL: response['icerik']['media_owneravatar'],
-          minURL: response['icerik']['media_owneravatar'],
+    List<APIMediaFetch> mediaList = [];
+    for (var element in response['icerik']) {
+      mediaList.add(
+        APIMediaFetch(
+          mediaOwner: MediaOwner(
+            userID: element['media_ownerID'],
+            displayname: element['media_ownerusername'],
+            avatar: MediaURL(
+              bigURL: element['media_owneravatar'],
+              normalURL: element['media_owneravatar'],
+              minURL: element['media_owneravatar'],
+            ),
+          ),
+          mediaDate: element['media_time'],
+          mediaSize: element['media_size'],
+          category: element['fotokategori'],
+          fotoPaylas: element['fotopaylas'],
+          mediatype: element['fotodosyatipi'],
+          media: Media(
+            mediaID: element['media_ID'],
+            mediaURL: MediaURL(
+              bigURL: element['fotoorijinalurl'],
+              normalURL: element['fotoufaklikurl'],
+              minURL: element['fotominnakurl'],
+            ),
+          ),
         ),
-      ),
-      mediaDate: response['icerik']['media_time'],
-      mediaSize: response['icerik']['media_size'],
-      category: response['icerik']['fotokategori'],
-      fotoPaylas: response['icerik']['fotopaylas'],
-      mediatype: response['icerik']['fotodosyatipi'],
-      media: Media(
-        mediaID: response['icerik']['media_ID'],
-        mediaURL: MediaURL(
-          bigURL: response['icerik']['fotoorijinalurl'],
-          normalURL: response['icerik']['fotoufaklikurl'],
-          minURL: response['icerik']['fotominnakurl'],
-        ),
-      ),
-    );
+      );
+    }
+    armoyuresponse.response = mediaList;
 
     return armoyuresponse;
   }

@@ -305,35 +305,7 @@ class UtilsServices {
     return armoyuresponse;
   }
 
-  Future<ServiceResult> getnotifications({
-    required String kategori,
-    required String kategoridetay,
-    required int page,
-  }) async {
-    Map<String, dynamic> response = await _apiHelpers.post(
-      body: {
-        "kategori": kategori,
-        "kategoridetay": kategoridetay,
-        "sayfa": page,
-        "limit": "20",
-      },
-      endpoint: "0/0/${_EndpointConstants.notifications}/0/0",
-      headers: _apiHelpers.getRequestHeader(token: getToken()),
-    );
-    ServiceResult result = ServiceResult(
-      status: response['durum'] == 1 ? true : false,
-      description: response['aciklama'],
-      descriptiondetail: response['aciklamadetay'],
-    );
-
-    if (response['durum'] == 0) {
-      return result;
-    }
-
-    return result;
-  }
-
-  Future<ServiceResult> getchats({required int page}) async {
+  Future<ChatListResponse> getchats({required int page}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "sayfa": page,
@@ -342,21 +314,47 @@ class UtilsServices {
       endpoint: "0/0/${_EndpointConstants.chat}/0/0",
       headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
+
     ServiceResult result = ServiceResult(
       status: response['durum'] == 1 ? true : false,
       description: response['aciklama'],
       descriptiondetail: response['aciklamadetay'],
     );
+    ChatListResponse armoyuresponse = ChatListResponse(result: result);
 
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
-    return result;
+
+    List<APIChatList> chatList = [];
+    for (var element in response['icerik']) {
+      chatList.add(
+        APIChatList(
+          kullID: element['kullid'],
+          adSoyad: element['adisoyadi'],
+          kullAdi: element['kulladi'],
+          bildirim: element['bildirim'],
+          sonGiris: element['songiris'],
+          sonMesaj: element['sonmesaj'],
+          sohbetTuru: element['sohbetturu'],
+          chatImage: Media(
+            mediaID: element['chatImage']['media_ID'],
+            mediaURL: MediaURL(
+              bigURL: element['chatImage']['media_bigURL'],
+              normalURL: element['chatImage']['media_URL'],
+              minURL: element['chatImage']['media_minURL'],
+            ),
+          ),
+          foto: element['foto'],
+        ),
+      );
+    }
+
+    armoyuresponse.response = chatList;
+    return armoyuresponse;
   }
 
-  Future<ServiceResult> getnewchatfriendlist({
-    required int page,
-  }) async {
+  Future<ServiceResult> getnewchatfriendlist({required int page}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "sayfa": page,
@@ -377,7 +375,7 @@ class UtilsServices {
     return result;
   }
 
-  Future<ServiceResult> getdeailchats({required int chatID}) async {
+  Future<ChatFetchDetailResponse> getdetailchats({required int chatID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "sohbetID": chatID,
@@ -391,11 +389,32 @@ class UtilsServices {
       description: response['aciklama'],
       descriptiondetail: response['aciklamadetay'],
     );
+    ChatFetchDetailResponse armoyuresponse =
+        ChatFetchDetailResponse(result: result);
 
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
-    return result;
+
+    List<APIChatDetailList> chatdetailList = [];
+    for (var element in response['icerik']) {
+      chatdetailList.add(
+        APIChatDetailList(
+          sohbetKim: element['sohbetkim'],
+          renkKodu: element['renkkodu'],
+          adSoyad: element['adsoyad'],
+          avatar: element['avatar'],
+          mesajIcerik: element['mesajicerik'],
+          zaman: element['zaman'],
+          zamanTarih: element['zamantarih'],
+          zamanSaat: element['zamansaat'],
+          durum: element['durum'],
+        ),
+      );
+    }
+
+    armoyuresponse.response = chatdetailList;
+    return armoyuresponse;
   }
 
   Future<ServiceResult> sendchatmessage({

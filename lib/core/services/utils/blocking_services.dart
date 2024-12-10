@@ -35,20 +35,26 @@ class BlockingServices {
       return armoyuresponse;
     }
 
-    armoyuresponse.response = APIBlockingList(
-      blockID: response['engel_ID'],
-      blockeduser: UserInfo(
-        userID: response['engel_kimeID'],
-        displayname: response['engel_kime'],
-        username: response['engel_kadi'],
-        avatar: MediaURL(
-          bigURL: response['engel_avatar'],
-          normalURL: response['engel_avatar'],
-          minURL: response['engel_avatar'],
+    List<APIBlockingList> blockedList = [];
+    for (var element in response['icerik']) {
+      blockedList.add(
+        APIBlockingList(
+          blockID: element['engel_ID'],
+          blockeduser: UserInfo(
+            userID: element['engel_kimeID'],
+            displayname: element['engel_kime'],
+            username: element['engel_kadi'],
+            avatar: MediaURL(
+              bigURL: element['engel_avatar'],
+              normalURL: element['engel_avatar'],
+              minURL: element['engel_avatar'],
+            ),
+          ),
+          date: element['engel_zaman'],
         ),
-      ),
-      date: response['engel_zaman'],
-    );
+      );
+    }
+    armoyuresponse.response = blockedList;
 
     return armoyuresponse;
   }

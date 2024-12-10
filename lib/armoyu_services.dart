@@ -1,6 +1,8 @@
 library armoyu_services.dart;
 
 import 'package:armoyu_services/core/models/ARMOYU/API/category/category.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/chat/chat_detail_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/chat/chat_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/country&province/country.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/country&province/province.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/event/event.dart';
@@ -17,6 +19,7 @@ import 'package:armoyu_services/core/models/ARMOYU/API/media/media_fetch.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/media/media_upload.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/news/news_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/notifications/notification_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/notifications/notification_setting_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/post/post_detail.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/profile/profile_friendlist.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/profile/profile_invitelist.dart';

@@ -17,8 +17,57 @@ class NotificationServices {
   }) {
     _apiHelpers = ApiHelpers(apiKey: apiKey, usePreviousAPI: usePreviousAPI);
   }
+  Future<NotificationListResponse> getnotifications({
+    required String kategori,
+    required String kategoridetay,
+    required int page,
+  }) async {
+    Map<String, dynamic> response = await _apiHelpers.post(
+      body: {
+        "kategori": kategori,
+        "kategoridetay": kategoridetay,
+        "sayfa": page,
+        "limit": "20",
+      },
+      endpoint: "0/0/${_EndpointConstants.notifications}/0/0",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
+    );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
 
-  Future<NotificationSettingsListResponse> listNotificationSettings() async {
+    NotificationListResponse armoyuresponse =
+        NotificationListResponse(result: result);
+    if (response['durum'] == 0) {
+      return armoyuresponse;
+    }
+
+    List<APINotificationList> notificationList = [];
+    for (var element in response['icerik']) {
+      notificationList.add(
+        APINotificationList(
+          bildirimID: element['bildirimID'],
+          bildirimDurum: element['bildirimdurum'],
+          bildirimIcerik: element['bildirimicerik'],
+          bildirimIcerikLink: element['bildirimiceriklink'],
+          bildirimZaman: element['bildirimzaman'],
+          bildirimGonderenID: element['bildirimgonderenID'],
+          bildirimGonderenAdSoyad: element['bildirimgonderenadsoyad'],
+          bildirimGonderenAvatar: element['bildirimgonderenavatar'],
+          bildirimGonderenLink: element['bildirimgonderenlink'],
+          bildirimAmac: element['bildirimamac'],
+          bildirimKategori: element['bildirimkategori'],
+          bildirimKategoriDetay: element['bildirimkategoridetay'],
+        ),
+      );
+    }
+    armoyuresponse.response = notificationList;
+    return armoyuresponse;
+  }
+
+  Future<NotificationSettingsResponse> listNotificationSettings() async {
     Map<String, dynamic> response = await _apiHelpers.post(
       endpoint: "0/0/${_EndpointConstants.notificationsettings}/",
       headers: _apiHelpers.getRequestHeader(token: getToken()),
@@ -28,14 +77,14 @@ class NotificationServices {
       description: response['aciklama'],
       descriptiondetail: response['aciklamadetay'],
     );
-    NotificationSettingsListResponse armoyuresponse =
-        NotificationSettingsListResponse(result: result);
+    NotificationSettingsResponse armoyuresponse =
+        NotificationSettingsResponse(result: result);
 
     if (response['durum'] == 0) {
       return armoyuresponse;
     }
 
-    armoyuresponse.response = APINotificationList(
+    armoyuresponse.response = APINotificationSetting(
       paylasimBegeni: response['icerik']['paylasimbegeni'],
       paylasimYorum: response['icerik']['paylasimyorum'],
       yorumBegeni: response['icerik']['yorumbegeni'],
