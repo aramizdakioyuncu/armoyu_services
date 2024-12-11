@@ -153,7 +153,7 @@ class UtilsServices {
     return armoyuresponse;
   }
 
-  Future<ServiceResult> myGroups() async {
+  Future<APIMyGroupListResponse> myGroups() async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {},
       endpoint: "0/0/${_EndpointConstants.mygroups}/0/0/",
@@ -164,14 +164,63 @@ class UtilsServices {
       description: response['aciklama'],
       descriptiondetail: response['aciklamadetay'],
     );
-
+    APIMyGroupListResponse armoyuresponse =
+        APIMyGroupListResponse(result: result);
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
-    return result;
+
+    List<APIMyGroupList> groupList = [];
+    for (var element in response['icerik']) {
+      groupList.add(
+        APIMyGroupList(
+          groupID: element['group_ID'],
+          groupName: element['group_name'],
+          groupShortName: element['group_shortname'],
+          groupJoinStatus: element['group_joinstatus'],
+          groupDescription: element['group_description'],
+          groupSocial: MyGroupSocial(
+            groupWebsite: element['group_social']['group_website'],
+            groupDiscord: element['group_ID']['group_discord'],
+          ),
+          groupURL: element['group_URL'],
+          groupUserCount: element['group_usercount'],
+          groupLogo: Media(
+            mediaID: element['group_logo']['media_ID'],
+            mediaURL: MediaURL(
+              bigURL: element['group_logo']['media_bigURL'],
+              normalURL: element['group_logo']['media_URL'],
+              minURL: element['group_logo']['media_minURL'],
+            ),
+          ),
+          groupBanner: Media(
+            mediaID: element['group_banner']['media_ID'],
+            mediaURL: MediaURL(
+              bigURL: element['group_banner']['media_bigURL'],
+              normalURL: element['group_banner']['media_URL'],
+              minURL: element['group_banner']['media_minURL'],
+            ),
+          ),
+          groupMyRole: MyGroupMyRole(
+            owner: element['owner'],
+            userInvite: element['user_invite'],
+            userKick: element['user_kick'],
+            userRole: element['user_role'],
+            groupSettings: element['group_settings'],
+            groupFiles: element['group_files'],
+            groupEvents: element['group_events'],
+            groupRole: element['group_role'],
+            groupSurvey: element['group_survey'],
+          ),
+        ),
+      );
+    }
+
+    armoyuresponse.response = groupList;
+    return armoyuresponse;
   }
 
-  Future<ServiceResult> mySchools() async {
+  Future<APIMySchoolListResponse> mySchools() async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {},
       endpoint: "0/0/${_EndpointConstants.myschools}/0/0/",
@@ -183,10 +232,44 @@ class UtilsServices {
       descriptiondetail: response['aciklamadetay'],
     );
 
+    APIMySchoolListResponse armoyuresponse =
+        APIMySchoolListResponse(result: result);
     if (response['durum'] == 0) {
-      return result;
+      return armoyuresponse;
     }
-    return result;
+
+    List<APIMySchoolList> myschoolList = [];
+
+    for (var element in response['icerik']) {
+      myschoolList.add(
+        APIMySchoolList(
+          schoolID: element['school_ID'],
+          schoolName: element['school_name'],
+          schoolURL: element['school_URL'],
+          schoolUserCount: element['school_usercount'],
+          schoolLogo: Media(
+            mediaID: element['school_logo']['media_ID'],
+            mediaURL: MediaURL(
+              bigURL: element['school_logo']['media_bigURL'],
+              normalURL: element['school_logo']['media_URL'],
+              minURL: element['school_logo']['media_minURL'],
+            ),
+          ),
+          schoolBanner: Media(
+            mediaID: element['school_banner']['media_ID'],
+            mediaURL: MediaURL(
+              bigURL: element['school_banner']['media_bigURL'],
+              normalURL: element['school_banner']['media_URL'],
+              minURL: element['school_banner']['media_minURL'],
+            ),
+          ),
+        ),
+      );
+    }
+
+    armoyuresponse.response = myschoolList;
+
+    return armoyuresponse;
   }
 
   Future<ServiceResult> myStations() async {

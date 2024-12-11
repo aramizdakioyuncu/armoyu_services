@@ -42,6 +42,8 @@ import 'package:armoyu_services/core/models/ARMOYU/API/story/story_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/story/story_viewlist.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/survey/survey_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/team/team_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/utils/my_group_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/utils/my_school_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/utils/player_pop_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/utils/player_xp_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/_response/service_result.dart';
@@ -95,14 +97,14 @@ class ChatFetchDetailResponse {
 // #Country
 class CountryResponse {
   final ServiceResult result;
-  APICountry? response;
+  List<APICountry>? response;
   CountryResponse({required this.result, this.response});
 }
 
 // #Province
 class ProvinceResponse {
   final ServiceResult result;
-  APIProvince? response;
+  List<APIProvince>? response;
   ProvinceResponse({required this.result, this.response});
 }
 
@@ -476,7 +478,19 @@ class LookProfilewithUsernameResponse {
   LookProfilewithUsernameResponse({required this.result, this.response});
 }
 
-//
+//#Utils
+
+class APIMyGroupListResponse {
+  final ServiceResult result;
+  List<APIMyGroupList>? response;
+  APIMyGroupListResponse({required this.result, this.response});
+}
+
+class APIMySchoolListResponse {
+  final ServiceResult result;
+  List<APIMySchoolList>? response;
+  APIMySchoolListResponse({required this.result, this.response});
+}
 
 class PlayerPopResponse {
   final ServiceResult result;

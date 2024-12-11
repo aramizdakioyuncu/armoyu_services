@@ -35,12 +35,18 @@ class CountryServices {
       return armoyuresponse;
     }
 
-    armoyuresponse.response = APICountry(
-      countryID: response['icerik']['country_ID'],
-      name: response['icerik']['country_name'],
-      code: response['icerik']['country_code'],
-      phonecode: response['icerik']['country_phoneCode'],
-    );
+    List<APICountry> countryList = [];
+    for (var element in response['icerik']) {
+      countryList.add(
+        APICountry(
+          countryID: element['country_ID'],
+          name: element['country_name'],
+          code: element['country_code'],
+          phonecode: element['country_phoneCode'],
+        ),
+      );
+    }
+    armoyuresponse.response = countryList;
 
     return armoyuresponse;
   }
@@ -62,12 +68,17 @@ class CountryServices {
     if (response['durum'] == 0) {
       return armoyuresponse;
     }
-    armoyuresponse.response = APIProvince(
-      provinceID: response['icerik']['province_ID'],
-      name: response['icerik']['province_name'],
-      platecode: response['icerik']['province_plateCode'],
-      phonecode: response['icerik']['province_phoneCode'],
-    );
+
+    List<APIProvince> provinceList = [];
+    for (var element in response['icerik']) {
+      provinceList.add(APIProvince(
+        provinceID: element['province_ID'],
+        name: element['province_name'],
+        platecode: element['province_plateCode'],
+        phonecode: element['province_phoneCode'],
+      ));
+    }
+    armoyuresponse.response = provinceList;
     return armoyuresponse;
   }
 }
