@@ -1,3 +1,3 @@
-## [1.0.0+30]
+## [1.0.0+31]
 
-- Çalışır hale getirilmesi için çalışmalara başlandı v6.
+- Çalışır hale getirildi Login sistemi iyileştirildi.

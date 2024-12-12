@@ -25,8 +25,11 @@ final class AuthServices {
     password = _apiHelpers.generateMd5(password);
 
     Map<String, dynamic> response = await _apiHelpers.post(
-      endpoint:
-          "$username/$password/${_EndpointConstants.previusAuthServicesLogin}/0/0/",
+      body: {
+        "username": username,
+        "password": password,
+      },
+      endpoint: "0/0/${_EndpointConstants.previusAuthServicesLogin}/0/0/",
     );
     ServiceResult result = ServiceResult(
       status: response['durum'] == 1 ? true : false,
