@@ -204,6 +204,138 @@ class PostsServices {
     return armoyuresponse;
   }
 
+  Future<PostFetchListResponse> getprofilePosts({
+    required String userID,
+    required String category,
+    required int page,
+  }) async {
+    Map<String, dynamic> response = await _apiHelpers.post(
+      body: {
+        "oyuncubakid": userID,
+        "limit": "20",
+        "paylasimozellik": category,
+      },
+      endpoint: "0/0/${_EndpointConstants.profileposts}/$page/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
+    );
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    PostFetchListResponse armoyuresponse =
+        PostFetchListResponse(result: result);
+    if (response['durum'] == 0) {
+      return armoyuresponse;
+    }
+
+    List<APIPostList> postList = [];
+    for (var element in response['icerik']) {
+      List<APIPostLiker> postlikersList = [];
+      for (var postliker in response['paylasimilkucbegenen']) {
+        postlikersList.add(
+          APIPostLiker(
+            postlikeID: postliker['begeni_ID'],
+            likerID: postliker['ID'],
+            likerdisplayname: postliker['adsoyad'],
+            likerusername: postliker['kullaniciadi'],
+            likeravatar: MediaURL(
+              bigURL: postliker['avatar'],
+              normalURL: postliker['avatar'],
+              minURL: postliker['avatar'],
+            ),
+            likerURL: postliker['URL'],
+            likedate: postliker['begeni_zaman'],
+          ),
+        );
+      }
+
+      List<APIPostComments> postcommenterList = [];
+      for (var postcommenter in response['ilkucyorum']) {
+        postcommenterList.add(
+          APIPostComments(
+            postcommenter: PostCommenter(
+              userID: postcommenter['yorumcuid'],
+              mention: postcommenter['yorumcuetiketad'],
+              username: postcommenter['yorumcukullaniciad'],
+              displayname: postcommenter['yorumcuadsoyad'],
+              userURL: postcommenter['oyunculink'],
+              avatar: MediaURL(
+                bigURL: postcommenter['yorumcuavatar'],
+                normalURL: postcommenter['yorumcuufakavatar'],
+                minURL: postcommenter['yorumcuminnakavatar'],
+              ),
+            ),
+            commentContent: postcommenter['yorumcuicerik'],
+            likeCount: postcommenter['yorumbegenisayi'],
+            reportCount: postcommenter['yorumsikayetsayi'],
+            isLikedByMe: postcommenter['benbegendim'],
+            isReportedByMe: postcommenter['bensikayet'],
+            commentID: postcommenter['yorumID'],
+            commentElapsedTime: postcommenter['yorumcuzamangecen'],
+            commentTime: postcommenter['yorumcuzaman'],
+            postID: postcommenter['paylasimID'],
+            replyTo: postcommenter['yorumcukimeyanit'],
+          ),
+        );
+      }
+
+      List<Media> mediaList = [];
+      for (var media in response['paylasimfoto']) {
+        mediaList.add(
+          Media(
+            mediaID: media['fotoID'],
+            mediaURL: MediaURL(
+              bigURL: media['fotourl'],
+              normalURL: media['fotoufakurl'],
+              minURL: media['fotominnakurl'],
+            ),
+            mediaDirection: media['medyayonu'],
+          ),
+        );
+      }
+
+      postList.add(
+        APIPostList(
+          postID: element['paylasimID'],
+          posttype: element['paylasimturu'],
+          postdevice: element['paylasimnereden'],
+          postOwner: PostOwner(
+            ownerID: element['sahipID'],
+            displayName: element['sahipID'],
+            ownerURL: element['sahipID'],
+            avatar: MediaURL(
+              bigURL: element['sahipavatar'],
+              normalURL: element['sahipavatarufaklik'],
+              minURL: element['sahipavatarminnak'],
+            ),
+            jobRole: element['sahipmeslekisyerirol'],
+            job: element['sahipmeslekisyerirollink'],
+          ),
+          content: element['paylasimicerik'],
+          location: element['paylasimkonum'],
+          date: element['paylasimzaman'],
+          datecounting: element['paylasimzamangecen'],
+          editdate: element['paylasimzamanedit'],
+          likeCount: element['begenisay'],
+          commentCount: element['yorumsay'],
+          repostCount: element['repostsay'],
+          reportCount: element['sikayetsay'],
+          didilikeit: element['benbegendim'],
+          didicommentit: element['benyorumladim'],
+          didirepostit: element['benretweetledim'],
+          didireportit: element['bensikayet'],
+          firstlikers: postlikersList,
+          firstcomments: postcommenterList,
+          media: mediaList,
+        ),
+      );
+    }
+    armoyuresponse.response = postList;
+    return armoyuresponse;
+  }
+
   Future<PostFetchListResponse> getPosts({required int page}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {"limit": "20"},

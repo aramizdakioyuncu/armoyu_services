@@ -290,32 +290,6 @@ class UtilsServices {
     return result;
   }
 
-  Future<ServiceResult> getprofilePosts({
-    required String userID,
-    required String category,
-    required int page,
-  }) async {
-    Map<String, dynamic> response = await _apiHelpers.post(
-      body: {
-        "oyuncubakid": userID,
-        "limit": "20",
-        "paylasimozellik": category,
-      },
-      endpoint: "0/0/${_EndpointConstants.profileposts}/$page/",
-      headers: _apiHelpers.getRequestHeader(token: getToken()),
-    );
-    ServiceResult result = ServiceResult(
-      status: response['durum'] == 1 ? true : false,
-      description: response['aciklama'],
-      descriptiondetail: response['aciklamadetay'],
-    );
-
-    if (response['durum'] == 0) {
-      return result;
-    }
-    return result;
-  }
-
   Future<PlayerPopResponse> getplayerxp({required int page}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {"sayfa": page},
