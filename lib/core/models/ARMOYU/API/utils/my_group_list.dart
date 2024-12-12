@@ -5,7 +5,7 @@ class APIMyGroupList {
   String groupName;
   String groupShortName;
   int groupJoinStatus;
-  String groupDescription;
+  String? groupDescription;
   MyGroupSocial groupSocial;
   String groupURL;
   int groupUserCount;

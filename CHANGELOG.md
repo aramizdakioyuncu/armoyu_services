@@ -1,3 +1,3 @@
-## [1.0.0+29]
+## [1.0.0+30]
 
-- Çalışır hale getirilmesi için çalışmalara başlandı v5.
+- Çalışır hale getirilmesi için çalışmalara başlandı v6.

@@ -74,6 +74,12 @@ final class AuthServices {
     return armoyuresponse;
   }
 
+  setbarriertoken({required String barriertoken}) {
+    //TOKEN AYARLARMA
+    setToken(barriertoken);
+    //TOKEN AYARLARMA
+  }
+
   Future<RegisterResponse> register({
     required String firstname,
     required String lastname,
