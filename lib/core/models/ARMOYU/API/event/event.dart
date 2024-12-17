@@ -2,10 +2,10 @@ import 'package:armoyu_services/core/models/ARMOYU/user.dart';
 
 class APIEvent {
   int eventID;
-  String status;
+  bool status;
   String link;
   String foto;
-  String fotoDetail;
+  String? fotoDetail;
   String name;
   int gameID;
   String gameName;

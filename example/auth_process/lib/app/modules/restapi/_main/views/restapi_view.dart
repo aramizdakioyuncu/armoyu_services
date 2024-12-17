@@ -196,6 +196,20 @@ class RestapiView extends StatelessWidget {
                               loadingStatus: false,
                             ),
                           ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ARMOYU.widgets.elevatedButton.costum1(
+                              text: "getPosts",
+                              enabled: controller.statusController.value! &&
+                                  AppList.user.value != null,
+                              onPressed: () async {
+                                // Get.toNamed("/restapi/gallery");
+                                await ARMOYU.service.postsServices
+                                    .getPosts(page: 1);
+                              },
+                              loadingStatus: false,
+                            ),
+                          ),
                         ],
                       ),
                     ),

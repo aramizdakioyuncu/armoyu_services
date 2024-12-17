@@ -25,7 +25,7 @@ class APISearchHashtagList {
 class APISearcHashtagDetail {
   int hashtagID;
   String value;
-  String? numberofuses;
+  int? numberofuses;
   String? firstdate;
 
   APISearcHashtagDetail({
@@ -40,7 +40,7 @@ class APISearcHashtagDetail {
     return APISearcHashtagDetail(
       hashtagID: json['hashtagID'] as int,
       value: json['value'] as String,
-      numberofuses: json['numberofuses'] as String?,
+      numberofuses: json['numberofuses'] as int?,
       firstdate: json['firstdate'] as String?,
     );
   }

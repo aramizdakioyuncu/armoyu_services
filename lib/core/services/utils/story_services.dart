@@ -43,7 +43,7 @@ class StoryServices {
     for (var element in response['icerik']) {
       List<StoryContent> storycontent = [];
 
-      for (var element2 in response['hikaye_icerik']) {
+      for (var element2 in element['hikaye_icerik']) {
         storycontent.add(
           StoryContent(
             hikayeId: element2['hikaye_ID'],

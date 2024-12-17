@@ -233,7 +233,7 @@ class PostsServices {
     List<APIPostList> postList = [];
     for (var element in response['icerik']) {
       List<APIPostLiker> postlikersList = [];
-      for (var postliker in response['paylasimilkucbegenen']) {
+      for (var postliker in element['paylasimilkucbegenen']) {
         postlikersList.add(
           APIPostLiker(
             postlikeID: postliker['begeni_ID'],
@@ -252,7 +252,7 @@ class PostsServices {
       }
 
       List<APIPostComments> postcommenterList = [];
-      for (var postcommenter in response['ilkucyorum']) {
+      for (var postcommenter in element['ilkucyorum']) {
         postcommenterList.add(
           APIPostComments(
             postcommenter: PostCommenter(
@@ -270,8 +270,8 @@ class PostsServices {
             commentContent: postcommenter['yorumcuicerik'],
             likeCount: postcommenter['yorumbegenisayi'],
             reportCount: postcommenter['yorumsikayetsayi'],
-            isLikedByMe: postcommenter['benbegendim'],
-            isReportedByMe: postcommenter['bensikayet'],
+            isLikedByMe: postcommenter['benbegendim'] == 1 ? true : false,
+            isReportedByMe: postcommenter['bensikayet'] == 1 ? true : false,
             commentID: postcommenter['yorumID'],
             commentElapsedTime: postcommenter['yorumcuzamangecen'],
             commentTime: postcommenter['yorumcuzaman'],
@@ -282,10 +282,11 @@ class PostsServices {
       }
 
       List<Media> mediaList = [];
-      for (var media in response['paylasimfoto']) {
+      for (var media in element['paylasimfoto']) {
         mediaList.add(
           Media(
             mediaID: media['fotoID'],
+            mediaType: media['paylasimkategori'],
             mediaURL: MediaURL(
               bigURL: media['fotourl'],
               normalURL: media['fotoufakurl'],
@@ -303,8 +304,8 @@ class PostsServices {
           postdevice: element['paylasimnereden'],
           postOwner: PostOwner(
             ownerID: element['sahipID'],
-            displayName: element['sahipID'],
-            ownerURL: element['sahipID'],
+            displayName: element['sahipad'],
+            ownerURL: element['sahiplink'],
             avatar: MediaURL(
               bigURL: element['sahipavatar'],
               normalURL: element['sahipavatarufaklik'],
@@ -358,7 +359,7 @@ class PostsServices {
     List<APIPostList> postList = [];
     for (var element in response['icerik']) {
       List<APIPostLiker> postlikersList = [];
-      for (var postliker in response['paylasimilkucbegenen']) {
+      for (var postliker in element['paylasimilkucbegenen']) {
         postlikersList.add(
           APIPostLiker(
             postlikeID: postliker['begeni_ID'],
@@ -377,7 +378,7 @@ class PostsServices {
       }
 
       List<APIPostComments> postcommenterList = [];
-      for (var postcommenter in response['ilkucyorum']) {
+      for (var postcommenter in element['ilkucyorum']) {
         postcommenterList.add(
           APIPostComments(
             postcommenter: PostCommenter(
@@ -395,8 +396,8 @@ class PostsServices {
             commentContent: postcommenter['yorumcuicerik'],
             likeCount: postcommenter['yorumbegenisayi'],
             reportCount: postcommenter['yorumsikayetsayi'],
-            isLikedByMe: postcommenter['benbegendim'],
-            isReportedByMe: postcommenter['bensikayet'],
+            isLikedByMe: postcommenter['benbegendim'] == 1 ? true : false,
+            isReportedByMe: postcommenter['bensikayet'] == 1 ? true : false,
             commentID: postcommenter['yorumID'],
             commentElapsedTime: postcommenter['yorumcuzamangecen'],
             commentTime: postcommenter['yorumcuzaman'],
@@ -407,10 +408,11 @@ class PostsServices {
       }
 
       List<Media> mediaList = [];
-      for (var media in response['paylasimfoto']) {
+      for (var media in element['paylasimfoto']) {
         mediaList.add(
           Media(
             mediaID: media['fotoID'],
+            mediaType: media['paylasimkategori'],
             mediaURL: MediaURL(
               bigURL: media['fotourl'],
               normalURL: media['fotoufakurl'],
@@ -428,8 +430,8 @@ class PostsServices {
           postdevice: element['paylasimnereden'],
           postOwner: PostOwner(
             ownerID: element['sahipID'],
-            displayName: element['sahipID'],
-            ownerURL: element['sahipID'],
+            displayName: element['sahipad'],
+            ownerURL: element['sahiplink'],
             avatar: MediaURL(
               bigURL: element['sahipavatar'],
               normalURL: element['sahipavatarufaklik'],
@@ -490,7 +492,7 @@ class PostsServices {
     APIPostList? postList;
     for (var element in response['icerik']) {
       List<APIPostLiker> postlikersList = [];
-      for (var postliker in response['paylasimilkucbegenen']) {
+      for (var postliker in element['paylasimilkucbegenen']) {
         postlikersList.add(
           APIPostLiker(
             postlikeID: postliker['begeni_ID'],
@@ -509,7 +511,7 @@ class PostsServices {
       }
 
       List<APIPostComments> postcommenterList = [];
-      for (var postcommenter in response['ilkucyorum']) {
+      for (var postcommenter in element['ilkucyorum']) {
         postcommenterList.add(
           APIPostComments(
             postcommenter: PostCommenter(
@@ -527,8 +529,8 @@ class PostsServices {
             commentContent: postcommenter['yorumcuicerik'],
             likeCount: postcommenter['yorumbegenisayi'],
             reportCount: postcommenter['yorumsikayetsayi'],
-            isLikedByMe: postcommenter['benbegendim'],
-            isReportedByMe: postcommenter['bensikayet'],
+            isLikedByMe: postcommenter['benbegendim'] == 1 ? true : false,
+            isReportedByMe: postcommenter['bensikayet'] == 1 ? true : false,
             commentID: postcommenter['yorumID'],
             commentElapsedTime: postcommenter['yorumcuzamangecen'],
             commentTime: postcommenter['yorumcuzaman'],
@@ -539,10 +541,11 @@ class PostsServices {
       }
 
       List<Media> mediaList = [];
-      for (var media in response['paylasimfoto']) {
+      for (var media in element['paylasimfoto']) {
         mediaList.add(
           Media(
             mediaID: media['fotoID'],
+            mediaType: media['paylasimkategori'],
             mediaURL: MediaURL(
               bigURL: media['fotourl'],
               normalURL: media['fotoufakurl'],
@@ -559,8 +562,8 @@ class PostsServices {
         postdevice: element['paylasimnereden'],
         postOwner: PostOwner(
           ownerID: element['sahipID'],
-          displayName: element['sahipID'],
-          ownerURL: element['sahipID'],
+          displayName: element['sahipad'],
+          ownerURL: element['sahiplink'],
           avatar: MediaURL(
             bigURL: element['sahipavatar'],
             normalURL: element['sahipavatarufaklik'],
@@ -611,7 +614,7 @@ class PostsServices {
     }
 
     List<APIPostComments> postcommentsList = [];
-    for (var postcommenter in response['ilkucyorum']) {
+    for (var postcommenter in response['icerik']) {
       postcommentsList.add(
         APIPostComments(
           postcommenter: PostCommenter(
@@ -629,8 +632,8 @@ class PostsServices {
           commentContent: postcommenter['yorumcuicerik'],
           likeCount: postcommenter['yorumbegenisayi'],
           reportCount: postcommenter['yorumsikayetsayi'],
-          isLikedByMe: postcommenter['benbegendim'],
-          isReportedByMe: postcommenter['bensikayet'],
+          isLikedByMe: postcommenter['benbegendim'] == 1 ? true : false,
+          isReportedByMe: postcommenter['bensikayet'] == 1 ? true : false,
           commentID: postcommenter['yorumID'],
           commentElapsedTime: postcommenter['yorumcuzamangecen'],
           commentTime: postcommenter['yorumcuzaman'],

@@ -6,7 +6,7 @@ class APIPostList {
   final String postdevice;
   final PostOwner postOwner;
   final String content;
-  final String location;
+  final String? location;
   final String date;
   final String datecounting;
   final String? editdate;
@@ -109,8 +109,8 @@ class PostOwner {
   String displayName;
   String ownerURL;
   MediaURL avatar;
-  String job;
-  String jobRole;
+  String? job;
+  String? jobRole;
 
   PostOwner({
     required this.ownerID,

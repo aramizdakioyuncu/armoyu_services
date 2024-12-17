@@ -171,7 +171,7 @@ class GroupServices {
 
     List<UserInfo> users = [];
 
-    for (var element in response['aciklama']) {
+    for (var element in response['icerik']) {
       users.add(
         UserInfo(
           userID: element['player_ID'],

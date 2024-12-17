@@ -51,7 +51,7 @@ class SurveyServices {
       }
 
       List<SurveyOption> optionList = [];
-      for (var element2 in element['survey_media']) {
+      for (var element2 in element['survey_options']) {
         optionList.add(
           SurveyOption(
             optionId: element2['option_ID'],
@@ -128,7 +128,7 @@ class SurveyServices {
       }
 
       List<SurveyOption> optionList = [];
-      for (var element2 in element['survey_media']) {
+      for (var element2 in element['survey_options']) {
         optionList.add(
           SurveyOption(
             optionId: element2['option_ID'],
