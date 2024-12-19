@@ -109,7 +109,7 @@ class NewsServices {
         ),
       ),
       title: response['icerik']['haberbaslik'],
-      content: null,
+      content: response['icerik']['yaziicerik'],
       summary: response['icerik']['ozet'],
       media: Media(
         mediaID: 0,

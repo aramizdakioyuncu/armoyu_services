@@ -71,7 +71,7 @@ class StoryServices {
         ),
       );
     }
-    armoyuresponse.response = [];
+    armoyuresponse.response = storyList;
     return armoyuresponse;
   }
 

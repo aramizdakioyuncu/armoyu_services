@@ -2,7 +2,7 @@ class APIJoinusPermissionList {
   int id;
   String value;
   String category;
-  String about;
+  String? about;
   String joinStatus;
 
   APIJoinusPermissionList({
