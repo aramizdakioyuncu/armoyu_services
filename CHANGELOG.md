@@ -1,3 +1,3 @@
-## [1.0.0+31]
+## [1.0.0+34]
 
-- Çalışır hale getirildi Login sistemi iyileştirildi.
+- Survey deki double sorunu çözüldü.

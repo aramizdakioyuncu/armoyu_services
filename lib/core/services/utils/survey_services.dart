@@ -56,7 +56,8 @@ class SurveyServices {
           SurveyOption(
             optionId: element2['option_ID'],
             optionAnswer: element2['option_answer'],
-            optionVotingPercentage: element2['option_votingPercentage'],
+            optionVotingPercentage:
+                double.parse(element2['option_votingPercentage']),
           ),
         );
       }
@@ -79,7 +80,8 @@ class SurveyServices {
           surveyStatus: element['survey_status'],
           surveyEndDate: element['survey_enddate'],
           surveyRemainingTime: element['survey_remainingtime'],
-          surveyVotingPercentage: element['survey_votingPercentage'],
+          surveyVotingPercentage:
+              double.parse(element['survey_votingPercentage']),
           surveyVotingCount: element['survey_votingCount'],
           surveyOptions: optionList,
           surveyDidIVote: element['survey_didIVote'],
@@ -133,7 +135,8 @@ class SurveyServices {
           SurveyOption(
             optionId: element2['option_ID'],
             optionAnswer: element2['option_answer'],
-            optionVotingPercentage: element2['option_votingPercentage'],
+            optionVotingPercentage:
+                double.parse(element2['option_votingPercentage']),
           ),
         );
       }
@@ -156,7 +159,8 @@ class SurveyServices {
           surveyStatus: element['survey_status'],
           surveyEndDate: element['survey_enddate'],
           surveyRemainingTime: element['survey_remainingtime'],
-          surveyVotingPercentage: element['survey_votingPercentage'],
+          surveyVotingPercentage:
+              double.parse(element['survey_votingPercentage']),
           surveyVotingCount: element['survey_votingCount'],
           surveyOptions: optionList,
           surveyDidIVote: element['survey_didIVote'],
