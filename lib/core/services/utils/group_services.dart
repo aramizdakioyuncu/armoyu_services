@@ -93,9 +93,16 @@ class GroupServices {
     return armoyuresponse;
   }
 
-  Future<GroupDetailResponse> groupFetch({required int grupID}) async {
+  Future<GroupDetailResponse> groupFetch(
+      {int? groupID, String? groupname}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
-      body: {"grupID": grupID},
+      body: groupID != null
+          ? {
+              "grupID": groupID,
+            }
+          : {
+              "groupname": groupname,
+            },
       endpoint: "0/0/${_EndpointConstants.groups}/0/0",
       headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
@@ -149,11 +156,16 @@ class GroupServices {
     return armoyuresponse;
   }
 
-  Future<GroupUsersResponse> groupusersFetch({required int grupID}) async {
+  Future<GroupUsersResponse> groupusersFetch(
+      {int? groupID, String? groupname}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
-      body: {
-        "grupID": grupID,
-      },
+      body: groupID != null
+          ? {
+              "grupID": groupID,
+            }
+          : {
+              "groupname": groupname,
+            },
       endpoint: "0/0/${_EndpointConstants.groupmembers}/0",
       headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
