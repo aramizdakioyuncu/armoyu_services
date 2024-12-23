@@ -697,7 +697,7 @@ class PostsServices {
       commentsList.add(
         APIPostLiker(
           postlikeID: element['paylasimID'],
-          likerID: element['paylasimID'],
+          likerID: element['begenenID'],
           likerdisplayname: element['begenenadi'],
           likerusername: element['begenenkullaniciadi'],
           likeravatar: MediaURL(

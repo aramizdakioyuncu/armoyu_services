@@ -1,3 +1,3 @@
-## [1.0.0+34]
+## [1.0.0+35]
 
-- Survey deki double sorunu çözüldü.
+- Servis Düzeltmesi.

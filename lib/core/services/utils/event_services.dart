@@ -191,11 +191,11 @@ class EventServices {
       grouplist.add(
         APIEventparticipantGroups(
           groupID: element['group_ID'],
-          groupName: element['group_ID'],
-          groupShortname: element['group_ID'],
-          groupLogo: element['group_ID'],
-          groupBanner: element['group_ID'],
-          groupURL: element['group_ID'],
+          groupName: element['group_name'],
+          groupShortname: element['group_shortname'],
+          groupLogo: element['group_logo'],
+          groupBanner: element['group_banner'],
+          groupURL: element['group_URL'],
           groupPlayers: groupPlayers,
         ),
       );
