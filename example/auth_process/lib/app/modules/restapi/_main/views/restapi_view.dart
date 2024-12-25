@@ -1,4 +1,5 @@
 import 'package:armoyu_services/armoyu_services.dart';
+import 'package:armoyu_services/core/models/ARMOYU/_response/response.dart';
 import 'package:armoyu_widgets/widget.dart';
 import 'package:auth_process/app/modules/restapi/_main/controllers/restapi_controller.dart';
 import 'package:auth_process/app/services/armoyu.dart';
@@ -203,9 +204,98 @@ class RestapiView extends StatelessWidget {
                               enabled: controller.statusController.value! &&
                                   AppList.user.value != null,
                               onPressed: () async {
-                                // Get.toNamed("/restapi/gallery");
                                 await ARMOYU.service.postsServices
                                     .getPosts(page: 1);
+                              },
+                              loadingStatus: false,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ARMOYU.widgets.elevatedButton.costum1(
+                              text: "piyasa (Kur)",
+                              enabled: controller.statusController.value! &&
+                                  AppList.user.value != null,
+                              onPressed: () async {
+                                ForeignCurrencyListResponse aa = await ARMOYU
+                                    .service.utilsServices
+                                    .foreigncurrencylist(page: 1);
+
+                                for (var element in aa.response!) {
+                                  log(element.value);
+                                }
+                              },
+                              loadingStatus: false,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ARMOYU.widgets.elevatedButton.costum1(
+                              text: "hava durumu",
+                              enabled: controller.statusController.value! &&
+                                  AppList.user.value != null,
+                              onPressed: () async {
+                                WeatherListResponse aa = await ARMOYU
+                                    .service.utilsServices
+                                    .weatherlist(page: 1);
+
+                                for (var element in aa.response!) {
+                                  log(element.city);
+                                }
+                              },
+                              loadingStatus: false,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ARMOYU.widgets.elevatedButton.costum1(
+                              text: "İndirimdeki Oyunlar",
+                              enabled: controller.statusController.value! &&
+                                  AppList.user.value != null,
+                              onPressed: () async {
+                                GamesOnSaleResponse aa = await ARMOYU
+                                    .service.utilsServices
+                                    .gamesOnSale(page: 1);
+
+                                for (var element in aa.response!) {
+                                  log(element.gameName);
+                                }
+                              },
+                              loadingStatus: false,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ARMOYU.widgets.elevatedButton.costum1(
+                              text: "Yeni Kayıt Olanlar",
+                              enabled: controller.statusController.value! &&
+                                  AppList.user.value != null,
+                              onPressed: () async {
+                                NewRegisteredUsersResponse aa = await ARMOYU
+                                    .service.utilsServices
+                                    .newRegisterUsers(page: 1);
+
+                                for (var element in aa.response!) {
+                                  log(element.displayname);
+                                }
+                              },
+                              loadingStatus: false,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ARMOYU.widgets.elevatedButton.costum1(
+                              text: "Minecraft İstatistik",
+                              enabled: controller.statusController.value! &&
+                                  AppList.user.value != null,
+                              onPressed: () async {
+                                MinecraftStatisticsResponse aa = await ARMOYU
+                                    .service.utilsServices
+                                    .minecraftStatistics(page: 1);
+
+                                for (var element in aa.response!) {
+                                  log("${element.playername} ${element.clanname}");
+                                }
                               },
                               loadingStatus: false,
                             ),

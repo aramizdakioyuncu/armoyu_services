@@ -42,10 +42,16 @@ import 'package:armoyu_services/core/models/ARMOYU/API/story/story_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/story/story_viewlist.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/survey/survey_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/team/team_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/utils/foreign_currency_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/utils/games_on_sale.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/utils/minecraft_statistics.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/utils/my_group_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/utils/my_school_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/utils/new_registered_users.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/utils/player_pop_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/utils/player_xp_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/utils/super_lig.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/utils/weather_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/_response/service_result.dart';
 import 'package:armoyu_services/core/models/ARMOYU/sitemessage.dart';
 
@@ -502,4 +508,40 @@ class PlayerXPResponse {
   final ServiceResult result;
   List<APIPlayerXp>? response;
   PlayerXPResponse({required this.result, this.response});
+}
+
+class ForeignCurrencyListResponse {
+  final ServiceResult result;
+  List<ForeignCurrencyList>? response;
+  ForeignCurrencyListResponse({required this.result, this.response});
+}
+
+class WeatherListResponse {
+  final ServiceResult result;
+  List<WeatherAPI>? response;
+  WeatherListResponse({required this.result, this.response});
+}
+
+class SuperLigResponse {
+  final ServiceResult result;
+  List<SuperLigAPI>? response;
+  SuperLigResponse({required this.result, this.response});
+}
+
+class GamesOnSaleResponse {
+  final ServiceResult result;
+  List<GamesOnSaleAPI>? response;
+  GamesOnSaleResponse({required this.result, this.response});
+}
+
+class NewRegisteredUsersResponse {
+  final ServiceResult result;
+  List<NewRegisteredUsersAPI>? response;
+  NewRegisteredUsersResponse({required this.result, this.response});
+}
+
+class MinecraftStatisticsResponse {
+  final ServiceResult result;
+  List<MinecraftStatisticsAPI>? response;
+  MinecraftStatisticsResponse({required this.result, this.response});
 }

@@ -1,3 +1,3 @@
-## [1.0.0+35]
+## [1.0.0+37]
 
-- Servis Düzeltmesi.
+- Yeni Fonksiyonlar Getirildi.
