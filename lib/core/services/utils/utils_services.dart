@@ -594,11 +594,13 @@ class UtilsServices {
           avarage: int.parse(element['avaraj']),
           playedmatchcount: int.parse(element['oynananmac']),
           point: int.parse(element['puan']),
-          teamlogo: MediaURL(
-            bigURL: element['logo'],
-            normalURL: element['logo'],
-            minURL: element['logo'],
-          ),
+          teamlogo: element['logo'] == null
+              ? null
+              : MediaURL(
+                  bigURL: element['logo'],
+                  normalURL: element['logo'],
+                  minURL: element['logo'],
+                ),
         ),
       );
     }

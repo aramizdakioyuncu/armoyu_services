@@ -1,3 +1,3 @@
-## [1.0.0+37]
+## [1.0.0+38]
 
-- Yeni Fonksiyonlar Getirildi.
+- Takım çekme sorunu düzeldi.
