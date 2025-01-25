@@ -83,9 +83,17 @@ class EventServices {
     return armoyuresponse;
   }
 
-  Future<EventDetailResponse> detailfetch({required int eventID}) async {
+  Future<EventDetailResponse> fetchdetail(
+      {int? eventID, String? eventURL}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
-      endpoint: "0/0/${_EndpointConstants.eventdetail}/$eventID/0/",
+      body: eventID != null
+          ? {
+              "eventID": eventID,
+            }
+          : {
+              "eventURL": eventURL,
+            },
+      endpoint: "0/0/${_EndpointConstants.eventdetail}/detay/0/",
       headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
@@ -101,9 +109,46 @@ class EventServices {
       return armoyuresponse;
     }
 
+    List<UserInfo> organizerlist = [];
+
+    for (var element2 in response['icerik']['event_organizer']) {
+      organizerlist.add(
+        UserInfo(
+          userID: element2['player_ID'],
+          displayname: element2['player_displayname'],
+          avatar: MediaURL(
+            bigURL: element2['player_avatar'],
+            normalURL: element2['player_avatar'],
+            minURL: element2['player_avatar'],
+          ),
+        ),
+      );
+    }
+
     armoyuresponse.response = APIEventDetail(
-      eventName: response['icerik']['event_name'],
-      eventDate: response['icerik']['event_date'],
+      event: APIEvent(
+        eventID: response['icerik']['event_ID'],
+        status: response['icerik']['event_status'] == 1 ? true : false,
+        link: response['icerik']['event_link'],
+        foto: response['icerik']['event_foto'],
+        fotoDetail: response['icerik']['event_fotodetail'],
+        name: response['icerik']['event_name'],
+        gameID: response['icerik']['event_gameID'],
+        gameName: response['icerik']['event_gamename'],
+        gameBanner: response['icerik']['event_gamebanner'],
+        gameLogo: response['icerik']['event_gamelogo'],
+        organizer: organizerlist,
+        type: response['icerik']['event_type'],
+        date: response['icerik']['event_date'],
+        participantType: response['icerik']['event_participanttype'],
+        participantLimit: response['icerik']['event_participantlimit'],
+        participantGroupPlayerLimit: response['icerik']
+            ['event_participantgroupplayerlimit'],
+        participantCurrent: response['icerik']['event_participantcurrent'],
+        location: response['icerik']['event_location'],
+        description: response['icerik']['event_description'],
+        rules: response['icerik']['event_rules'],
+      ),
       dlc: response['icerik']['dlc'],
       files: response['icerik']['files'],
       detail: response['icerik']['detail'],

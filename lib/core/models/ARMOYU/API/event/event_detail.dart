@@ -1,13 +1,13 @@
+import 'package:armoyu_services/core/models/ARMOYU/API/event/event.dart';
+
 class APIEventDetail {
-  String eventName;
-  String eventDate;
+  APIEvent event;
   List<dynamic> dlc; // DLC listesi, içeriğine göre tipi değişebilir
   List<dynamic> files; // Dosya listesi, içeriğine göre tipi değişebilir
   List<dynamic> detail; // Detay listesi, içeriğine göre tipi değişebilir
 
   APIEventDetail({
-    required this.eventName,
-    required this.eventDate,
+    required this.event,
     required this.dlc,
     required this.files,
     required this.detail,
@@ -16,8 +16,7 @@ class APIEventDetail {
   // JSON'dan APIEventDetail nesnesi oluşturma
   factory APIEventDetail.fromJson(Map<String, dynamic> json) {
     return APIEventDetail(
-      eventName: json['event_name'],
-      eventDate: json['event_date'],
+      event: json['event'],
       dlc: json['dlc'] ?? [],
       files: json['files'] ?? [],
       detail: json['detail'] ?? [],
@@ -27,8 +26,7 @@ class APIEventDetail {
   // APIEventDetail nesnesini JSON'a dönüştürme
   Map<String, dynamic> toJson() {
     return {
-      'event_name': eventName,
-      'event_date': eventDate,
+      'event': event,
       'dlc': dlc,
       'files': files,
       'detail': detail,

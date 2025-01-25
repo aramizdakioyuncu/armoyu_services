@@ -2,25 +2,25 @@ import 'package:armoyu_services/core/models/ARMOYU/media.dart';
 
 class APIPostList {
   final int postID;
-  final String posttype;
-  final String postdevice;
-  final PostOwner postOwner;
-  final String content;
-  final String? location;
-  final String date;
-  final String datecounting;
-  final String? editdate;
-  final List<APIPostLiker>? firstlikers;
-  final int likeCount;
-  final int commentCount;
-  final int repostCount;
-  final int reportCount;
-  final int didilikeit;
-  final int didicommentit;
-  final int didirepostit;
-  final int didireportit;
-  final List<Media>? media;
-  final List<APIPostComments>? firstcomments;
+  String posttype;
+  String postdevice;
+  PostOwner postOwner;
+  String content;
+  String? location;
+  String date;
+  String datecounting;
+  String? editdate;
+  List<APIPostLiker>? firstlikers;
+  int likeCount;
+  int commentCount;
+  int repostCount;
+  int reportCount;
+  int didilikeit;
+  int didicommentit;
+  int didirepostit;
+  int didireportit;
+  List<Media>? media;
+  List<APIPostComments>? firstcomments;
 
   APIPostList({
     required this.postID,

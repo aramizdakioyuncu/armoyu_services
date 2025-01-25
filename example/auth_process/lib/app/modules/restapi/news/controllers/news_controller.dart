@@ -23,4 +23,13 @@ class NewsController extends GetxController {
     newsfetchStatus.value = false;
     log(response.toString());
   }
+
+  fetchdetailnews({int? newsID, String? newsURL}) async {
+    NewsFetchResponse response = await ARMOYU.service.newsServices
+        .fetchdetail(newsID: newsID, newsURL: newsURL);
+    if (response.result.status == false) {
+      return log(response.result.description);
+    }
+    log(response.response!.title.toString());
+  }
 }

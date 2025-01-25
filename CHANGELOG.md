@@ -1,3 +1,3 @@
-## [1.0.0+38]
+## [1.0.0+40]
 
-- Takım çekme sorunu düzeldi.
+- API classtaki final parametreleri kaldırıldı.

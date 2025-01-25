@@ -77,9 +77,18 @@ class NewsServices {
     return armoyuresponse;
   }
 
-  Future<NewsFetchResponse> fetchnews({required int newsID}) async {
+  Future<NewsFetchResponse> fetchdetail({
+    int? newsID,
+    String? newsURL,
+  }) async {
     Map<String, dynamic> response = await _apiHelpers.post(
-      body: {"haberID": "$newsID"},
+      body: newsID != null
+          ? {
+              "haberID": newsID,
+            }
+          : {
+              "haberURL": newsURL,
+            },
       endpoint: "0/0/${_EndpointConstants.newsDetail}/0/",
       headers: _apiHelpers.getRequestHeader(token: getToken()),
     );

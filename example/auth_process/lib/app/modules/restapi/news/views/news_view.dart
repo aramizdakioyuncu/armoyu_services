@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:armoyu_services/core/models/ARMOYU/API/news/news_list.dart';
 import 'package:auth_process/app/modules/restapi/news/controllers/news_controller.dart';
 import 'package:auth_process/app/services/armoyu.dart';
@@ -39,7 +41,11 @@ class NewsView extends StatelessWidget {
                         return Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () async {
+                              log(newsInfo.newsURL.split("/")[5]);
+                              controller.fetchdetailnews(
+                                  newsURL: newsInfo.newsURL.split("/")[5]);
+                            },
                             child: Container(
                               height: 300,
                               width: 400,
