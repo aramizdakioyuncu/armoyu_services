@@ -4,6 +4,8 @@ import 'package:armoyu_services/core/models/ARMOYU/API/blocking/blocking_list.da
 import 'package:armoyu_services/core/models/ARMOYU/API/category/category.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/chat/chat_detail_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/chat/chat_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/controlpanel/controlpanel_meetinglist.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/controlpanel/controlpanel_userslist.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/country&province/country.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/country&province/province.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/event/event.dart';
@@ -544,4 +546,17 @@ class MinecraftStatisticsResponse {
   final ServiceResult result;
   List<MinecraftStatisticsAPI>? response;
   MinecraftStatisticsResponse({required this.result, this.response});
+}
+
+// #Control Panel
+class ControlPanelHomeResponse {
+  final ServiceResult result;
+  List<APIControlpanelUserslist>? response;
+  ControlPanelHomeResponse({required this.result, this.response});
+}
+
+class ControlPanelMeetingResponse {
+  final ServiceResult result;
+  List<APIControlpanelMeetinglist>? response;
+  ControlPanelMeetingResponse({required this.result, this.response});
 }

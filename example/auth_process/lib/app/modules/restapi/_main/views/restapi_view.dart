@@ -312,6 +312,18 @@ class RestapiView extends StatelessWidget {
                               loadingStatus: false,
                             ),
                           ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ARMOYU.widgets.elevatedButton.costum1(
+                              text: "Kontrol Paneli",
+                              enabled: controller.statusController.value! &&
+                                  AppList.user.value != null,
+                              onPressed: () async {
+                                Get.toNamed("/restapi/controlpanel");
+                              },
+                              loadingStatus: false,
+                            ),
+                          ),
                         ],
                       ),
                     ),

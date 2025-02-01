@@ -3,6 +3,8 @@ library armoyu_services.dart;
 import 'package:armoyu_services/core/models/ARMOYU/API/category/category.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/chat/chat_detail_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/chat/chat_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/controlpanel/controlpanel_meetinglist.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/controlpanel/controlpanel_userslist.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/country&province/country.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/country&province/province.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/event/event.dart';
@@ -84,6 +86,7 @@ part 'core/services/utils/station_services.dart';
 part 'core/services/utils/story_services.dart';
 part 'core/services/utils/survey_services.dart';
 part 'core/services/utils/teams_services.dart';
+part 'core/services/utils/controlpanel_services.dart';
 
 part 'core/services/utils/utils_services.dart';
 part 'core/helpers/api_helpers.dart';
@@ -114,6 +117,7 @@ class ARMOYUServices {
   late final StoryServices storyServices;
   late final SurveyServices surveyServices;
   late final TeamsServices teamsServices;
+  late final ControlpanelServices controlpanelServices;
 
 //WİDGETSLIST
   final List<APISearchDetail> peopleList = [];
@@ -293,6 +297,12 @@ class ARMOYUServices {
     );
 
     teamsServices = TeamsServices(
+      getToken: () => _getToken,
+      setToken: (String? tkn) => token = tkn,
+      apiKey: apiKey,
+      usePreviousAPI: usePreviousAPI,
+    );
+    controlpanelServices = ControlpanelServices(
       getToken: () => _getToken,
       setToken: (String? tkn) => token = tkn,
       apiKey: apiKey,

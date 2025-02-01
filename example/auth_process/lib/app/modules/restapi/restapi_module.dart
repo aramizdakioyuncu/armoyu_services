@@ -1,4 +1,5 @@
 import 'package:auth_process/app/modules/restapi/_main/views/restapi_view.dart';
+import 'package:auth_process/app/modules/restapi/controlpanel/views/controlpanel_view.dart';
 import 'package:auth_process/app/modules/restapi/events/views/events_view.dart';
 import 'package:auth_process/app/modules/restapi/gallery/views/gallery_detail_view.dart';
 import 'package:auth_process/app/modules/restapi/gallery/views/gallery_view.dart';
@@ -58,6 +59,10 @@ class RestapiModule {
     GetPage(
       name: "$route/events",
       page: () => const EventsView(),
+    ),
+    GetPage(
+      name: "$route/controlpanel",
+      page: () => const ControlpanelView(),
     ),
   ];
 }

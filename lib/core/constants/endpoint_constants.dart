@@ -40,6 +40,9 @@ final class _EndpointConstants {
   static const String joinleave = "etkinlikler/katilma";
   static const String participant = "etkinlikler/katilim";
 
+  //Control Panel
+  static const String controlpanel = "yonetim-paneli";
+
   //Groups
   static const String groups = "gruplar";
   static const String groupmembers = "gruplar/uyeler";
