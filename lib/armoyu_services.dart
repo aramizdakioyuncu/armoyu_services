@@ -7,6 +7,7 @@ import 'package:armoyu_services/core/models/ARMOYU/API/controlpanel/controlpanel
 import 'package:armoyu_services/core/models/ARMOYU/API/controlpanel/controlpanel_userslist.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/country&province/country.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/country&province/province.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/crew/crew_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/event/event.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/event/event_detail.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/event/event_participant.dart';
@@ -70,6 +71,7 @@ part 'core/services/utils/app_services.dart';
 part 'core/services/utils/blocking_services.dart';
 part 'core/services/utils/category_services.dart';
 part 'core/services/utils/country_services.dart';
+part 'core/services/utils/crew_services.dart';
 part 'core/services/utils/event_services.dart';
 part 'core/services/utils/group_services.dart';
 
@@ -101,6 +103,7 @@ class ARMOYUServices {
   late final BlockingServices blockingServices;
   late final CategoryServices categoryServices;
   late final CountryServices countryServices;
+  late final CrewServices crewServices;
   late final EventServices eventServices;
   late final GroupServices groupServices;
 
@@ -191,6 +194,13 @@ class ARMOYUServices {
     );
 
     countryServices = CountryServices(
+      getToken: () => _getToken,
+      setToken: (String? tkn) => token = tkn,
+      apiKey: apiKey,
+      usePreviousAPI: usePreviousAPI,
+    );
+
+    crewServices = CrewServices(
       getToken: () => _getToken,
       setToken: (String? tkn) => token = tkn,
       apiKey: apiKey,

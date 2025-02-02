@@ -8,6 +8,7 @@ import 'package:armoyu_services/core/models/ARMOYU/API/controlpanel/controlpanel
 import 'package:armoyu_services/core/models/ARMOYU/API/controlpanel/controlpanel_userslist.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/country&province/country.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/country&province/province.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/crew/crew_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/event/event.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/event/event_detail.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/event/event_joinorleave.dart';
@@ -107,6 +108,13 @@ class CountryResponse {
   final ServiceResult result;
   List<APICountry>? response;
   CountryResponse({required this.result, this.response});
+}
+
+//Crew
+class CrewResponse {
+  final ServiceResult result;
+  List<APICrewList>? response;
+  CrewResponse({required this.result, this.response});
 }
 
 // #Province

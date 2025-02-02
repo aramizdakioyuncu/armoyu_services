@@ -1,3 +1,3 @@
-## [1.0.0+40]
+## [1.0.0+43]
 
-- API classtaki final parametreleri kaldırıldı.
+- Geliştirmeler devam ediyor.

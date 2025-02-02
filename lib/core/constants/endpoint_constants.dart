@@ -59,6 +59,9 @@ final class _EndpointConstants {
   static const String applicationList = "ekibimiz/basvurular";
   static const String requestjoindepertment = "ekibimiz/katil-istek";
 
+//Crew
+  static const String crew = "ekibimiz/";
+
   //LoginRegister
   static const String invitecodefetch = "davetkodsorgula";
 
