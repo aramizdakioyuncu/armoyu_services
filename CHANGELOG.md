@@ -1,3 +1,3 @@
-## [1.0.0+43]
+## [1.0.0+44]
 
-- Geliştirmeler devam ediyor.
+- Hakkımızda ve Kurallar getirildi.

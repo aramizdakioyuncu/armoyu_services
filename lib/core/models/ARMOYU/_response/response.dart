@@ -33,6 +33,7 @@ import 'package:armoyu_services/core/models/ARMOYU/API/notifications/notificatio
 import 'package:armoyu_services/core/models/ARMOYU/API/post/post_detail.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/profile/profile_friendlist.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/profile/profile_invitelist.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/rules/rules.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/school/school_detail.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/school/school_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/search/search_hashtaglist.dart';
@@ -385,6 +386,13 @@ class ProfileFriendListResponse {
   List<APIProfileFriendlist>? response;
 
   ProfileFriendListResponse({required this.result, this.response});
+}
+
+//Rules
+class RulesResponse {
+  final ServiceResult result;
+  List<APIRules>? response;
+  RulesResponse({required this.result, this.response});
 }
 
 // #School

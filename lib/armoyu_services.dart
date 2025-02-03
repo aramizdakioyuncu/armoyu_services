@@ -26,6 +26,7 @@ import 'package:armoyu_services/core/models/ARMOYU/API/notifications/notificatio
 import 'package:armoyu_services/core/models/ARMOYU/API/post/post_detail.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/profile/profile_friendlist.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/profile/profile_invitelist.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/rules/rules.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/school/school_detail.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/school/school_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/search/search_hashtaglist.dart';
@@ -67,6 +68,7 @@ part 'core/services/logging/logging_services.dart';
 part 'core/services/auth/auth_services.dart';
 part 'core/services/user/user_services.dart';
 
+part 'core/services/utils/about_services.dart';
 part 'core/services/utils/app_services.dart';
 part 'core/services/utils/blocking_services.dart';
 part 'core/services/utils/category_services.dart';
@@ -82,6 +84,7 @@ part 'core/services/utils/news_services.dart';
 part 'core/services/utils/notification_services.dart';
 part 'core/services/utils/posts_services.dart';
 part 'core/services/utils/profile_services.dart';
+part 'core/services/utils/rules_services.dart';
 part 'core/services/utils/school_services.dart';
 part 'core/services/utils/search_services.dart';
 part 'core/services/utils/station_services.dart';
@@ -99,6 +102,8 @@ class ARMOYUServices {
   late final UserServices userServices;
   late final UtilsServices utilsServices;
 
+  late final AboutServices aboutServices;
+
   late final AppServices appServices;
   late final BlockingServices blockingServices;
   late final CategoryServices categoryServices;
@@ -114,6 +119,7 @@ class ARMOYUServices {
   late final NotificationServices notificationServices;
   late final PostsServices postsServices;
   late final ProfileServices profileServices;
+  late final RulesServices rulesServices;
   late final SchoolServices schoolServices;
   late final SearchServices searchServices;
   late final StationServices stationServices;
@@ -166,6 +172,13 @@ class ARMOYUServices {
     );
 
     utilsServices = UtilsServices(
+      getToken: () => _getToken,
+      setToken: (String? tkn) => token = tkn,
+      apiKey: apiKey,
+      usePreviousAPI: usePreviousAPI,
+    );
+
+    aboutServices = AboutServices(
       getToken: () => _getToken,
       setToken: (String? tkn) => token = tkn,
       apiKey: apiKey,
@@ -265,6 +278,13 @@ class ARMOYUServices {
     );
 
     profileServices = ProfileServices(
+      getToken: () => _getToken,
+      setToken: (String? tkn) => token = tkn,
+      apiKey: apiKey,
+      usePreviousAPI: usePreviousAPI,
+    );
+
+    rulesServices = RulesServices(
       getToken: () => _getToken,
       setToken: (String? tkn) => token = tkn,
       apiKey: apiKey,

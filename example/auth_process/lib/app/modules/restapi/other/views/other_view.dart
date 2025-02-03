@@ -1,3 +1,8 @@
+import 'dart:developer';
+
+import 'package:armoyu_services/core/models/ARMOYU/API/rules/rules.dart';
+import 'package:armoyu_services/core/models/ARMOYU/_response/response.dart';
+import 'package:armoyu_services/core/models/ARMOYU/_response/service_result.dart';
 import 'package:auth_process/app/services/armoyu.dart';
 import 'package:flutter/material.dart';
 
@@ -35,8 +40,26 @@ class OtherView extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ARMOYU.widgets.elevatedButton.costum1(
-                    text: "text",
-                    onPressed: () {},
+                    text: "Kurallar",
+                    onPressed: () async {
+                      RulesResponse response =
+                          await ARMOYU.service.rulesServices.fetch(page: 1);
+                      for (APIRules element in response.response!) {
+                        log(element.toJson().toString());
+                      }
+                    },
+                    loadingStatus: false,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ARMOYU.widgets.elevatedButton.costum1(
+                    text: "Hakkımızda",
+                    onPressed: () async {
+                      ServiceResult response =
+                          await ARMOYU.service.aboutServices.fetch(page: 1);
+                      log(response.descriptiondetail);
+                    },
                     loadingStatus: false,
                   ),
                 ),

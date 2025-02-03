@@ -5,9 +5,11 @@ final class _EndpointConstants {
   static const String previousBaseUrl = "https://aramizdakioyuncu.com/botlar";
   static const String previusAuthServicesLogin = "0";
 
-  // static const String authServicesLogin = "login";
+  //About
+  static const String about = "hakkimizda/";
+  //Others
+
   static const String users = "users";
-  // static const String requests = "requests";
   static const String register = "kayit-ol";
   static const String logout = "cikis-yap";
   static const String forgotPassword = "sifremi-unuttum";
@@ -34,6 +36,9 @@ final class _EndpointConstants {
   static const String countries = "ulkeler";
   static const String provinces = "iller";
 
+  //Crew
+  static const String crew = "ekibimiz/";
+
   //Event
   static const String eventlist = "etkinlikler/liste";
   static const String eventdetail = "etkinlikler";
@@ -58,9 +63,6 @@ final class _EndpointConstants {
   static const String permissions = "yetkiler";
   static const String applicationList = "ekibimiz/basvurular";
   static const String requestjoindepertment = "ekibimiz/katil-istek";
-
-//Crew
-  static const String crew = "ekibimiz/";
 
   //LoginRegister
   static const String invitecodefetch = "davetkodsorgula";
@@ -106,6 +108,9 @@ final class _EndpointConstants {
   static const String changebanner = "arkaplan-guncelle";
   static const String selectfavteam = "profil/favoritakimsec";
   static const String saveprofiledetails = "profil/ozelbilgiler";
+
+  //Rule
+  static const String rules = "kurallar/";
 
   //School
   static const String getschools = "okullar";
