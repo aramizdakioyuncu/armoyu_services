@@ -1,3 +1,3 @@
-## [1.0.0+44]
+## [1.0.0+45]
 
-- Hakkımızda ve Kurallar getirildi.
+- Wallpaper bilgisi çekilebilir.

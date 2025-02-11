@@ -128,6 +128,8 @@ final class _EndpointConstants {
   static const String stations = "istasyonlar/liste";
   static const String stationequipments = "istasyonlar/ekipmanlar";
 
+  static const String statistics = "istatistik";
+
   //Story
   static const String story = "hikaye";
   static const String addstory = "hikaye/ekle";

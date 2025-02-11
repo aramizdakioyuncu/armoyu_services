@@ -63,6 +63,28 @@ class OtherView extends StatelessWidget {
                     loadingStatus: false,
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ARMOYU.widgets.elevatedButton.costum1(
+                    text: "İstatistikler",
+                    onPressed: () async {
+                      StatisticsListResponse response = await ARMOYU
+                          .service.statisticsServices
+                          .fetch(category: "oturumkayitlari");
+
+                      if (!response.result.status) {
+                        return;
+                      }
+
+                      for (var ee in response.response!) {
+                        log(ee.days.toJson().toString());
+                        log(ee.hours.toJson().toString());
+                        log(ee.month.toJson().toString());
+                      }
+                    },
+                    loadingStatus: false,
+                  ),
+                ),
               ],
             )
           ],

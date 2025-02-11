@@ -34,6 +34,7 @@ import 'package:armoyu_services/core/models/ARMOYU/API/search/search_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/station/station_detail.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/station/station_equipment_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/station/station_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/statistics/statistics_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/story/story_likelist.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/story/story_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/story/story_viewlist.dart';
@@ -88,6 +89,7 @@ part 'core/services/utils/rules_services.dart';
 part 'core/services/utils/school_services.dart';
 part 'core/services/utils/search_services.dart';
 part 'core/services/utils/station_services.dart';
+part 'core/services/utils/statistics_services.dart';
 part 'core/services/utils/story_services.dart';
 part 'core/services/utils/survey_services.dart';
 part 'core/services/utils/teams_services.dart';
@@ -123,6 +125,7 @@ class ARMOYUServices {
   late final SchoolServices schoolServices;
   late final SearchServices searchServices;
   late final StationServices stationServices;
+  late final StatisticsServices statisticsServices;
   late final StoryServices storyServices;
   late final SurveyServices surveyServices;
   late final TeamsServices teamsServices;
@@ -306,6 +309,12 @@ class ARMOYUServices {
     );
 
     stationServices = StationServices(
+      getToken: () => _getToken,
+      setToken: (String? tkn) => token = tkn,
+      apiKey: apiKey,
+      usePreviousAPI: usePreviousAPI,
+    );
+    statisticsServices = StatisticsServices(
       getToken: () => _getToken,
       setToken: (String? tkn) => token = tkn,
       apiKey: apiKey,

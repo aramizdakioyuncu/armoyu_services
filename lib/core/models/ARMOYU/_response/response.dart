@@ -41,6 +41,7 @@ import 'package:armoyu_services/core/models/ARMOYU/API/search/search_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/station/station_detail.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/station/station_equipment_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/station/station_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/statistics/statistics_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/story/story_likelist.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/story/story_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/story/story_viewlist.dart';
@@ -420,6 +421,12 @@ class StationFetchListResponse {
   final ServiceResult result;
   List<APIStationList>? response;
   StationFetchListResponse({required this.result, this.response});
+}
+
+class StatisticsListResponse {
+  final ServiceResult result;
+  List<APIStatisticsList>? response;
+  StatisticsListResponse({required this.result, this.response});
 }
 
 class StationFetchEquipmentListResponse {

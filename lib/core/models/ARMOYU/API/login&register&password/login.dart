@@ -22,6 +22,7 @@ class APILogin {
   String? levelColor;
   Media? avatar;
   Media? banner;
+  Media? wallpaper;
   APILoginDetailInfo? detailInfo;
   UserRole? userRole;
   SocialAccounts? socailAccounts;
@@ -62,6 +63,7 @@ class APILogin {
     this.levelColor,
     this.avatar,
     this.banner,
+    this.wallpaper,
     this.detailInfo,
     this.userRole,
     this.socailAccounts,
@@ -103,6 +105,8 @@ class APILogin {
       levelColor: json['levelColor'],
       avatar: json['avatar'] != null ? Media.fromJson(json['avatar']) : null,
       banner: json['banner'] != null ? Media.fromJson(json['banner']) : null,
+      wallpaper:
+          json['wallpaper'] != null ? Media.fromJson(json['wallpaper']) : null,
       detailInfo: json['detailInfo'] != null
           ? APILoginDetailInfo.fromJson(json['detailInfo'])
           : null,
@@ -168,6 +172,7 @@ class APILogin {
       'levelColor': levelColor,
       'avatar': avatar?.toJson(),
       'banner': banner?.toJson(),
+      'wallpaper': wallpaper?.toJson(),
       'detailInfo': detailInfo?.toJson(),
       'userRole': userRole?.toJson(),
       'socailAccounts': socailAccounts?.toJson(),
@@ -291,6 +296,16 @@ class APILogin {
                 bigURL: response['icerik']['banner']['media_bigURL'],
                 normalURL: response['icerik']['banner']['media_URL'],
                 minURL: response['icerik']['banner']['media_minURL'],
+              ),
+            ),
+      wallpaper: response['icerik']['wallpaper'] == null
+          ? null
+          : Media(
+              mediaID: response['icerik']['wallpaper']['media_ID'],
+              mediaURL: MediaURL(
+                bigURL: response['icerik']['wallpaper']['media_bigURL'],
+                normalURL: response['icerik']['wallpaper']['media_URL'],
+                minURL: response['icerik']['wallpaper']['media_minURL'],
               ),
             ),
       detailInfo: response['icerik']['detailInfo'] == null
