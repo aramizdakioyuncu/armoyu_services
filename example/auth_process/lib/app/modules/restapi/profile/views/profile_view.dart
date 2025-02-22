@@ -37,6 +37,14 @@ class ProfileView extends StatelessWidget {
                       loadingStatus: controller.proccessStatus.value,
                     ),
                   ),
+                  Obx(
+                    () => ARMOYU.widgets.elevatedButton.costum1(
+                      text: "Fetch Profile (Anonymous)",
+                      onPressed: () =>
+                          controller.lookprofile(isanonymous: true),
+                      loadingStatus: controller.proccessStatus.value,
+                    ),
+                  ),
                 ],
               ),
             ),

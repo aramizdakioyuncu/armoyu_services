@@ -7,7 +7,7 @@ class APIGroupDetail {
   String groupName;
   String groupShortname;
   bool groupJoinStatus;
-  String groupDescription;
+  String? groupDescription;
   GroupSocial groupSocial;
   String groupURL;
   UserInfo groupOwner;
