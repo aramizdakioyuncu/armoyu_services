@@ -1,3 +1,3 @@
-## [1.0.0+45]
+## [1.0.0+48]
 
-- Wallpaper bilgisi çekilebilir.
+- Chatteki yeni aratma kısmındaki veri karışılığı giderildi.

@@ -73,6 +73,7 @@ part 'core/services/utils/about_services.dart';
 part 'core/services/utils/app_services.dart';
 part 'core/services/utils/blocking_services.dart';
 part 'core/services/utils/category_services.dart';
+part 'core/services/utils/chat_services.dart';
 part 'core/services/utils/country_services.dart';
 part 'core/services/utils/crew_services.dart';
 part 'core/services/utils/event_services.dart';
@@ -109,6 +110,7 @@ class ARMOYUServices {
   late final AppServices appServices;
   late final BlockingServices blockingServices;
   late final CategoryServices categoryServices;
+  late final ChatServices chatServices;
   late final CountryServices countryServices;
   late final CrewServices crewServices;
   late final EventServices eventServices;
@@ -203,6 +205,12 @@ class ARMOYUServices {
     );
 
     categoryServices = CategoryServices(
+      getToken: () => _getToken,
+      setToken: (String? tkn) => token = tkn,
+      apiKey: apiKey,
+      usePreviousAPI: usePreviousAPI,
+    );
+    chatServices = ChatServices(
       getToken: () => _getToken,
       setToken: (String? tkn) => token = tkn,
       apiKey: apiKey,

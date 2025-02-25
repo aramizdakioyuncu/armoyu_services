@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:armoyu_services/core/models/ARMOYU/API/chat/chat_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/rules/rules.dart';
 import 'package:armoyu_services/core/models/ARMOYU/_response/response.dart';
 import 'package:armoyu_services/core/models/ARMOYU/_response/service_result.dart';
@@ -80,6 +81,46 @@ class OtherView extends StatelessWidget {
                         log(ee.days.toJson().toString());
                         log(ee.hours.toJson().toString());
                         log(ee.month.toJson().toString());
+                      }
+                    },
+                    loadingStatus: false,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ARMOYU.widgets.elevatedButton.costum1(
+                    text: "Chat New List (Friends)",
+                    onPressed: () async {
+                      ChatNewListResponse response = await ARMOYU
+                          .service.chatServices
+                          .newChatlist(page: 1);
+
+                      if (!response.result.status) {
+                        return;
+                      }
+
+                      for (APIChatList ee in response.response!) {
+                        log(ee.toJson().toString());
+                      }
+                    },
+                    loadingStatus: false,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ARMOYU.widgets.elevatedButton.costum1(
+                    text: "Chat List (CurrentChat)",
+                    onPressed: () async {
+                      ChatListResponse response = await ARMOYU
+                          .service.chatServices
+                          .currentChatList(page: 1);
+
+                      if (!response.result.status) {
+                        return;
+                      }
+
+                      for (APIChatList ee in response.response!) {
+                        log(ee.toJson().toString());
                       }
                     },
                     loadingStatus: false,

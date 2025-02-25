@@ -99,6 +99,12 @@ class ChatListResponse {
   ChatListResponse({required this.result, this.response});
 }
 
+class ChatNewListResponse {
+  final ServiceResult result;
+  List<APIChatList>? response;
+  ChatNewListResponse({required this.result, this.response});
+}
+
 class ChatFetchDetailResponse {
   final ServiceResult result;
   List<APIChatDetailList>? response;

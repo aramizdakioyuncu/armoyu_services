@@ -6,10 +6,9 @@ class APIChatList {
   String? kullAdi;
   int bildirim;
   String sonGiris;
-  String sonMesaj;
+  String? sonMesaj;
   String sohbetTuru;
   Media chatImage;
-  String foto;
 
   APIChatList({
     required this.kullID,
@@ -20,7 +19,6 @@ class APIChatList {
     required this.sonMesaj,
     required this.sohbetTuru,
     required this.chatImage,
-    required this.foto,
   });
 
   factory APIChatList.fromJson(Map<String, dynamic> json) {
@@ -33,7 +31,6 @@ class APIChatList {
       sonMesaj: json['sonmesaj'],
       sohbetTuru: json['sohbetturu'],
       chatImage: Media.fromJson(json['chatImage']),
-      foto: json['foto'],
     );
   }
 
@@ -47,7 +44,6 @@ class APIChatList {
       'sonmesaj': sonMesaj,
       'sohbetturu': sohbetTuru,
       'chatImage': chatImage.toJson(),
-      'foto': foto,
     };
   }
 }
