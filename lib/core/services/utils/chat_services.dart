@@ -115,11 +115,12 @@ class ChatServices {
     return armoyuresponse;
   }
 
-  Future<ChatFetchDetailResponse> fetchdetailChat({required int chatID}) async {
+  Future<ChatFetchDetailResponse> fetchdetailChat(
+      {required int chatID, required APIChat chatCategory}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {
         "sohbetID": chatID,
-        "sohbetturu": "ozel",
+        "sohbetturu": chatCategory.name,
       },
       endpoint: "0/0/${_EndpointConstants.chatdetail}/0/0",
       headers: _apiHelpers.getRequestHeader(token: getToken()),

@@ -1,3 +1,3 @@
-## [1.0.0+48]
+## [1.0.0+49]
 
-- Chatteki yeni aratma kısmındaki veri karışılığı giderildi.
+-  Kategorileme içi Chate enum classı getirildi.
