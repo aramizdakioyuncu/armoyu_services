@@ -189,6 +189,40 @@ class OtherView extends StatelessWidget {
                     loadingStatus: false,
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ARMOYU.widgets.elevatedButton.costum1(
+                    text: "Group Create Room ",
+                    onPressed: () async {
+                      GroupCreateRoomResponse response =
+                          await ARMOYU.service.groupServices.groupRoomCreate(
+                              groupID: 1, roomName: "oda adı", roomLimit: 2);
+
+                      if (!response.result.status) {
+                        return;
+                      }
+                      log(response.response!.toJson().toString());
+                    },
+                    loadingStatus: false,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ARMOYU.widgets.elevatedButton.costum1(
+                    text: "Group Delete Room ",
+                    onPressed: () async {
+                      ServiceResult response = await ARMOYU
+                          .service.groupServices
+                          .groupRoomDelete(roomID: 1);
+
+                      if (!response.status) {
+                        return;
+                      }
+                      log(response.description.toString());
+                    },
+                    loadingStatus: false,
+                  ),
+                ),
               ],
             )
           ],

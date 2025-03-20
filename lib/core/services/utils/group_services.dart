@@ -427,6 +427,85 @@ class GroupServices {
     return armoyuresponse;
   }
 
+  Future<GroupCreateRoomResponse> groupRoomCreate({
+    required int groupID,
+    required String roomName,
+    String? roomdescription,
+    RoomType roomType = RoomType.sound,
+    int? roomLimit,
+  }) async {
+    Map<String, dynamic> body = {
+      "groupID": groupID,
+      "islem": "olustur",
+      "roomname": roomName,
+      "roomdescription": roomdescription,
+      "roomtype": roomType.name,
+      "limit": roomLimit,
+    };
+    // Null olanları kaldır
+    body.removeWhere((key, value) => value == null);
+    // Null olanları kaldır
+
+    Map<String, dynamic> response = await _apiHelpers.post(
+      body: body,
+      endpoint: "0/0/${_EndpointConstants.groupRooms}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
+    );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    GroupCreateRoomResponse armoyuresponse =
+        GroupCreateRoomResponse(result: result);
+
+    if (response['durum'] == 0) {
+      return armoyuresponse;
+    }
+
+    GroupRoom roomsList = GroupRoom(
+      roomID: response['icerik']['room_ID'],
+      owner: response['icerik']['room_owner'],
+      name: response['icerik']['room_name'],
+      type: response['icerik']['room_type'] == "text"
+          ? RoomType.text
+          : RoomType.sound,
+      description: response['icerik']['room_description'],
+      limit: response['icerik']['room_limit'],
+      options: response['icerik']['room_options'],
+    );
+
+    armoyuresponse.response = roomsList;
+
+    return armoyuresponse;
+  }
+
+  Future<ServiceResult> groupRoomDelete({required int roomID}) async {
+    Map<String, dynamic> body = {
+      "islem": "sil",
+      "roomID": roomID,
+    };
+    // Null olanları kaldır
+    body.removeWhere((key, value) => value == null);
+    // Null olanları kaldır
+
+    Map<String, dynamic> response = await _apiHelpers.post(
+      body: body,
+      endpoint: "0/0/${_EndpointConstants.groupRooms}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
+    );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    return result;
+  }
+
   Future<GroupRoomsResponse> groupRoomsFetch({required int groupID}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: {

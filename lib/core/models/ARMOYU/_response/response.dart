@@ -220,6 +220,12 @@ class GroupCreateResponse {
   GroupCreateResponse({required this.result, this.response});
 }
 
+class GroupCreateRoomResponse {
+  final ServiceResult result;
+  GroupRoom? response;
+  GroupCreateRoomResponse({required this.result, this.response});
+}
+
 class GroupRoomsResponse {
   final ServiceResult result;
   List<GroupRoom>? response;
