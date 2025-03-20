@@ -426,4 +426,128 @@ class GroupServices {
 
     return armoyuresponse;
   }
+
+  Future<GroupRoomsResponse> groupRoomsFetch({required int groupID}) async {
+    Map<String, dynamic> response = await _apiHelpers.post(
+      body: {
+        "groupID": groupID,
+      },
+      endpoint: "0/0/${_EndpointConstants.groupRooms}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
+    );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    GroupRoomsResponse armoyuresponse = GroupRoomsResponse(result: result);
+
+    if (response['durum'] == 0) {
+      return armoyuresponse;
+    }
+
+    List<GroupRoom> roomsList = [];
+    for (var element in response['icerik']) {
+      roomsList.add(
+        GroupRoom(
+          roomID: element['room_ID'],
+          owner: element['room_owner'],
+          name: element['room_name'],
+          type: element['room_type'],
+          description: element['room_description'],
+          limit: element['room_limit'],
+          options: element['room_options'],
+        ),
+      );
+    }
+
+    armoyuresponse.response = roomsList;
+
+    return armoyuresponse;
+  }
+
+  Future<GroupRoomChatsResponse> groupRoomChats({required int roomID}) async {
+    Map<String, dynamic> response = await _apiHelpers.post(
+      body: {
+        "roomID": roomID,
+        "islem": "sohbet",
+      },
+      endpoint: "0/0/${_EndpointConstants.groupRooms}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
+    );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    GroupRoomChatsResponse armoyuresponse =
+        GroupRoomChatsResponse(result: result);
+
+    if (response['durum'] == 0) {
+      return armoyuresponse;
+    }
+
+    List<GroupRoomChat> chatsList = [];
+    for (var element in response['icerik']) {
+      chatsList.add(
+        GroupRoomChat(
+          chatID: element['chat_ID'],
+          owner: element['chat_owner'],
+          sender: element['chat_sender'],
+          content: element['chat_content'],
+          date: element['chat_date'],
+          chatReply: element['chat_reply'],
+        ),
+      );
+    }
+
+    armoyuresponse.response = chatsList;
+
+    return armoyuresponse;
+  }
+
+  Future<GroupRoomChatsSendResponse> groupRoomChatSend({
+    required int roomID,
+    required String content,
+  }) async {
+    Map<String, dynamic> response = await _apiHelpers.post(
+      body: {
+        "roomID": roomID,
+        "islem": "sohbet-et",
+        "content": content,
+      },
+      endpoint: "0/0/${_EndpointConstants.groupRooms}/0/",
+      headers: _apiHelpers.getRequestHeader(token: getToken()),
+    );
+
+    ServiceResult result = ServiceResult(
+      status: response['durum'] == 1 ? true : false,
+      description: response['aciklama'],
+      descriptiondetail: response['aciklamadetay'],
+    );
+
+    GroupRoomChatsSendResponse armoyuresponse =
+        GroupRoomChatsSendResponse(result: result);
+
+    if (response['durum'] == 0) {
+      return armoyuresponse;
+    }
+
+    GroupRoomChat chatsList = GroupRoomChat(
+      chatID: response['icerik']['chat_ID'],
+      owner: response['icerik']['chat_owner'],
+      sender: response['icerik']['chat_sender'],
+      content: response['icerik']['chat_content'],
+      date: response['icerik']['chat_date'],
+      chatReply: response['icerik']['chat_reply'],
+    );
+
+    armoyuresponse.response = chatsList;
+
+    return armoyuresponse;
+  }
 }

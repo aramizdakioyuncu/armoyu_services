@@ -58,6 +58,7 @@ final class _EndpointConstants {
   static const String groupInvite = "gruplar/davetet";
   static const String groupuserremove = "gruplar/gruptanat";
   static const String groupcreate = "gruplar-olustur";
+  static const String groupRooms = "gruplar/odalar";
 
   //JoinUs
   static const String permissions = "yetkiler";

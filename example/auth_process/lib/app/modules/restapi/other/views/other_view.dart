@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:armoyu_services/core/models/ARMOYU/API/chat/chat_list.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/group/group_room.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/group/group_room_chat.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/rules/rules.dart';
 import 'package:armoyu_services/core/models/ARMOYU/_response/response.dart';
 import 'package:armoyu_services/core/models/ARMOYU/_response/service_result.dart';
@@ -122,6 +124,67 @@ class OtherView extends StatelessWidget {
                       for (APIChatList ee in response.response!) {
                         log(ee.toJson().toString());
                       }
+                    },
+                    loadingStatus: false,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ARMOYU.widgets.elevatedButton.costum1(
+                    text: "Group Rooms",
+                    onPressed: () async {
+                      GroupRoomsResponse response =
+                          await ARMOYU.service.groupServices.groupRoomsFetch(
+                        groupID: 1,
+                      );
+
+                      if (!response.result.status) {
+                        return;
+                      }
+
+                      for (GroupRoom ee in response.response!) {
+                        log(ee.toJson().toString());
+                      }
+                    },
+                    loadingStatus: false,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ARMOYU.widgets.elevatedButton.costum1(
+                    text: "Group Room Chats",
+                    onPressed: () async {
+                      GroupRoomChatsResponse response =
+                          await ARMOYU.service.groupServices.groupRoomChats(
+                        roomID: 1,
+                      );
+
+                      if (!response.result.status) {
+                        return;
+                      }
+
+                      for (GroupRoomChat ee in response.response!) {
+                        log(ee.toJson().toString());
+                      }
+                    },
+                    loadingStatus: false,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ARMOYU.widgets.elevatedButton.costum1(
+                    text: "Group Room Chats Send",
+                    onPressed: () async {
+                      GroupRoomChatsSendResponse response =
+                          await ARMOYU.service.groupServices.groupRoomChatSend(
+                        roomID: 1,
+                        content: "adsfas",
+                      );
+
+                      if (!response.result.status) {
+                        return;
+                      }
+                      log(response.response!.toJson().toString());
                     },
                     loadingStatus: false,
                   ),

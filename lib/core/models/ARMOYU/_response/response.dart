@@ -19,6 +19,8 @@ import 'package:armoyu_services/core/models/ARMOYU/API/group/group_invite_answer
 import 'package:armoyu_services/core/models/ARMOYU/API/group/group_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/group/group_media.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/group/group_request.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/group/group_room.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/group/group_room_chat.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/group/group_user.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/group/group_user_kick.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/joinus/joinus_list.dart';
@@ -216,6 +218,24 @@ class GroupCreateResponse {
   final ServiceResult result;
   APIGroupCreate? response;
   GroupCreateResponse({required this.result, this.response});
+}
+
+class GroupRoomsResponse {
+  final ServiceResult result;
+  List<GroupRoom>? response;
+  GroupRoomsResponse({required this.result, this.response});
+}
+
+class GroupRoomChatsResponse {
+  final ServiceResult result;
+  List<GroupRoomChat>? response;
+  GroupRoomChatsResponse({required this.result, this.response});
+}
+
+class GroupRoomChatsSendResponse {
+  final ServiceResult result;
+  GroupRoomChat? response;
+  GroupRoomChatsSendResponse({required this.result, this.response});
 }
 
 // #JoinUS

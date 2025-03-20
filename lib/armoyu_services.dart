@@ -14,6 +14,8 @@ import 'package:armoyu_services/core/models/ARMOYU/API/event/event_detail.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/event/event_participant.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/group/group_detail.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/group/group_media.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/group/group_room.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/group/group_room_chat.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/group/group_user.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/joinus/joinus_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/joinus/joinus_permission_list.dart';

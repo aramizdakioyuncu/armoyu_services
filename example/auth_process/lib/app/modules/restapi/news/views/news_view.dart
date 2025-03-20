@@ -65,8 +65,8 @@ class NewsView extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
                                       colors: [
-                                        Colors.black.withOpacity(0.5),
-                                        Colors.black.withOpacity(0.3),
+                                        Colors.black.withValues(alpha: 0.5),
+                                        Colors.black.withValues(alpha: 0.3),
                                       ],
                                       begin: Alignment.bottomCenter,
                                       end: Alignment.topCenter,
