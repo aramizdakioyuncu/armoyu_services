@@ -1,3 +1,3 @@
-## [1.0.0+51]
+## [1.0.0+52]
 
--  Grup içi sohbet odaları oluşturma ve silme getirildi.
+-  Paylaşım yapan bilgisine banner ve username verisi eklendi.

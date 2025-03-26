@@ -320,20 +320,25 @@ class PostsServices {
 
       postList.add(
         APIPostList(
-          postID: element['paylasimID'],
-          posttype: element['paylasimturu'],
-          postdevice: element['paylasimnereden'],
+          postID: element['postID'],
+          posttype: element['type'],
+          postdevice: element['device'],
           postOwner: PostOwner(
-            ownerID: element['sahipID'],
-            displayName: element['sahipad'],
-            ownerURL: element['sahiplink'],
+            ownerID: element['owner']['owner_ID'],
+            displayName: element['owner']['displayname'],
+            username: element['owner']['username'],
             avatar: MediaURL(
-              bigURL: element['sahipavatar'],
-              normalURL: element['sahipavatarufaklik'],
-              minURL: element['sahipavatarminnak'],
+              bigURL: element['owner']['avatar']['media_bigURL'],
+              normalURL: element['owner']['avatar']['media_URL'],
+              minURL: element['owner']['avatar']['media_minURL'],
             ),
-            jobRole: element['sahipmeslekisyerirol'],
-            job: element['sahipmeslekisyerirollink'],
+            banner: MediaURL(
+              bigURL: element['owner']['banner']['media_bigURL'],
+              normalURL: element['owner']['banner']['media_URL'],
+              minURL: element['owner']['banner']['media_minURL'],
+            ),
+            job: element['owner']['job'],
+            jobURL: element['owner']['jobURL'],
           ),
           content: element['paylasimicerik'],
           location: element['paylasimkonum'],
@@ -357,133 +362,6 @@ class PostsServices {
     armoyuresponse.response = postList;
     return armoyuresponse;
   }
-
-  // Future<PostFetchListResponse> getPosts({required int page}) async {
-  //   Map<String, dynamic> response = await _apiHelpers.post(
-  //     body: {"limit": "20"},
-  //     endpoint: "0/0/${_EndpointConstants.getposts}/$page/",
-  //     headers: _apiHelpers.getRequestHeader(token: getToken()),
-  //   );
-
-  //   ServiceResult result = ServiceResult(
-  //     status: response['durum'] == 1 ? true : false,
-  //     description: response['aciklama'],
-  //     descriptiondetail: response['aciklamadetay'],
-  //   );
-
-  //   PostFetchListResponse armoyuresponse =
-  //       PostFetchListResponse(result: result);
-  //   if (response['durum'] == 0) {
-  //     return armoyuresponse;
-  //   }
-
-  //   List<APIPostList> postList = [];
-  //   for (var element in response['icerik']) {
-  //     List<APIPostLiker> postlikersList = [];
-  //     for (var postliker in element['paylasimilkucbegenen']) {
-  //       postlikersList.add(
-  //         APIPostLiker(
-  //           postlikeID: postliker['begeni_ID'],
-  //           likerID: postliker['ID'],
-  //           likerdisplayname: postliker['adsoyad'],
-  //           likerusername: postliker['kullaniciadi'],
-  //           likeravatar: MediaURL(
-  //             bigURL: postliker['avatar'],
-  //             normalURL: postliker['avatar'],
-  //             minURL: postliker['avatar'],
-  //           ),
-  //           likerURL: postliker['URL'],
-  //           likedate: postliker['begeni_zaman'],
-  //         ),
-  //       );
-  //     }
-
-  //     List<APIPostComments> postcommenterList = [];
-  //     for (var postcommenter in element['ilkucyorum']) {
-  //       postcommenterList.add(
-  //         APIPostComments(
-  //           postcommenter: PostCommenter(
-  //             userID: postcommenter['yorumcuid'],
-  //             mention: postcommenter['yorumcuetiketad'],
-  //             username: postcommenter['yorumcukullaniciad'],
-  //             displayname: postcommenter['yorumcuadsoyad'],
-  //             userURL: postcommenter['oyunculink'],
-  //             avatar: MediaURL(
-  //               bigURL: postcommenter['yorumcuavatar'],
-  //               normalURL: postcommenter['yorumcuufakavatar'],
-  //               minURL: postcommenter['yorumcuminnakavatar'],
-  //             ),
-  //           ),
-  //           commentContent: postcommenter['yorumcuicerik'],
-  //           likeCount: postcommenter['yorumbegenisayi'],
-  //           reportCount: postcommenter['yorumsikayetsayi'],
-  //           isLikedByMe: postcommenter['benbegendim'] == 1 ? true : false,
-  //           isReportedByMe: postcommenter['bensikayet'] == 1 ? true : false,
-  //           commentID: postcommenter['yorumID'],
-  //           commentElapsedTime: postcommenter['yorumcuzamangecen'],
-  //           commentTime: postcommenter['yorumcuzaman'],
-  //           postID: postcommenter['paylasimID'],
-  //           replyTo: postcommenter['yorumcukimeyanit'],
-  //         ),
-  //       );
-  //     }
-
-  //     List<Media> mediaList = [];
-  //     for (var media in element['paylasimfoto']) {
-  //       mediaList.add(
-  //         Media(
-  //           mediaID: media['fotoID'],
-  //           mediaType: media['paylasimkategori'],
-  //           mediaURL: MediaURL(
-  //             bigURL: media['fotourl'],
-  //             normalURL: media['fotoufakurl'],
-  //             minURL: media['fotominnakurl'],
-  //           ),
-  //           mediaDirection: media['medyayonu'],
-  //         ),
-  //       );
-  //     }
-
-  //     postList.add(
-  //       APIPostList(
-  //         postID: element['paylasimID'],
-  //         posttype: element['paylasimturu'],
-  //         postdevice: element['paylasimnereden'],
-  //         postOwner: PostOwner(
-  //           ownerID: element['sahipID'],
-  //           displayName: element['sahipad'],
-  //           ownerURL: element['sahiplink'],
-  //           avatar: MediaURL(
-  //             bigURL: element['sahipavatar'],
-  //             normalURL: element['sahipavatarufaklik'],
-  //             minURL: element['sahipavatarminnak'],
-  //           ),
-  //           jobRole: element['sahipmeslekisyerirol'],
-  //           job: element['sahipmeslekisyerirollink'],
-  //         ),
-  //         content: element['paylasimicerik'],
-  //         location: element['paylasimkonum'],
-  //         date: element['paylasimzaman'],
-  //         datecounting: element['paylasimzamangecen'],
-  //         editdate: element['paylasimzamanedit'],
-  //         likeCount: element['begenisay'],
-  //         commentCount: element['yorumsay'],
-  //         repostCount: element['repostsay'],
-  //         reportCount: element['sikayetsay'],
-  //         didilikeit: element['benbegendim'],
-  //         didicommentit: element['benyorumladim'],
-  //         didirepostit: element['benretweetledim'],
-  //         didireportit: element['bensikayet'],
-  //         firstlikers: postlikersList,
-  //         firstcomments: postcommenterList,
-  //         media: mediaList,
-  //       ),
-  //     );
-  //   }
-  //   armoyuresponse.response = postList;
-
-  //   return armoyuresponse;
-  // }
 
   Future<PostFetchResponse> detailfetch({
     int? postID,
@@ -578,20 +456,25 @@ class PostsServices {
       }
 
       postList = APIPostList(
-        postID: element['paylasimID'],
-        posttype: element['paylasimturu'],
-        postdevice: element['paylasimnereden'],
+        postID: element['postID'],
+        posttype: element['type'],
+        postdevice: element['device'],
         postOwner: PostOwner(
-          ownerID: element['sahipID'],
-          displayName: element['sahipad'],
-          ownerURL: element['sahiplink'],
+          ownerID: element['owner']['owner_ID'],
+          displayName: element['owner']['displayname'],
+          username: element['owner']['username'],
           avatar: MediaURL(
-            bigURL: element['sahipavatar'],
-            normalURL: element['sahipavatarufaklik'],
-            minURL: element['sahipavatarminnak'],
+            bigURL: element['owner']['avatar']['media_bigURL'],
+            normalURL: element['owner']['avatar']['media_URL'],
+            minURL: element['owner']['avatar']['media_minURL'],
           ),
-          jobRole: element['sahipmeslekisyerirol'],
-          job: element['sahipmeslekisyerirollink'],
+          banner: MediaURL(
+            bigURL: element['owner']['banner']['media_bigURL'],
+            normalURL: element['owner']['banner']['media_URL'],
+            minURL: element['owner']['banner']['media_minURL'],
+          ),
+          job: element['owner']['job'],
+          jobURL: element['owner']['jobURL'],
         ),
         content: element['paylasimicerik'],
         location: element['paylasimkonum'],

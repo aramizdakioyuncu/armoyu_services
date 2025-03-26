@@ -1,4 +1,5 @@
 import 'package:armoyu_services/armoyu_services.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/post/post_detail.dart';
 import 'package:armoyu_services/core/models/ARMOYU/_response/response.dart';
 import 'package:armoyu_widgets/widget.dart';
 import 'package:auth_process/app/modules/restapi/_main/controllers/restapi_controller.dart';
@@ -204,8 +205,14 @@ class RestapiView extends StatelessWidget {
                               enabled: controller.statusController.value! &&
                                   AppList.user.value != null,
                               onPressed: () async {
-                                await ARMOYU.service.postsServices
+                                PostFetchListResponse response = await ARMOYU
+                                    .service.postsServices
                                     .getPosts(page: 1);
+
+                                for (APIPostList element
+                                    in response.response!) {
+                                  log(element.toJson().toString());
+                                }
                               },
                               loadingStatus: false,
                             ),

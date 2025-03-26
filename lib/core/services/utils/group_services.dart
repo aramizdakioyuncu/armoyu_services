@@ -534,7 +534,7 @@ class GroupServices {
           roomID: element['room_ID'],
           owner: element['room_owner'],
           name: element['room_name'],
-          type: element['room_type'],
+          type: element['room_type'] == "text" ? RoomType.text : RoomType.sound,
           description: element['room_description'],
           limit: element['room_limit'],
           options: element['room_options'],

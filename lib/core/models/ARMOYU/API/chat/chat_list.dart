@@ -1,3 +1,4 @@
+import 'package:armoyu_services/core/models/ARMOYU/API/chat/chat.dart';
 import 'package:armoyu_services/core/models/ARMOYU/media.dart';
 
 class APIChatList {
@@ -7,7 +8,7 @@ class APIChatList {
   int bildirim;
   String sonGiris;
   String? sonMesaj;
-  String sohbetTuru;
+  APIChat sohbetTuru;
   Media chatImage;
 
   APIChatList({
@@ -29,7 +30,10 @@ class APIChatList {
       bildirim: json['bildirim'],
       sonGiris: json['songiris'],
       sonMesaj: json['sonmesaj'],
-      sohbetTuru: json['sohbetturu'],
+      sohbetTuru: APIChat.values.firstWhere(
+        (e) => e.name == json['sohbetturu'],
+        orElse: () => APIChat.ozel, // Varsayılan değer (isteğe bağlı)
+      ),
       chatImage: Media.fromJson(json['chatImage']),
     );
   }
@@ -42,7 +46,7 @@ class APIChatList {
       'bildirim': bildirim,
       'songiris': sonGiris,
       'sonmesaj': sonMesaj,
-      'sohbetturu': sohbetTuru,
+      'sohbetturu': sohbetTuru.name,
       'chatImage': chatImage.toJson(),
     };
   }

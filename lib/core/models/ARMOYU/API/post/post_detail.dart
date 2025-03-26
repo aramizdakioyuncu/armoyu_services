@@ -50,7 +50,7 @@ class APIPostList {
       postID: json['postID'],
       posttype: json['posttype'],
       postdevice: json['postdevice'],
-      postOwner: json['postOwner'],
+      postOwner: PostOwner.fromJson(json['postOwner']),
       content: json['content'],
       location: json['location'],
       date: json['date'],
@@ -83,7 +83,7 @@ class APIPostList {
       'postID': postID,
       'posttype': posttype,
       'postdevice': postdevice,
-      'postOwner': postOwner,
+      'postOwner': postOwner.toJson(),
       'content': content,
       'location': location,
       'date': date,
@@ -107,28 +107,31 @@ class APIPostList {
 class PostOwner {
   int ownerID;
   String displayName;
-  String ownerURL;
+  String username;
   MediaURL avatar;
+  MediaURL banner;
   String? job;
-  String? jobRole;
+  String? jobURL;
 
   PostOwner({
     required this.ownerID,
     required this.displayName,
-    required this.ownerURL,
+    required this.username,
     required this.avatar,
+    required this.banner,
     required this.job,
-    required this.jobRole,
+    required this.jobURL,
   });
 
   factory PostOwner.fromJson(Map<String, dynamic> json) {
     return PostOwner(
       ownerID: json['ownerID'],
       displayName: json['displayName'],
-      ownerURL: json['ownerURL'],
+      username: json['username'],
       avatar: MediaURL.fromJson(json['avatar']),
+      banner: MediaURL.fromJson(json['banner']),
       job: json['job'],
-      jobRole: json['jobRole'],
+      jobURL: json['jobURL'],
     );
   }
 
@@ -136,10 +139,11 @@ class PostOwner {
     return {
       'ownerID': ownerID,
       'displayName': displayName,
-      'ownerURL': ownerURL,
+      'username': username,
       'avatar': avatar.toJson(),
+      'banner': banner.toJson(),
       'job': job,
-      'jobRole': jobRole,
+      'jobURL': jobURL,
     };
   }
 }

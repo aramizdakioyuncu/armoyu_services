@@ -49,7 +49,8 @@ class ChatServices {
           bildirim: element['bildirim'],
           sonGiris: element['songiris'],
           sonMesaj: element['sonmesaj'],
-          sohbetTuru: element['sohbetturu'],
+          sohbetTuru:
+              element['sohbetturu'] == "ozel" ? APIChat.ozel : APIChat.grup,
           chatImage: Media(
             mediaID: element['chatImage']['media_ID'],
             mediaURL: MediaURL(
@@ -97,7 +98,8 @@ class ChatServices {
           bildirim: element['bildirim'],
           sonGiris: element['songiris'],
           sonMesaj: element['sonmesaj'],
-          sohbetTuru: element['sohbetturu'],
+          sohbetTuru:
+              element['sohbetturu'] == "ozel" ? APIChat.ozel : APIChat.grup,
           chatImage: Media(
             mediaID: element['chatImage']['media_ID'],
             mediaURL: MediaURL(
