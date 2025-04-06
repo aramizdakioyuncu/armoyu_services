@@ -4,12 +4,16 @@ final class ApiHelpers {
   final String apiKey;
   final bool usePreviousAPI;
 
-  late final String baseUrl;
+  late String baseUrl;
 
   ApiHelpers({required this.apiKey, required this.usePreviousAPI}) {
-    baseUrl = usePreviousAPI
-        ? _EndpointConstants.previousBaseUrl
-        : _EndpointConstants.baseURL;
+    if (usePreviousAPI) {
+      log("Previous API kullanılıyor.");
+      baseUrl = _EndpointConstants.previousBaseUrl;
+    } else {
+      log("baseURL API kullanılıyor.");
+      baseUrl = _EndpointConstants.baseURL;
+    }
   }
 
 ////MD5/////

@@ -69,7 +69,7 @@ class RestapiView extends StatelessWidget {
                           controller.savestaus.value = true;
                           ARMOYU.service = ARMOYUServices(
                             apiKey: controller.apikeyController.value.text,
-                            usePreviousAPI: true,
+                            // usePreviousAPI: true,
                           );
                           ARMOYU.widgets =
                               ARMOYUWidget(service: ARMOYU.service);

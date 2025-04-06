@@ -1,3 +1,3 @@
-## [1.0.0+52]
+## [1.0.0+53]
 
--  Paylaşım yapan bilgisine banner ve username verisi eklendi.
+-  api.armoyu.com a geçiş eklendi artık baseURL url varsayılan.

@@ -4,7 +4,7 @@ import 'package:armoyu_widgets/widget.dart';
 class ARMOYU {
   static ARMOYUServices service = ARMOYUServices(
     apiKey: "",
-    usePreviousAPI: true,
+    usePreviousAPI: false,
   );
 
   static ARMOYUWidget widgets = ARMOYUWidget(service: service);
