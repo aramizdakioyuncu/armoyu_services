@@ -1,3 +1,3 @@
-## [1.0.0+53]
+## [1.0.0+55]
 
--  api.armoyu.com a geçiş eklendi artık baseURL url varsayılan.
+-  media güncellemesi.

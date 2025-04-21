@@ -223,6 +223,27 @@ class OtherView extends StatelessWidget {
                     loadingStatus: false,
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ARMOYU.widgets.elevatedButton.costum1(
+                    text: "Fetch Gallery list ",
+                    onPressed: () async {
+                      MediaFetchResponse response =
+                          await ARMOYU.service.mediaServices.fetch(
+                        page: 1,
+                      );
+
+                      if (!response.result.status) {
+                        log(response.result.description);
+                        return;
+                      }
+                      log(response.response!.map((element) {
+                        return element.toJson().toString();
+                      }).toString());
+                    },
+                    loadingStatus: false,
+                  ),
+                ),
               ],
             )
           ],

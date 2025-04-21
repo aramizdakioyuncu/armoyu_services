@@ -19,17 +19,39 @@ class MediaServices {
   }
 
   Future<MediaFetchResponse> fetch({
-    required int uyeID,
-    required String category,
+    int? userID,
+    String? username,
+    String category = "-1",
     required int page,
+    int limit = 30,
   }) async {
+    if (userID == null && username == null) {
+      return MediaFetchResponse(
+          result: ServiceResult(
+        description: "userID or username is required",
+      ));
+    }
+
     Map<String, dynamic> response = await _apiHelpers.post(
-      body: {
-        "oyuncubakid": "$uyeID",
-        "kategori": category,
-        "limit": "30",
-        "sayfa": page,
-      },
+      body: userID != null
+          ? {
+              "oyuncubakid": userID,
+              "kategori": category,
+              "limit": limit,
+              "sayfa": page,
+            }
+          : username == null
+              ? {
+                  "oyuncubakid": username,
+                  "kategori": category,
+                  "limit": limit,
+                  "sayfa": page,
+                }
+              : {
+                  "kategori": category,
+                  "limit": limit,
+                  "sayfa": page,
+                },
       endpoint: "0/0/${_EndpointConstants.media}/0/0/",
       headers: _apiHelpers.getRequestHeader(token: getToken()),
     );

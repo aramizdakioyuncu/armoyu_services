@@ -204,18 +204,18 @@ class PostsServices {
     return armoyuresponse;
   }
 
-  Future<PostFetchListResponse> getPosts({
-    int? userID,
-    String? username,
-    String? category,
-    required int page,
-  }) async {
+  Future<PostFetchListResponse> getPosts(
+      {int? userID,
+      String? username,
+      String? category,
+      required int page,
+      int limit = 20}) async {
     Map<String, dynamic> response = await _apiHelpers.post(
       body: userID != null
           ? category == null
               ? {
                   "oyuncubakid": userID,
-                  "limit": "20",
+                  "limit": limit,
                 }
               : {
                   "oyuncubakid": userID,
@@ -226,15 +226,15 @@ class PostsServices {
               ? category == null
                   ? {
                       "oyuncubakusername": username,
-                      "limit": "20",
+                      "limit": limit,
                     }
                   : {
                       "oyuncubakusername": username,
-                      "limit": "20",
+                      "limit": limit,
                       "paylasimozellik": category,
                     }
               : {
-                  "limit": "20",
+                  "limit": limit,
                 },
       endpoint: "0/0/${_EndpointConstants.profileposts}/$page/",
       headers: _apiHelpers.getRequestHeader(token: getToken()),
