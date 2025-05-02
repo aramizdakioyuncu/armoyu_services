@@ -1,3 +1,4 @@
+import 'package:armoyu_services/core/constants/variables.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/country&province/country.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/country&province/province.dart';
 import 'package:armoyu_services/core/models/ARMOYU/media.dart';
@@ -283,9 +284,12 @@ class APILogin {
           : Media(
               mediaID: response['icerik']['avatar']['media_ID'],
               mediaURL: MediaURL(
-                bigURL: response['icerik']['avatar']['media_bigURL'],
-                normalURL: response['icerik']['avatar']['media_URL'],
-                minURL: response['icerik']['avatar']['media_minURL'],
+                bigURL: response['icerik']['avatar']['media_bigURL'] ??
+                    Variables.avatar,
+                normalURL: response['icerik']['avatar']['media_URL'] ??
+                    Variables.avatar,
+                minURL: response['icerik']['avatar']['media_minURL'] ??
+                    Variables.avatar,
               ),
             ),
       banner: response['icerik']['banner'] == null
@@ -293,9 +297,12 @@ class APILogin {
           : Media(
               mediaID: response['icerik']['banner']['media_ID'],
               mediaURL: MediaURL(
-                bigURL: response['icerik']['banner']['media_bigURL'],
-                normalURL: response['icerik']['banner']['media_URL'],
-                minURL: response['icerik']['banner']['media_minURL'],
+                bigURL: response['icerik']['banner']['media_bigURL'] ??
+                    Variables.banner,
+                normalURL: response['icerik']['banner']['media_URL'] ??
+                    Variables.banner,
+                minURL: response['icerik']['banner']['media_minURL'] ??
+                    Variables.banner,
               ),
             ),
       wallpaper: response['icerik']['wallpaper'] == null
@@ -303,9 +310,12 @@ class APILogin {
           : Media(
               mediaID: response['icerik']['wallpaper']['media_ID'],
               mediaURL: MediaURL(
-                bigURL: response['icerik']['wallpaper']['media_bigURL'],
-                normalURL: response['icerik']['wallpaper']['media_URL'],
-                minURL: response['icerik']['wallpaper']['media_minURL'],
+                bigURL: response['icerik']['wallpaper']['media_bigURL'] ??
+                    Variables.wallpaper,
+                normalURL: response['icerik']['wallpaper']['media_URL'] ??
+                    Variables.wallpaper,
+                minURL: response['icerik']['wallpaper']['media_minURL'] ??
+                    Variables.wallpaper,
               ),
             ),
       detailInfo: response['icerik']['detailInfo'] == null
