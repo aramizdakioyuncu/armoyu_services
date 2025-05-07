@@ -1,3 +1,3 @@
-## [1.0.0+55]
+## [1.0.0+57]
 
--  media güncellemesi.
+-  Bağımlılıklar Güncellendi.

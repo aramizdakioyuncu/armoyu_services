@@ -1,5 +1,3 @@
-library armoyu_services.dart;
-
 import 'package:armoyu_services/core/models/ARMOYU/API/category/category.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/chat/chat.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/chat/chat_detail_list.dart';
