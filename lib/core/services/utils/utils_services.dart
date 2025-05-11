@@ -64,7 +64,7 @@ class UtilsServices {
         "email": useremail,
         "sifirlamatercihi": userresettype
       },
-      endpoint: "0/0${_EndpointConstants.forgotPassword}/0/0/",
+      endpoint: "0/0/${_EndpointConstants.forgotPassword}/0/0/",
     );
     ServiceResult result = ServiceResult(
       status: response['durum'] == 1 ? true : false,
