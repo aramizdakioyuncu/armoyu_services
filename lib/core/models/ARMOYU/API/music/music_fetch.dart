@@ -10,6 +10,7 @@ class APIMusicFetch {
   final int musicID;
   final MusicCategory category;
   final String name;
+  final String? ownername;
   final String musicURL;
   final bool ismyfav;
   final int listeningcount;
@@ -19,6 +20,7 @@ class APIMusicFetch {
     required this.musicID,
     required this.category,
     required this.name,
+    required this.ownername,
     required this.musicURL,
     required this.ismyfav,
     required this.listeningcount,
@@ -32,6 +34,7 @@ class APIMusicFetch {
       category:
           MusicCategory.values.firstWhere((e) => e.name == json['category']),
       name: json['name'],
+      ownername: json['ownername'],
       musicURL: json['musicURL'],
       ismyfav: json['ismyfav'],
       listeningcount: json['listeningcount'],
@@ -45,6 +48,7 @@ class APIMusicFetch {
       'musicID': musicID,
       'category': category.name,
       'name': name,
+      'ownername': ownername,
       'musicURL': musicURL,
       'ismyfav': ismyfav,
       'listeningcount': listeningcount,
