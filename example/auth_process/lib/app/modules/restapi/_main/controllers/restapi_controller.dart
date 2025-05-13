@@ -11,7 +11,7 @@ class RestapiController extends GetxController {
 //Profile
 
   var useravatarController =
-      "https://aramizdakioyuncu.com/galeri/ana-yapi/armoyu128.png".obs;
+      "https://storage.aramizdakioyuncu.com/galeri/ana-yapi/armoyu128.png".obs;
 
   var savestaus = false.obs;
   var loginstaus = false.obs;

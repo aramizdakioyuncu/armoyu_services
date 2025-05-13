@@ -73,6 +73,13 @@ final class _EndpointConstants {
   static const String mediaturn = "medya/donder";
   static const String mediaupload = "medya/yukle";
 
+  //Musics
+  static const String music = "muzikler";
+  static const String musicSearch = "muzikler/bul";
+  static const String musicFavorites = "muzikler/favoriler";
+  static const String musicaddFavorite = "muzikler/favoriler/ekle";
+  static const String musicremoveFavorite = "muzikler/favoriler/sil";
+
   //News
   static const String newsList = "haberler/liste";
   static const String newsDetail = "haberler/detay";

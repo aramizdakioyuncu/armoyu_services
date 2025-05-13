@@ -29,6 +29,7 @@ import 'package:armoyu_services/core/models/ARMOYU/API/login&register&password/i
 import 'package:armoyu_services/core/models/ARMOYU/API/login&register&password/login.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/media/media_fetch.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/media/media_upload.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/music/music_fetch.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/news/news_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/notifications/notification_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/notifications/notification_setting_list.dart';
@@ -277,6 +278,13 @@ class MediaFetchResponse {
   final ServiceResult result;
   List<APIMediaFetch>? response;
   MediaFetchResponse({required this.result, this.response});
+}
+
+// #Music
+class MusicFetchResponse {
+  final ServiceResult result;
+  List<APIMusicFetch>? response;
+  MusicFetchResponse({required this.result, this.response});
 }
 
 class MediaRotationResponse {

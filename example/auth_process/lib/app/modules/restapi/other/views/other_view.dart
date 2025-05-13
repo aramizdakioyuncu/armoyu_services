@@ -244,6 +244,100 @@ class OtherView extends StatelessWidget {
                     loadingStatus: false,
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ARMOYU.widgets.elevatedButton.costum1(
+                    text: "Music List ",
+                    onPressed: () async {
+                      MusicFetchResponse response = await ARMOYU
+                          .service.musicServices
+                          .musicsList(page: 1);
+
+                      if (!response.result.status) {
+                        log(response.result.description);
+                        return;
+                      }
+                      log(response.response!.map((element) {
+                        return element.toJson().toString();
+                      }).toString());
+                    },
+                    loadingStatus: false,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ARMOYU.widgets.elevatedButton.costum1(
+                    text: "Music Favorite List ",
+                    onPressed: () async {
+                      MusicFetchResponse response = await ARMOYU
+                          .service.musicServices
+                          .musicfavoriteList(page: 1);
+
+                      if (!response.result.status) {
+                        log(response.result.description);
+                        return;
+                      }
+                      log(response.response!.map((element) {
+                        return element.toJson().toString();
+                      }).toString());
+                    },
+                    loadingStatus: false,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ARMOYU.widgets.elevatedButton.costum1(
+                    text: "Music Add Favorite ",
+                    onPressed: () async {
+                      ServiceResult response = await ARMOYU
+                          .service.musicServices
+                          .addfavorite(musicID: 1);
+
+                      if (!response.status) {
+                        log(response.description);
+                        return;
+                      }
+                    },
+                    loadingStatus: false,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ARMOYU.widgets.elevatedButton.costum1(
+                    text: "Music Remove Favorite ",
+                    onPressed: () async {
+                      ServiceResult response = await ARMOYU
+                          .service.musicServices
+                          .removefavorite(musicID: 1);
+
+                      if (!response.status) {
+                        log(response.description);
+                        return;
+                      }
+                    },
+                    loadingStatus: false,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ARMOYU.widgets.elevatedButton.costum1(
+                    text: "Music Search ",
+                    onPressed: () async {
+                      MusicFetchResponse response = await ARMOYU
+                          .service.musicServices
+                          .musicSearch(search: "müh");
+
+                      if (!response.result.status) {
+                        log(response.result.description);
+                        return;
+                      }
+                      log(response.response!.map((element) {
+                        return element.toJson().toString();
+                      }).toString());
+                    },
+                    loadingStatus: false,
+                  ),
+                ),
               ],
             )
           ],

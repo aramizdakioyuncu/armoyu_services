@@ -21,6 +21,7 @@ import 'package:armoyu_services/core/models/ARMOYU/API/login&register&password/i
 import 'package:armoyu_services/core/models/ARMOYU/API/login&register&password/login.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/media/media_fetch.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/media/media_upload.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/music/music_fetch.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/news/news_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/notifications/notification_list.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/notifications/notification_setting_list.dart';
@@ -83,6 +84,7 @@ part 'core/services/utils/group_services.dart';
 part 'core/services/utils/joinus_services.dart';
 part 'core/services/utils/loginregister_services.dart';
 part 'core/services/utils/media_services.dart';
+part 'core/services/utils/music_services.dart';
 part 'core/services/utils/news_services.dart';
 part 'core/services/utils/notification_services.dart';
 part 'core/services/utils/posts_services.dart';
@@ -120,6 +122,7 @@ class ARMOYUServices {
   late final JoinUsServices joinusServices;
   late final LoginRegisterServices loginRegisterServices;
   late final MediaServices mediaServices;
+  late final MusicServices musicServices;
   late final NewsServices newsServices;
   late final NotificationServices notificationServices;
   late final PostsServices postsServices;
@@ -268,6 +271,12 @@ class ARMOYUServices {
       usePreviousAPI: usePreviousAPI,
     );
 
+    musicServices = MusicServices(
+      getToken: () => _getToken,
+      setToken: (String? tkn) => token = tkn,
+      apiKey: apiKey,
+      usePreviousAPI: usePreviousAPI,
+    );
     newsServices = NewsServices(
       getToken: () => _getToken,
       setToken: (String? tkn) => token = tkn,
