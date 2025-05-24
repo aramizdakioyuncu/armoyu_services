@@ -28,6 +28,7 @@ import 'package:armoyu_services/core/models/ARMOYU/API/notifications/notificatio
 import 'package:armoyu_services/core/models/ARMOYU/API/post/post_detail.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/profile/profile_friendlist.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/profile/profile_invitelist.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/reels/reels.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/rules/rules.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/school/school_detail.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/school/school_list.dart';
@@ -89,6 +90,8 @@ part 'core/services/utils/news_services.dart';
 part 'core/services/utils/notification_services.dart';
 part 'core/services/utils/posts_services.dart';
 part 'core/services/utils/profile_services.dart';
+part 'core/services/utils/reels_services.dart';
+
 part 'core/services/utils/rules_services.dart';
 part 'core/services/utils/school_services.dart';
 part 'core/services/utils/search_services.dart';
@@ -127,6 +130,7 @@ class ARMOYUServices {
   late final NotificationServices notificationServices;
   late final PostsServices postsServices;
   late final ProfileServices profileServices;
+  late final ReelsServices reelsServices;
   late final RulesServices rulesServices;
   late final SchoolServices schoolServices;
   late final SearchServices searchServices;
@@ -299,6 +303,13 @@ class ARMOYUServices {
     );
 
     profileServices = ProfileServices(
+      getToken: () => _getToken,
+      setToken: (String? tkn) => token = tkn,
+      apiKey: apiKey,
+      usePreviousAPI: usePreviousAPI,
+    );
+
+    reelsServices = ReelsServices(
       getToken: () => _getToken,
       setToken: (String? tkn) => token = tkn,
       apiKey: apiKey,

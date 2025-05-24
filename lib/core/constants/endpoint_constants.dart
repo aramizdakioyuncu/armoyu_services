@@ -117,6 +117,9 @@ final class _EndpointConstants {
   static const String selectfavteam = "profil/favoritakimsec";
   static const String saveprofiledetails = "profil/ozelbilgiler";
 
+  //Reels
+  static const String reels = "reels";
+
   //Rule
   static const String rules = "kurallar/";
 

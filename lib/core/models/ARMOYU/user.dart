@@ -41,7 +41,7 @@ class UserInfo {
       'userID': userID,
       'displayname': displayname,
       'username': username,
-      'avatar': avatar,
+      'avatar': avatar.toJson(),
     };
   }
 

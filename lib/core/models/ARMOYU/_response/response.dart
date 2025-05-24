@@ -36,6 +36,7 @@ import 'package:armoyu_services/core/models/ARMOYU/API/notifications/notificatio
 import 'package:armoyu_services/core/models/ARMOYU/API/post/post_detail.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/profile/profile_friendlist.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/profile/profile_invitelist.dart';
+import 'package:armoyu_services/core/models/ARMOYU/API/reels/reels.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/rules/rules.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/school/school_detail.dart';
 import 'package:armoyu_services/core/models/ARMOYU/API/school/school_list.dart';
@@ -427,6 +428,14 @@ class ProfileFriendListResponse {
   List<APIProfileFriendlist>? response;
 
   ProfileFriendListResponse({required this.result, this.response});
+}
+
+//Reels
+class ReelsListResponse {
+  final ServiceResult result;
+  List<APIReel>? response;
+
+  ReelsListResponse({required this.result, this.response});
 }
 
 //Rules
