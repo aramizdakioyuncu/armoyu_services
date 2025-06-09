@@ -72,6 +72,7 @@ final class _EndpointConstants {
   static const String media = "medya";
   static const String mediaturn = "medya/donder";
   static const String mediaupload = "medya/yukle";
+  static const String mediadelete = "medya/sil";
 
   //Musics
   static const String music = "muzikler";

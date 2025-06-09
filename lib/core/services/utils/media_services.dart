@@ -136,7 +136,7 @@ class MediaServices {
       body: {
         "medyaID": "$mediaID",
       },
-      endpoint: "0/0/${_EndpointConstants.mediaturn}/0/",
+      endpoint: "0/0/${_EndpointConstants.mediadelete}/0/",
       headers: _apiHelpers.getRequestHeader(token: getToken()),
     );
 
