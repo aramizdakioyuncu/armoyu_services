@@ -1,3 +1,3 @@
-## [1.0.0+64]
+## [1.0.0+66]
 
--  Medya için kategorilemede düzenleme yapıldı.
+-  Fix media response parsing in fetch method; increment version to 1.0.0+66

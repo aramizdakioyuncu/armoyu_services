@@ -191,7 +191,7 @@ class MediaServices {
     }
 
     List<APIMediaUpload> medialist = [];
-    for (var element in response['durum']['icerik']) {
+    for (var element in response['icerik']) {
       medialist.add(
         APIMediaUpload(
           status: element['durum'],
