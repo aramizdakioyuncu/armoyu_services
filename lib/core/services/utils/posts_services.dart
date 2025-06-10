@@ -308,6 +308,15 @@ class PostsServices {
           Media(
             mediaID: media['fotoID'],
             mediaType: media['paylasimkategori'],
+            owner: MediaOwner(
+              userID: media['owner']['owner_ID'],
+              displayname: media['owner']['owner_displayname'],
+              avatar: MediaURL(
+                bigURL: media['owner']['owner_avatar']['media_bigURL'],
+                normalURL: media['owner']['owner_avatar']['media_URL'],
+                minURL: media['owner']['owner_avatar']['media_minURL'],
+              ),
+            ),
             mediaURL: MediaURL(
               bigURL: media['fotourl'],
               normalURL: media['fotoufakurl'],
@@ -445,6 +454,15 @@ class PostsServices {
           Media(
             mediaID: media['fotoID'],
             mediaType: media['paylasimkategori'],
+            owner: MediaOwner(
+              userID: media['owner']['owner_ID'],
+              displayname: media['owner']['owner_displayname'],
+              avatar: MediaURL(
+                bigURL: media['owner']['owner_avatar']['media_bigURL'],
+                normalURL: media['owner']['owner_avatar']['media_URL'],
+                minURL: media['owner']['owner_avatar']['media_minURL'],
+              ),
+            ),
             mediaURL: MediaURL(
               bigURL: media['fotourl'],
               normalURL: media['fotoufakurl'],
