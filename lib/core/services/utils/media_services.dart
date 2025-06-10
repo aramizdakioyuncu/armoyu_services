@@ -1,5 +1,7 @@
 part of 'package:armoyu_services/armoyu_services.dart';
 
+enum MediaType { video, image, sound, all }
+
 class MediaServices {
   final String? Function() getToken;
   final void Function(String? token) setToken;
@@ -21,7 +23,7 @@ class MediaServices {
   Future<MediaFetchResponse> fetch({
     int? userID,
     String? username,
-    String category = "-1",
+    MediaType category = MediaType.all,
     required int page,
     int limit = 30,
   }) async {
@@ -36,19 +38,19 @@ class MediaServices {
       body: userID != null
           ? {
               "oyuncubakid": userID,
-              "kategori": category,
+              "kategori": category == MediaType.all ? "-1" : category.name,
               "limit": limit,
               "sayfa": page,
             }
           : username == null
               ? {
                   "oyuncubakid": username,
-                  "kategori": category,
+                  "kategori": category == MediaType.all ? "-1" : category.name,
                   "limit": limit,
                   "sayfa": page,
                 }
               : {
-                  "kategori": category,
+                  "kategori": category == MediaType.all ? "-1" : category.name,
                   "limit": limit,
                   "sayfa": page,
                 },

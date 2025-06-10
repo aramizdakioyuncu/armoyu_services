@@ -1,3 +1,3 @@
-## [1.0.0+57]
+## [1.0.0+64]
 
--  Bağımlılıklar Güncellendi.
+-  Medya için kategorilemede düzenleme yapıldı.
